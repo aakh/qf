@@ -3,9 +3,20 @@
  
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>QF - <%= @title %></title>
+    <title><%= title %></title>
+    <%= render 'layouts/stylesheets' %>
   </head>
   <body>
-    <%= yield %>
+    <div class="container">
+      <div id="header">
+        <%= render 'layouts/header' %>
+      </div>
+      <div id="content" class="round">
+        <%= yield %>
+      </div>
+      <div id="footer">
+        <%= render 'layouts/footer' %>
+      </div>
+    </div>
   </body>
 </html>
