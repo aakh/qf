@@ -1,5 +1,5 @@
 .container {
-  width: 750px;
+  //width: 750px;
 }
 
 .navigation {
@@ -80,7 +80,7 @@ body {
 #footer {
   text-align: center;
   margin-top: 10px;
-  width: 750px;
+  //width: 750px;
   margin-left: auto;
   margin-right: auto;
 }
