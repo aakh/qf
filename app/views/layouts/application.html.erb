@@ -10,6 +10,12 @@
     <div class="container">
       <div id="header">
         <%= render 'layouts/header' %>
+        <% if flash[:notice] %>
+					<div class="green"><%= flash[:notice] %></div>
+				<%end -%>
+				<% if flash[:error] %>
+					<div class="red"><%= flash[:error] %></div>
+				<%end -%>
       </div>
       <div id="content" class="round">
         <%= yield %>

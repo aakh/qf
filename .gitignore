@@ -3,3 +3,4 @@ config/initializers/session_store.rb
 log/
 script/
 db/*.sqlite3
+spec/
