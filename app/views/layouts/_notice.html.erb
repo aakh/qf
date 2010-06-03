@@ -1,0 +1,20 @@
+<% flash.each do |key, msg| %>
+  <% cssclass = "round " %>
+  <% if flash[:notice] %>
+    <% cssclass += "successExplanation" %>
+  <% else %>
+    <% cssclass += "errorExplanation" %>
+  <% end %>
+  <%= content_tag :div, msg, :class => cssclass, :id => key %>
+  
+  <% if true %><!-- don't really need this appear stuff for page load message -->
+    <% content_tag :script, :type => "text/javascript" do %>
+      $('<%= key %>').style.display = 'none';
+      new Effect.Appear('<%= key %>', {duration: 2});
+    <% end %>
+  <!-- end erb comment --><% end %>
+  
+  <% content_tag :script, :type => "text/javascript" do %>
+    setTimeout("new Effect.Fade('<%= key %>');", 5000);
+  <% end %>
+<% end %>

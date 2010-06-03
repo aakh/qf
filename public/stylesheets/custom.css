@@ -1,13 +1,19 @@
 .round {
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+.flash_notice {
+  float: right;
+  clear: right;
+  padding-top: 35px;
 }
 
 .navigation {
-    float: right;
-    background-color: #ddd;
-    padding: 0 0.7em;
-    white-space: nowrap;
+  float: right;
+  background-color: #ddd;
+  padding: 0 0.7em;
+  white-space: nowrap;
 }
 
 ul.navigation {
@@ -16,13 +22,13 @@ ul.navigation {
 
 .navigation li {
   list-style-type: none;
-  display: inline-block;
+  display: inline;
   padding: 0.2em 0;
 }
 
 .navigation li a {
-  padding: 0 5px;
-  //font-weight: bold;
+  color: #000;
+  padding: 0 6px;
 }
 
 .navigation li a:visited {
@@ -33,34 +39,26 @@ ul.navigation {
   text-decoration: underline;
 }
 
-a.signup_button {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  text-align: center;
-  width: 190px;
-  color: #fff;
-  background: #ddd;
-  font-size: 150%;
-  font-weight: bold;
-  padding: 20px;
-  //float: left;
-}
-
 .main_title {  
-  padding: 35px;
-  font-size: 250%;
-  width: 550px;
+  font-size: 200%;
   padding-right: 0px;
   padding-left: 0px;
+  float: left; 
+  padding-top: 40px;
 }
 
 .logo {
-  float: left;
+  float: left; 
+  display: table-cell;
+  vertical-align: middle;
 }
 
-.green {
-  color: green;
+.successExplanation {
+  color: #00aa00;
+  border: #00aa00 4px;
+  display: block;
+  background-color: #ccffcc;
+  padding: 10px;
 }
 
 .errorExplanation {
@@ -78,24 +76,32 @@ a.signup_button {
   border-bottom: 2px solid red;
 }
 
-.red {
-  color: red;
+a.signup_button {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 190px;
+  color: #660000;
+  background-color: #ddd;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 20px;
 }
 
 #header {
   padding-top: 20px;
   padding-bottom: 0px;
+  clear: both;
 }
 
 #header img {
   padding: 0em;
-  //background: #fff;
 }
 
 #footer {
   text-align: center;
   margin-top: 10px;
-  //width: 750px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -106,9 +112,9 @@ a.signup_button {
 
 #content {
   margin-top: 1em;
-  //font-size: 120%;
   padding: 20px;
   background: #eee;
+  clear: both;
 }
 
 body {
@@ -116,15 +122,15 @@ body {
 }
 
 a {
-  color:  #000;
+  color: #555555;
   text-decoration: none;
 }
 
 a:hover {
-  color: #333;
+  color: #000;
   text-decoration: underline;
 }
 
 a:visited {
-  color: #000;
+  color: #555555;
 }

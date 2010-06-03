@@ -3,6 +3,7 @@ class UserSessionsController < ApplicationController
   # GET /user_sessions/new.xml
   def new
     @user_session = UserSession.new
+    @title = "Sign in"
   end
 
   # POST /user_sessions
@@ -11,7 +12,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
 
     if @user_session.save
-      flash[:notice] = 'Welcome back!'
+      flash[:notice] = 'Signed in successfully.'
       redirect_to root_url
     else
       render :action => "new"
@@ -23,7 +24,7 @@ class UserSessionsController < ApplicationController
   def destroy
     @user_session = UserSession.find
     @user_session.destroy
-    flash[:notice] = 'See ya!'
+    flash[:notice] = 'Logged out successfully'
 
     redirect_to root_url
   end

@@ -1,13 +1,21 @@
-<%= link_to logo, root_path %>
+
+  <%= link_to logo, root_path %>
+  <p class="main_title">The Queensferry Hotel</p>
+
+
 <ul class="navigation round">
   <li><%= link_to "Home", root_path %></li>
   <% if current_user %>
     <li><%= link_to "Edit profile", edit_user_path(:current) %></li>
-    <li><%= link_to "Sign out", signout_path %></li>
+    <li><%= link_to "Logout", logout_path %></li>
   <% else %>
-    <li><%= link_to "Sign in", signin_path %></li>
+    <li><%= link_to "Login", login_path %></li>
     <li><%= link_to "Sign up", signup_path %></li>
   <% end %>
   <li><%= link_to "Help", help_path %></li>
 </ul>  
-<p class="main_title">The Queen's Ferry Hotel</p>
+
+<div class="round flash_notice">
+  <%= render 'layouts/notice' %>
+</div>        
+        

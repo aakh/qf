@@ -9,8 +9,8 @@ ActionController::Routing::Routes.draw do |map|
   map.help '/help', :controller => 'pages', :action => 'help'
   
   map.signup '/signup', :controller => 'users', :action => 'new'
-  map.signin '/signin', :controller => 'user_sessions', :action => 'new'
-  map.signout '/signout', :controller => 'user_sessions', :action => 'destroy'
+  map.login '/login', :controller => 'user_sessions', :action => 'new'
+  map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   map.resources :concepts
   

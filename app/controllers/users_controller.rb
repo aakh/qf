@@ -22,7 +22,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = current_user
+    if params[:id] != "current"
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
     @title = "Edit profile"
   end
 
@@ -43,10 +47,14 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = current_user
+    if params[:id] != "current"
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
 
     if @user.update_attributes(params[:user])
-      flash[:notice] = 'Profile updated successfully'
+      flash[:notice] = 'Profile updated successfully.'
       redirect_to(@user)
     else
       render :action => "edit"
