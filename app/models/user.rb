@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
   acts_as_authentic
-  #attr_accessor :password, :password_confirmation
+  has_and_belongs_to_many :roles
+  attr_accessor :role_ids
 end

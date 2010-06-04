@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     @user = User.find(params[:id])
-    @title = @user.name
+    @title = @user.first_name + " " + @user.last_name
   end
 
   # GET /users/new

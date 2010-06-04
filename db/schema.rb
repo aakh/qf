@@ -9,11 +9,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100602011940) do
+ActiveRecord::Schema.define(:version => 20100604012507) do
 
   create_table "concepts", :force => true do |t|
     t.string   "name",       :null => false
     t.string   "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
+  create_table "user_sessions", :force => true do |t|
+    t.string   "email"
+    t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -30,8 +48,9 @@ ActiveRecord::Schema.define(:version => 20100602011940) do
     t.datetime "last_login_at"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
-    t.string   "name"
-    t.string   "origin"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "country"
     t.date     "birthday"
     t.datetime "created_at"
     t.datetime "updated_at"

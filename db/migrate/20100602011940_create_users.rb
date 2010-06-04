@@ -17,8 +17,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string    :last_login_ip                                     
       
       #profile stuff
-      t.string :name
-      t.string :origin
+      t.string :first_name
+      t.string :last_name
+      t.string :country
       t.date :birthday
       
       t.timestamps
