@@ -7,9 +7,8 @@ class CreateConcepts < ActiveRecord::Migration
       t.timestamps
     end
     
-    Concept.create!(:name => "Starters", :desc => "")
     Concept.create!(:name => "Mains", :desc => "")
-    Concept.create!(:name => "Deserts", :desc => "")
+    Concept.create!(:name => "Starters", :desc => "")
     Concept.create!(:name => "Beer", :desc => "")
     
   end

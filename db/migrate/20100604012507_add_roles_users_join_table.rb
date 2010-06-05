@@ -5,9 +5,11 @@ class AddRolesUsersJoinTable < ActiveRecord::Migration
     end
     
     u = User.create(:email => "ali@aliak.net", :password => "admin", :password_confirmation => "admin")
-    r = Role.find_by_name("Administrator")
+    r1 = Role.find_by_name("Administrator")
+    r2 = Role.find_by_name("Manager")
+    r3 = Role.find_by_name("Staff")
     
-    u.roles << r
+    u.roles << r1 << r2 << r3 
     u.save!
   end
 

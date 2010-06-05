@@ -1,0 +1,8 @@
+<h2>New Menu Item</h2>
+
+<% semantic_form_for(@entity) do |f| %>
+  <%= f.inputs %>
+  <% f.buttons do %>
+    <%= f.commit_button "Add Menu Item" %>
+  <% end %>
+<% end %>

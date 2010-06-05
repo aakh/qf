@@ -52,7 +52,7 @@ class UsersController < ApplicationController
     else
       @user = current_user
     end
-
+    
     if @user.update_attributes(params[:user])
       flash[:notice] = 'Profile updated successfully.'
       redirect_to(@user)

@@ -6,10 +6,12 @@
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <hr>
-    <%= f.input :first_name, :required => false %>
-    <%= f.input :last_name, :required => false %>
-    <%= f.input :birthday, :required => false, :start_year => 1920 %>
-    <%= f.input :country, :required => false %>
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :birthday %>
+    <%= f.input :country %>
   <% end %>
-  <%= f.buttons %>
+  <% f.buttons do %>
+    <%= f.commit_button "Sign up" %>
+  <% end %>
 <% end %>

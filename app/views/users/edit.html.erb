@@ -3,13 +3,17 @@
 <% semantic_form_for @user do |f| %>
   <% f.inputs do %>
     <%= f.input :email %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
+    <%= f.input :password, :required => false %>
+    <%= f.input :password_confirmation, :required => false %>
     <hr>
-    <%= f.input :first_name, :required => false %>
-    <%= f.input :last_name, :required => false %>
-    <%= f.input :birthday, :required => false, :start_year => 1920 %>
-    <%= f.input :country, :required => false %>
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :birthday %>
+    <%= f.input :country %>
+    <% if current_user.has_role? 'Administrator' %>
+      <hr>
+      <%= f.input :roles %>
+    <% end %>
   <% end %>
   <%= f.buttons %>
 <% end %>

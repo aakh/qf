@@ -12,10 +12,21 @@
       <div id="header">
         <%= render 'layouts/header' %>
       </div>
-      <div id="content" class="round">
-        <%= yield %>
-      </div>
-      <div id="footer">
+      <table>
+        <tr>
+          <td class="menu">
+            <div id="menu" class="round">
+              <%= render 'layouts/main_menu' %>
+            </div>
+          </td>
+          <td class="content round">
+            <div id="content">
+              <%= yield %>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div id="footer" class="round">
         <%= render 'layouts/footer' %>
       </div>
       <%= debug params if Rails.env.development? %>

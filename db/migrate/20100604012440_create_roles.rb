@@ -7,6 +7,7 @@ class CreateRoles < ActiveRecord::Migration
     end
     
     Role.create!(:name => "Administrator")
+    Role.create!(:name => "Manager")
     Role.create!(:name => "Staff")
   end
 
