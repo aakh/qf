@@ -6,3 +6,4 @@ plugins:
 - iso-3166-country-select
 - annotate_models
 - validation_reflection
+- paperclip

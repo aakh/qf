@@ -1,4 +1,6 @@
 <p>
+  <%= image_tag @entity.photo.url %>
+<p>
   <b>Name:</b>
   <%=h @entity.name %>
 </p>
@@ -7,7 +9,3 @@
   <b>Desc:</b>
   <%=h @entity.desc %>
 </p>
-
-
-<%= link_to 'Edit', edit_entity_path(@entity) %> |
-<%= link_to 'Back', entities_path %>

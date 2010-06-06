@@ -18,7 +18,7 @@
   <% if current_user and current_user.has_role? 'Manager' %>
     <li><%= link_to "Add Menu Category", new_concept_path %></li>
     <li><%= link_to "Add Menu Item", new_entity_path %></li>
-    <li><%= link_to "View Menu Items", concepts_path %></li>
+    <li><%= link_to "View Menu Categories", concepts_path %></li>
   <% end %>
 <% end %>
 </ul>  

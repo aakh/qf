@@ -3,33 +3,18 @@ class EntitiesController < ApplicationController
   # GET /entities.xml
   def index
     @entities = Entity.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @entities }
-    end
   end
 
   # GET /entities/1
   # GET /entities/1.xml
   def show
     @entity = Entity.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @entity }
-    end
   end
 
   # GET /entities/new
   # GET /entities/new.xml
   def new
     @entity = Entity.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @entity }
-    end
   end
 
   # GET /entities/1/edit
@@ -42,32 +27,28 @@ class EntitiesController < ApplicationController
   def create
     @entity = Entity.new(params[:entity])
 
-    respond_to do |format|
-      if @entity.save
-        flash[:notice] = 'Entity was successfully created.'
-        format.html { redirect_to(@entity) }
-        format.xml  { render :xml => @entity, :status => :created, :location => @entity }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @entity.errors, :status => :unprocessable_entity }
-      end
+    if @entity.save!
+      flash[:notice] = 'Menu Item was successfully created.'
+      redirect_to(@entity)
+    else
+      flash[:error] = 'Something went wrong.'
+      render :action => "new"
     end
+    
   end
 
   # PUT /entities/1
   # PUT /entities/1.xml
   def update
     @entity = Entity.find(params[:id])
-
-    respond_to do |format|
-      if @entity.update_attributes(params[:entity])
-        flash[:notice] = 'Entity was successfully updated.'
-        format.html { redirect_to(@entity) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @entity.errors, :status => :unprocessable_entity }
-      end
+    
+    if @entity.update_attributes(params[:entity])
+      flash[:notice] = 'Menu Item was successfully updated.'
+      redirect_to(@entity)
+    else
+      flash[:error] = 'Something went wrong.'
+      flash[:error] = params[:entity].inspect
+      render :action => "edit"
     end
   end
 
@@ -77,9 +58,6 @@ class EntitiesController < ApplicationController
     @entity = Entity.find(params[:id])
     @entity.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(entities_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(entities_url)
   end
 end
