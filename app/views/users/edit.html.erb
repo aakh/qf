@@ -10,7 +10,7 @@
     <%= f.input :last_name %>
     <%= f.input :birthday %>
     <%= f.input :country %>
-    <% if current_user.has_role? 'Administrator' %>
+    <% if administrator? %>
       <hr>
       <%= f.input :roles %>
     <% end %>
