@@ -1,6 +1,7 @@
 
 <ul>
   <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to "Menu", concepts_path %></li>
   <% if current_user %>
     <li><%= link_to "Edit profile", edit_user_path(:current) %></li>
     <li><%= link_to "Logout", logout_path %></li>
@@ -9,16 +10,15 @@
     <li><%= link_to "Sign up", signup_path %></li>
   <% end %>
   <li><%= link_to "Help", help_path %></li>
-<% if current_user and (current_user.has_role? 'Administrator' or current_user.has_role? 'Manager') %>
+<% if manager? or administrator? %>
   <br>
   <hr>
-  <% if current_user and current_user.has_role? 'Administrator' %>
+  <% if administrator? %>
     <li><%= link_to "View Users", users_path %></li>
   <% end %>
-  <% if current_user and current_user.has_role? 'Manager' %>
+  <% if manager? %>
     <li><%= link_to "Add Menu Category", new_concept_path %></li>
     <li><%= link_to "Add Menu Item", new_entity_path %></li>
-    <li><%= link_to "View Menu Categories", concepts_path %></li>
   <% end %>
 <% end %>
 </ul>  

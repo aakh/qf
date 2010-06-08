@@ -4,7 +4,9 @@ class AddRolesUsersJoinTable < ActiveRecord::Migration
       t.references :role, :user
     end
     
-    u = User.create(:email => "ali@aliak.net", :password => "admin", :password_confirmation => "admin")
+    u = User.create(:email => "ali@aliak.net", :password => "admin", :password_confirmation => "admin",
+                    :first_name => "Ali", :last_name => "Akhtarzada", :birthday => "8 June 1982",
+                    :country => "Bahrain")
     r1 = Role.find_by_name("Administrator")
     r2 = Role.find_by_name("Manager")
     r3 = Role.find_by_name("Staff")

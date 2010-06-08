@@ -28,8 +28,14 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   validates_presence_of :password, :password_confirmation, :on => :create
   validates_presence_of :email
+  attr_accessor :first_name, :last_name
   
   def has_role?(rolename)
     self.roles.find_by_name(rolename) ? true : false
+  end
+  
+  def full_name
+    return "Full name here"
+    @first_name + " " + @last_name
   end
 end

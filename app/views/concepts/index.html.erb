@@ -1,18 +1,13 @@
-<h2>Listing Menu Items</h2>
+<h2>The Menu</h2>
 
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-
 <% @concepts.each do |concept| %>
   <tr>
-    <td><%=h concept.name %></td>
-    <td><%=h concept.desc %></td>
-    <td><%= link_to 'Show', concept %></td>
-    <td><%= link_to 'Edit', edit_concept_path(concept) %></td>
-    <td><%= link_to 'Destroy', concept, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to concept.name, concept %></td>
+    <% if manager? %>
+      <td><%= link_to 'Edit', edit_concept_path(concept) %></td>
+      <td><%= link_to 'Destroy', concept, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

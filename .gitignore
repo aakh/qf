@@ -4,3 +4,4 @@ log/
 script/
 db/*.sqlite3
 spec/
+test/
