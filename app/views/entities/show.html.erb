@@ -1,6 +1,5 @@
 <p>
-  <%= image_tag @entity.photo.url %>
-  <%= image_tag @entity.photo.url(:thumb) %>
+  <%= image_tag @entity.photo.url, :size => "100x100" %>
 <p>
   <b>Name:</b>
   <%=h @entity.name %>

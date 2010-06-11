@@ -1,4 +1,5 @@
 class EntitiesController < ApplicationController
+  
   # GET /entities
   # GET /entities.xml
   def index
@@ -27,11 +28,11 @@ class EntitiesController < ApplicationController
   def create
     @entity = Entity.new(params[:entity])
 
-    if @entity.save!
+    if @entity.save
       flash[:notice] = 'Menu Item was successfully created.'
       redirect_to(@entity)
     else
-      flash[:error] = 'Something went wrong.'
+      flash[:error] = 'Could not create the Menu Item'
       render :action => "new"
     end
     

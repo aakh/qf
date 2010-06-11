@@ -1,14 +1,18 @@
 # == Schema Information
-# Schema version: 20100605101028
+# Schema version: 20100605220136
 #
 # Table name: entities
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  desc       :text
-#  concept_id :integer
-#  created_at :datetime
-#  updated_at :datetime
+#  id                 :integer         not null, primary key
+#  name               :string(255)
+#  desc               :text
+#  concept_id         :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  photo_file_name    :string(255)
+#  photo_content_type :string(255)
+#  photo_file_size    :integer
+#  photo_updated_at   :datetime
 #
 
 class Entity < ActiveRecord::Base
@@ -22,5 +26,11 @@ class Entity < ActiveRecord::Base
   #validates_attachment_size :photo, :less_than => 5.megabytes
   #validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
   validates_uniqueness_of :name, :scope => :concept_id, :case_sensitive => false
+  before_update :capitalize
+  def capitalize
+	arr = name.split(/ /)
+	arr.each {|w| w.capitalize!}
+	@attributes['name'] = arr.join ' '
+  end
   
 end
