@@ -1,0 +1,3 @@
+class DimensionsController < ApplicationController
+
+end

@@ -9,11 +9,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100605220136) do
+ActiveRecord::Schema.define(:version => 20100614023756) do
 
   create_table "concepts", :force => true do |t|
     t.string   "name",       :null => false
     t.string   "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "concepts_dimensions", :id => false, :force => true do |t|
+    t.integer "concept_id"
+    t.integer "dimension_id"
+  end
+
+  create_table "dimensions", :force => true do |t|
+    t.string   "name"
+    t.string   "desc"
+    t.float    "ideal",         :default => 0.0
+    t.float    "weight",        :default => 0.0
+    t.integer  "valuable_id"
+    t.string   "valuable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,6 +44,26 @@ ActiveRecord::Schema.define(:version => 20100605220136) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+  end
+
+  create_table "fact_values", :force => true do |t|
+    t.float    "value"
+    t.integer  "fact_id"
+    t.integer  "entity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "facts", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "opinions", :force => true do |t|
+    t.float    "min",        :default => 0.0
+    t.float    "max",        :default => 1.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "roles", :force => true do |t|

@@ -1,8 +1,9 @@
 <h2>New Menu Item</h2>
 <% semantic_form_for @entity, :html => { :multipart => true } do |f| %>
   <% f.inputs do %> 
-    <%= f.input :concept, :label => "Category" %>
     <%= f.input :name %>  
+    <%= f.input :concept, :label => "Category" %>
+    <%= f.input :price, :required => true %>
     <%= f.input :photo %>
     <%= f.input :desc, :label => "Description" %>  
   <% end %>

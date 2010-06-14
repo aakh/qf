@@ -9,7 +9,7 @@ class CreateConcepts < ActiveRecord::Migration
     
     Concept.create!(:name => "Mains", :desc => "")
     Concept.create!(:name => "Starters", :desc => "")
-    Concept.create!(:name => "Beer", :desc => "")
+    Concept.create!(:name => "Tap Beer", :desc => "")
     
   end
 

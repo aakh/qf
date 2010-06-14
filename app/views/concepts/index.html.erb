@@ -4,7 +4,7 @@
 <% @concepts.each do |concept| %>
   <tr>
     <td><%= link_to concept.name, concept %></td>
-    <% if manager? %>
+    <% if role? 'manager' %>
       <td><%= link_to 'Edit', edit_concept_path(concept) %></td>
       <td><%= link_to 'Destroy', concept, :confirm => 'Are you sure?', :method => :delete %></td>
     <% end %>

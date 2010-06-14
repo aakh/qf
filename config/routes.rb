@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :concepts
+  
   map.resources :entities
 
   map.resources :roles
@@ -6,6 +8,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_sessions
 
   map.resources :users
+  
+  map.resources :dimensions
+  map.resources :facts
+  map.resources :opinions
+  
+  map.resources :fact_values
 
   map.root :controller => 'pages', :action => 'home'
   map.about '/about', :controller => 'pages', :action => 'about'
@@ -16,7 +24,6 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'user_sessions', :action => 'new'
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
-  map.resources :concepts
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
