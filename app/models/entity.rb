@@ -39,4 +39,7 @@ class Entity < ActiveRecord::Base
     @attributes['name'] = arr.join ' '
   end
   
+  accepts_nested_attributes_for :fact_values
+  attr_accessor :price
+  
 end

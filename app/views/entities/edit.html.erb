@@ -1,6 +1,12 @@
 <h2>Edit Menu Item</h2>
 <% semantic_form_for @entity, :html => { :multipart => true } do |f| %>
-  <%= f.inputs :name, :desc, :concept, :photo %>
+  <% f.inputs do %> 
+    <%= f.input :name %>  
+    <%= f.input :concept, :label => "Category" %>
+    <%= f.input :price, :required => true %>
+    <%= f.input :photo %>
+    <%= f.input :desc, :label => "Description" %>     
+  <% end %>
   <% f.buttons do %>
     <%= f.commit_button "Update" %>
   <% end %>

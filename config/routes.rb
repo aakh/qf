@@ -12,6 +12,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :dimensions
   map.resources :facts
   map.resources :opinions
+  
+  map.resources :fact_values
 
   map.root :controller => 'pages', :action => 'home'
   map.about '/about', :controller => 'pages', :action => 'about'
