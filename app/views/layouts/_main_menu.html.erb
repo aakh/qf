@@ -10,13 +10,13 @@
     <li><%= link_to "Sign up", signup_path %></li>
   <% end %>
   <li><%= link_to "Help", help_path %></li>
-<% if manager? or administrator? %>
+<% if current_user %>
   <br>
   <hr>
-  <% if administrator? %>
+  <% if role? 'administrator' %>
     <li><%= link_to "View Users", users_path %></li>
   <% end %>
-  <% if manager? %>
+  <% if role? 'manager' %>
     <li><%= link_to "Add Menu Category", new_concept_path %></li>
     <li><%= link_to "Add Menu Item", new_entity_path %></li>
   <% end %>

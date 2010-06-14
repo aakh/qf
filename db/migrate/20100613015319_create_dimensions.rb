@@ -3,11 +3,9 @@ class CreateDimensions < ActiveRecord::Migration
     create_table :dimensions do |t|
       t.string :name
       t.string :desc
-      t.float :ideal
-      t.float :weight
-      t.float :min
-      t.float :max
-	  t.references :valuable, :polymorphic => true
+      t.float :ideal, :default => 0
+      t.float :weight, :default => 0
+      t.references :valuable, :polymorphic => true
 
       t.timestamps
     end

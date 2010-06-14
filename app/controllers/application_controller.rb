@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   
-  helper_method :current_user, :manager?, :administrator?, :staff?
+  helper_method :current_user, :role?
   
   private
   def current_user_session
@@ -21,15 +21,8 @@ class ApplicationController < ActionController::Base
     @current_user = current_user_session && current_user_session.record
   end
   
-  def manager?
-    current_user and current_user.has_role? 'Manager'
+  def role?(r)
+    current_user and current_user.has_role? r.capitalize
   end
   
-  def administrator?
-    current_user and current_user.has_role? 'Administrator'
-  end
-  
-  def staff?
-    current_user and current_user.has_role? 'Staff'
-  end
 end

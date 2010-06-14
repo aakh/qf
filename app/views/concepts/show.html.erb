@@ -1,15 +1,18 @@
-<p>
-  <%=h @concept.name %>
-</p>
+<h3><%=h @concept.name %></h3>
+
+
 
 <p>
   <% @concept.entities.each do |entity| %>
-    <li> <%=h entity.name %> 
-    <% if manager? %>
+    <li> <%= link_to entity.name, entity_path %>
+    (
+    <% fact = Dimension.find_by_name('Price').valuable %>
+    $<%= FactValue.find_by_fact_id_and_entity_id( fact.id, entity.id ).value %>
+    )
+    <% if role? 'manager' %>
       [
-      <%= link_to 'Show', entity %> |
       <%= link_to 'Edit', edit_entity_path(entity) %> |
-      <%= link_to 'Destroy', entity, :confirm => 'Are you sure?', :method => :delete %> 
+      <%= link_to 'Delete', entity, :confirm => 'Are you sure?', :method => :delete %> 
       ]
     <% end %>
   <% end %>

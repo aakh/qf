@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100605220136
+# Schema version: 20100613020951
 #
 # Table name: entities
 #
@@ -17,6 +17,10 @@
 
 class Entity < ActiveRecord::Base
   belongs_to :concept
+  
+  has_many :fact_values
+  has_many :facts, :through => :fact_values
+  
   validates_presence_of :name, :concept
   has_attached_file :photo, #:styles => { :thumb => "100x100>" },
                     :url  => "/images/entities/:id/:style/:basename.:extension",
@@ -26,11 +30,13 @@ class Entity < ActiveRecord::Base
   #validates_attachment_size :photo, :less_than => 5.megabytes
   #validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
   validates_uniqueness_of :name, :scope => :concept_id, :case_sensitive => false
+  
   before_update :capitalize
+  
   def capitalize
-	arr = name.split(/ /)
-	arr.each {|w| w.capitalize!}
-	@attributes['name'] = arr.join ' '
+    arr = name.split(/ /)
+    arr.each {|w| w.capitalize!}
+    @attributes['name'] = arr.join ' '
   end
   
 end

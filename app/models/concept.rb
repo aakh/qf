@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100605220136
+# Schema version: 20100613020951
 #
 # Table name: concepts
 #
@@ -16,4 +16,7 @@ class Concept < ActiveRecord::Base
   validates_length_of :desc, :maximum => 1000
   has_many :entities, :dependent => :destroy
   validates_uniqueness_of :name, :case_sensitive => false
+  has_and_belongs_to_many :dimensions
+  has_many :facts, :through => :dimensions
+  has_many :opinions, :through => :dimensions
 end
