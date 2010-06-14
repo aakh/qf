@@ -1,5 +1,5 @@
 class EntitiesController < ApplicationController
-  
+  before_filter :check_manager, :except => [:show]
   # GET /entities
   # GET /entities.xml
   def index

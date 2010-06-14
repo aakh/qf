@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :check_administrator, :only => :index
+  before_filter :check_administrator, :only => [:index, :destroy]
+  before_filter :check_logged_in, :only => [:edit, :show, :update]
   # GET /users
   # GET /users.xml
   def index
@@ -23,12 +24,17 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @title = "Edit profile"
     if params[:id] != "current"
-      @user = User.find(params[:id])
+      unless role? 'administrator' or (current_user.id == params[:id].to_i)
+        flash[:notice] = "You can't access that bozo."
+        redirect_to root_path
+      else
+        @user = User.find(params[:id])
+      end
     else
       @user = current_user
     end
-    @title = "Edit profile"
   end
 
   # POST /users

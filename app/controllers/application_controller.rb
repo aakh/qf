@@ -12,8 +12,29 @@ class ApplicationController < ActionController::Base
   
   def check_administrator
     unless role? 'administrator'
-      flash[:notice] = "You do not have permission to do that"
-      redirect_to root_path
+      flash[:notice] = "You do not have permission to do that."
+      redirect_to login_path
+    end
+  end
+  
+  def check_manager
+    unless role? 'manager'
+      flash[:notice] = "You do not have permission to do that."
+      redirect_to login_path
+    end
+  end
+  
+  def check_staff
+    unless role? 'staff'
+      flash[:notice] = "You do not have permission to do that."
+      redirect_to login_path
+    end
+  end
+  
+  def check_logged_in
+    unless current_user
+      flash[:notice] = "You have to log in first."
+      redirect_to login_path
     end
   end
   

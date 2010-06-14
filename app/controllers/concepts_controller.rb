@@ -1,4 +1,5 @@
 class ConceptsController < ApplicationController
+  before_filter :check_manager, :except => [:index, :show]
   def index
     @concepts = Concept.all
   end
