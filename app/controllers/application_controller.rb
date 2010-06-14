@@ -10,6 +10,13 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user, :role?
   
+  def check_administrator
+    unless role? 'administrator'
+      flash[:notice] = "You do not have permission to do that"
+      redirect_to root_path
+    end
+  end
+  
   private
   def current_user_session
     return @current_user_session if defined? @current_user_session
