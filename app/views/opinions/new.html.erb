@@ -1,0 +1,11 @@
+<h2>New Opinion</h2>
+<% semantic_form_for @opinion do |f| %>
+  <% f.inputs :for => :dimension do |dim| %> 
+    <%= dim.input :name %>
+    <%= dim.input :desc %>
+  <% end %>
+  <%= f.inputs :min, :max %>
+  <% f.buttons do %>
+    <%= f.commit_button "Add Opinion" %>
+  <% end %>
+<% end %>

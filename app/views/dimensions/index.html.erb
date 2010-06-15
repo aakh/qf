@@ -1,2 +1,37 @@
-<h1>Dimension#index</h1>
-<p>Find me in app/views/dimension/index.html.erb</p>
+<h2>Value Dimensions</h2>
+<table>
+<% @dimensions.each do |dimension| %>
+  <% if dimension.valuable_type == "Opinion" %>
+    <tr>
+      <td>
+        <%= link_to dimension.name, dimension %>
+      </td>
+      <% if current_user %>
+        <td>
+          [
+          <%= link_to 'Edit', edit_dimension_path(dimension) %>
+          <% if role? 'staff' %>
+            | <%= link_to 'Delete', dimension, :confirm => 'Are you sure?', :method => :delete %>
+          <% end %>
+          ]
+        </td>
+      <% end %>
+    </tr>
+  <% elsif role?('staff') %>
+    <tr>
+      <td>
+        FACT: <%= link_to dimension.name, dimension %>
+      </td>
+      <% if current_user and dimension.name != "Price" %>
+        <td>
+          [
+          <%= link_to 'Edit', edit_dimension_path(dimension) %> |
+          <%= link_to 'Delete', dimension, :confirm => 'Are you sure?', :method => :delete %>
+          ]
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+

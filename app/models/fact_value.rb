@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 20100614023756
+#
+# Table name: fact_values
+#
+#  id         :integer         not null, primary key
+#  value      :float
+#  fact_id    :integer
+#  entity_id  :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class FactValue < ActiveRecord::Base
   belongs_to :entity
   belongs_to :fact

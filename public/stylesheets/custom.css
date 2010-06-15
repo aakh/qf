@@ -37,11 +37,13 @@
 }
 
 .main_title {  
-  font-size: 200%;
+  font-size: 250%;
   padding-right: 0px;
   padding-left: 0px;
   float: left; 
-  padding-top: 40px;
+  padding-top: 50px;
+  text-decoration: underline;
+  font-family: arial;
 }
 
 .logo {
@@ -80,7 +82,7 @@ a.signup_button {
   text-align: center;
   width: 190px;
   color: #660000;
-  background-color: #ddd;
+  background-color: #aaffaa;
   font-size: 150%;
   font-weight: bold;
   padding: 20px;
@@ -140,7 +142,8 @@ ul.footer {
 }
 
 body {
-  background: rgb(234,197,111)
+  background-color: rgb(234,197,111);
+  /*background-image: url(/images/background.jpg);*/
 }
 
 a {
