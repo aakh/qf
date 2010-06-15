@@ -2,7 +2,7 @@ class DimensionsController < ApplicationController
   before_filter :check_staff_role, :only => :delete
   
   def index
-    @dimensions = Dimension.all
+    @dimensions = Dimension.all :order => "name"
   end
   
   def edit
