@@ -5,7 +5,7 @@ class CreateFacts < ActiveRecord::Migration
     end
     
     f = Fact.create
-    f.dimension = Dimension.new :name => "+Price"
+    f.dimension = Dimension.new :name => "Price"
     f.save!
   end
 
