@@ -4,7 +4,7 @@ class FactsController < ApplicationController
   
   def new
     @fact = Fact.new
-    @fact.dimension = Dimension.new
+    @fact.build_dimension
   end
 
   def create    

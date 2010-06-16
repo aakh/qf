@@ -1,12 +1,13 @@
 <h2>Edit Fact</h2>
 <% semantic_form_for @fact do |f| %>
   <% f.inputs :for => :dimension do |dim| %> 
-    <% if @fact.dimension.name == "Price" %>
-      Cannot edit 'Price'
+    <% if @fact.dimension.name == "+Price" %>
+      Cannot edit fact 'Price'
     <% else %>
       <%= dim.input :name %>
     <% end %>
     <%= dim.input :desc %>
+    <%= dim.input :concepts %>
   <% end %>
   <% f.buttons do %>
     <%= f.commit_button "Update" %>

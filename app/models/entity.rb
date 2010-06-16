@@ -20,6 +20,7 @@ class Entity < ActiveRecord::Base
   
   has_many :fact_values
   has_many :facts, :through => :fact_values
+  accepts_nested_attributes_for :fact_values
   
   validates_presence_of :name, :concept
   has_attached_file :photo, #:styles => { :thumb => "100x100>" },

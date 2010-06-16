@@ -3,6 +3,7 @@
   <% f.inputs :for => :dimension do |dim| %> 
     <%= dim.input :name %>
     <%= dim.input :desc %>
+    <%= dim.input :concepts %>
   <% end %>
   <%= f.inputs :min, :max %>
   <% f.buttons do %>

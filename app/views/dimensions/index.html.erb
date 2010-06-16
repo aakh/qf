@@ -20,9 +20,9 @@
   <% elsif role?('staff') %>
     <tr>
       <td>
-        FACT: <%= link_to dimension.name, dimension %>
+        <%= link_to dimension.name, dimension %>
       </td>
-      <% if current_user and dimension.name != "Price" %>
+      <% if current_user and dimension.name != "+Price" %>
         <td>
           [
           <%= link_to 'Edit', edit_dimension_path(dimension) %> |

@@ -1,6 +1,6 @@
 class CreateFactValues < ActiveRecord::Migration
   def self.set_price(entity, price)
-    p = Dimension.find_by_name('Price').valuable
+    p = Dimension.find_by_name('+Price').valuable
     v = FactValue.create(:value => price)
     v.fact = p
     v.entity = entity

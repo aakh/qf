@@ -1,7 +1,7 @@
 <h2>New Menu Categroy</h2>
 
 <% semantic_form_for(@concept) do |f| %>
-  <%= f.inputs %>
+  <%= f.inputs :name, :desc, :dimensions %>
   <% f.buttons do %>
     <%= f.commit_button "Add Categroy" %>
   <% end %>

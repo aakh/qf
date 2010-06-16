@@ -22,7 +22,7 @@ class EntitiesController < ApplicationController
   # GET /entities/1/edit
   def edit
     @entity = Entity.find(params[:id])
-    @entity.price = FactValue.get_value(Dimension.find_by_name('Price'), @entity).value
+    @entity.price = FactValue.get_value(Dimension.find_by_name('+Price'), @entity).value
   end
 
   # POST /entities
@@ -30,7 +30,7 @@ class EntitiesController < ApplicationController
   def create
     @entity = Entity.new(params[:entity])
     val = FactValue.create(:value => @entity.price)
-    val.fact = Dimension.find_by_name('Price').valuable
+    val.fact = Dimension.find_by_name('+Price').valuable
     val.entity = @entity
     val.save
     
@@ -50,7 +50,7 @@ class EntitiesController < ApplicationController
     @entity = Entity.find(params[:id])
     
     if @entity.update_attributes(params[:entity])
-      fv = FactValue.get_value(Dimension.find_by_name('Price'), @entity)
+      fv = FactValue.get_value(Dimension.find_by_name('+Price'), @entity)
       fv.value = @entity.price
       fv.save!
       flash[:notice] = 'Menu Item was successfully updated.'
