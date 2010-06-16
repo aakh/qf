@@ -8,7 +8,7 @@
 <h2><%=h @entity.name %></h2>
 
 <b>Price:</b>
-<%=h FactValue.get_value(Dimension.find_by_name('Price'), @entity).value %>
+<%=h FactValue.get_value(Dimension.find_by_name('+Price'), @entity).value %>
 
 <% unless @entity.desc.blank? %>
   <br>

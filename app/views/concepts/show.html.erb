@@ -6,7 +6,7 @@
     <td>
       <li> <%= link_to entity.name, entity_path(:id => entity) %>
       (
-      $<%= FactValue.get_value(Dimension.find_by_name('Price'), entity).value %>
+      $<%= FactValue.get_value(Dimension.find_by_name('+Price'), entity).value %>
       )
     </td>
     <% if role? 'manager' %>
