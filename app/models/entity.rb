@@ -33,11 +33,12 @@ class Entity < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :concept_id, :case_sensitive => false
   
   before_update :capitalize
+  before_save :capitalize
   
   def capitalize
-    arr = name.split(/ /)
-    arr.each {|w| w.capitalize!}
-    @attributes['name'] = arr.join ' '
+    #arr = name.split(/ /)
+    #arr.each {|w| w.capitalize!}
+    @attributes['name'].capitalize!# = arr.join ' '
   end
   
   accepts_nested_attributes_for :fact_values

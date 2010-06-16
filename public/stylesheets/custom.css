@@ -14,6 +14,13 @@
   vertical-align: top;
 }
 
+.dimensions {
+  background-color: #a4ffa4;
+  vertical-align: top;
+  padding: 20px;
+  white-space:nowrap;
+}
+
 #menu {
   padding: 20px 0 20px 0;
   background-color: #fff;
@@ -82,7 +89,7 @@ a.signup_button {
   text-align: center;
   width: 190px;
   color: #660000;
-  background-color: #aaffaa;
+  background-color: #a4ffa4;
   font-size: 150%;
   font-weight: bold;
   padding: 20px;
@@ -139,6 +146,7 @@ ul.footer {
   padding: 20px;
   background: #fff;
   border: #000 4px;
+  vertical-align: top;
 }
 
 body {

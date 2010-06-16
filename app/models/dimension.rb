@@ -19,4 +19,16 @@ class Dimension < ActiveRecord::Base
   has_and_belongs_to_many :concepts
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :valuable_type, :case_sensitive => false
+   
+  before_update :capitalize
+  before_save :capitalize
+  
+  def capitalize
+    #arr = name.split(/ /)
+    #arr.each {|w| w.capitalize!}
+    @attributes['name'].capitalize!# = arr.join ' '
+    if @attributes['valuable_type'] == "Fact"
+      @attributes['name'] = "+" + @attributes['name']
+    end
+  end
 end

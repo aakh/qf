@@ -3,13 +3,11 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Desc</th>
   </tr>
 
 <% @entities.each do |entity| %>
   <tr>
     <td><%=h entity.name %></td>
-    <td><%=h entity.desc %></td>
     <td><%= link_to 'Show', entity %></td>
     <td><%= link_to 'Edit', edit_entity_path(entity) %></td>
     <td><%= link_to 'Destroy', entity, :confirm => 'Are you sure?', :method => :delete %></td>
