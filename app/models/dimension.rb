@@ -28,7 +28,7 @@ class Dimension < ActiveRecord::Base
     #arr.each {|w| w.capitalize!}
     @attributes['name'].capitalize!# = arr.join ' '
     if @attributes['valuable_type'] == "Fact"
-      @attributes['name'] = "+" + @attributes['name'] if @attributes['name'][0] != '+'
+      @attributes['name'] = "+" + @attributes['name']
     end
   end
 end
