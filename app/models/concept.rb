@@ -19,4 +19,12 @@ class Concept < ActiveRecord::Base
   has_and_belongs_to_many :dimensions
   has_many :facts, :through => :dimensions
   has_many :opinions, :through => :dimensions
+  
+  def facts
+    dimensions.find_all { |dim| dim.valuable_type == "Fact" }.sort
+  end
+  
+  def opinions
+    dimensions.find_all { |dim| dim.valuable_type == "Opinion" }.sort
+  end
 end

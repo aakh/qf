@@ -17,7 +17,11 @@ class FactValue < ActiveRecord::Base
   
   validates_presence_of :value
   
-  def self.get_value(dim, entity)
-    FactValue.find_by_fact_id_and_entity_id( dim.valuable.id, entity.id )
+  def self.get_value(fact, entity)
+    FactValue.find_by_fact_id_and_entity_id( fact.id, entity.id )
+  end
+  
+  def templatize
+    fact.template.gsub("#", value.to_s)
   end
 end

@@ -19,6 +19,12 @@
   vertical-align: top;
   padding: 20px;
   white-space:nowrap;
+  float: right;
+}
+
+.dimensions hr {
+  color: black;
+  background-color: black;
 }
 
 #menu {
@@ -166,4 +172,15 @@ a:hover {
 
 a:visited {
   color: #555555;
+}
+
+h4 {
+  color: black;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+hr {
+  color: black;
+  background-color: black;
 }

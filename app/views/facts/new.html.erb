@@ -2,6 +2,7 @@
 <% semantic_form_for @fact do |f| %>
   <% f.inputs :for => :dimension do |dim| %> 
     <%= dim.input :name %>
+    <%= f.input :template %>
     <%= dim.input :desc %>
     <%= dim.input :concepts %>
   <% end %>

@@ -1,4 +1,4 @@
-<%if @entity.photo.file?%>
+<%if @entity.photo.file? %>
   <center>
   <%= image_tag @entity.photo.url %>
   </center>
@@ -7,9 +7,11 @@
 
 <h2><%=h @entity.name %></h2>
 
-<b>Price:</b>
-<%=h FactValue.get_value(Dimension.find_by_name('+Price'), @entity).value %>
-
+<div class="dimensions round">
+  <% @entity.fact_values.each do |fv| %>
+    <b><%= fv.fact.dimension.name %></b>: <%=h fv.templatize %>
+  <% end %>
+</div>
 <% unless @entity.desc.blank? %>
   <br>
   <b>Description:</b>

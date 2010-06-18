@@ -1,14 +1,14 @@
 <h2><%=h @concept.name %></h2>
 <table>
   <tr>
-    <td width=100%>
+    <td width=100% style="valign:top;">
       <table>
         <% @concept.entities.each do |entity| %>
           <tr>
             <td>
               <li> <%= link_to entity.name, entity_path(:id => entity) %>
               (
-              $<%= FactValue.get_value(Dimension.find_by_name('+Price'), entity).value %>
+              $<%= FactValue.get_value(Fact.find_by_name('Price'), entity).value %>
               )
             </td>
             <% if role? 'manager' %>
@@ -25,9 +25,14 @@
     </td>
     <td>
       <div class="dimensions round">
-        <u><h4>Associated values:</h4></u>
-        <% @concept.dimensions.each do |dim| %>
-          <% if dim.valuable_type == "Opinion" or role? 'staff' %>
+        <h4>Associated values:</h4>
+        <% @concept.opinions.each do |dim| %>
+          <li><%= dim.name %>
+        <% end %>
+        <% if role? 'staff' %>
+          <br><br><hr>
+          <h4>Facts</h4>
+          <% @concept.facts.each do |dim| %>
             <li><%= dim.name %>
           <% end %>
         <% end %>

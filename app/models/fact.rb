@@ -15,4 +15,7 @@ class Fact < ActiveRecord::Base
   has_many :fact_values, :dependent => :destroy
   has_many :entities, :through => :fact_values
   
+  def self.find_by_name(name)
+    Dimension.find_by_name_and_valuable_type( 'Price', 'Fact').valuable
+  end
 end

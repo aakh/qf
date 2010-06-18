@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
   end
 
   create_table "facts", :force => true do |t|
+    t.string   "template"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -20,15 +20,13 @@ class Dimension < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :valuable_type, :case_sensitive => false
    
-  before_update :capitalize
-  before_save :capitalize
+  before_validation :capitalize
   
   def capitalize
-    #arr = name.split(/ /)
-    #arr.each {|w| w.capitalize!}
-    @attributes['name'].capitalize!# = arr.join ' '
-    if @attributes['valuable_type'] == "Fact"
-      @attributes['name'] = "+" + @attributes['name']
-    end
+    @attributes['name'].capitalize!
+  end
+  
+  def <=>(dim) # Comparison operator for sorting
+    name <=> dim.name
   end
 end

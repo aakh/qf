@@ -32,13 +32,10 @@ class Entity < ActiveRecord::Base
   #validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
   validates_uniqueness_of :name, :scope => :concept_id, :case_sensitive => false
   
-  before_update :capitalize
-  before_save :capitalize
+  before_validation :fix_name
   
-  def capitalize
-    #arr = name.split(/ /)
-    #arr.each {|w| w.capitalize!}
-    @attributes['name'].capitalize!# = arr.join ' '
+  def fix_name
+    @attributes['name'] = @attributes['name'].titleize
   end
   
   accepts_nested_attributes_for :fact_values
