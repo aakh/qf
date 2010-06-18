@@ -3,6 +3,8 @@ class DimensionsController < ApplicationController
   
   def index
     @dimensions = Dimension.all :order => "name"
+    @facts = Dimension.all :order => "name", :conditions => "valuable_type = 'Fact'"
+    @opinions = Dimension.all :order => "name", :conditions => "valuable_type = 'Opinion'"
   end
   
   def edit

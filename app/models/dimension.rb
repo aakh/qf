@@ -29,4 +29,5 @@ class Dimension < ActiveRecord::Base
   def <=>(dim) # Comparison operator for sorting
     name <=> dim.name
   end
+  
 end

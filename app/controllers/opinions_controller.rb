@@ -4,7 +4,7 @@ class OpinionsController < ApplicationController
   
   def new
     @opinion = Opinion.new
-    @opinion.dimension = Dimension.new
+    @opinion.build_dimension 
   end
 
   def create    
