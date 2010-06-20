@@ -17,8 +17,6 @@ class Concept < ActiveRecord::Base
   has_many :entities, :dependent => :destroy
   validates_uniqueness_of :name, :case_sensitive => false
   has_and_belongs_to_many :dimensions
-  has_many :facts, :through => :dimensions
-  has_many :opinions, :through => :dimensions
   
   def facts
     dimensions.find_all { |dim| dim.valuable_type == "Fact" }.sort

@@ -30,4 +30,12 @@ class Dimension < ActiveRecord::Base
     name <=> dim.name
   end
   
+  def self.facts
+    Dimension.all :conditions => "valuable_type = 'Fact'"
+  end
+  
+  def self.opinions
+    Dimension.all :conditions => "valuable_type = 'Opinion'"
+  end
+  
 end

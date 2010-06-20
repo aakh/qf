@@ -9,7 +9,7 @@
 #
 
 class Fact < ActiveRecord::Base
-  has_one :dimension, :as => :valuable
+  has_one :dimension, :as => :valuable, :dependent => :destroy
   accepts_nested_attributes_for :dimension
   
   has_many :fact_values, :dependent => :destroy

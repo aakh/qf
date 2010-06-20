@@ -11,7 +11,7 @@
 #
 
 class Opinion < ActiveRecord::Base
-  has_one :dimension, :as => :valuable
+  has_one :dimension, :as => :valuable, :dependent => :destroy
   accepts_nested_attributes_for :dimension
   validates_presence_of :min, :max
   

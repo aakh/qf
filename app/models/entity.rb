@@ -18,11 +18,11 @@
 class Entity < ActiveRecord::Base
   belongs_to :concept
   
-  has_many :fact_values
+  has_many :fact_values, :dependent => :destroy
   has_many :facts, :through => :fact_values
   accepts_nested_attributes_for :fact_values
   
-  validates_presence_of :name, :concept
+  validates_presence_of :name, :concept, :price
   has_attached_file :photo, #:styles => { :thumb => "100x100>" },
                     :url  => "/images/entities/:id/:style/:basename.:extension",
                     :path => ":rails_root/public/images/entities/:id/:style/:basename.:extension"
@@ -38,7 +38,6 @@ class Entity < ActiveRecord::Base
     @attributes['name'] = @attributes['name'].titleize
   end
   
-  accepts_nested_attributes_for :fact_values
   attr_accessor :price
   
 end

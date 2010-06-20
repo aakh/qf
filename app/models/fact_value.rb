@@ -22,6 +22,6 @@ class FactValue < ActiveRecord::Base
   end
   
   def templatize
-    fact.template.gsub("#", value.to_s)
+    fact.template.gsub("#", value.to_s.sub(/\.0.?/, ''))
   end
 end

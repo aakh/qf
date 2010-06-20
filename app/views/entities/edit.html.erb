@@ -1,13 +1,38 @@
 <h2>Edit Menu Item</h2>
 <% semantic_form_for @entity, :html => { :multipart => true } do |f| %>
-  <% f.inputs do %> 
-    <%= f.input :name %>  
-    <%= f.input :concept, :label => "Category" %>
-    <%= f.input :price, :required => true %>
-    <%= f.input :photo %>
-    <%= f.input :desc, :label => "Description" %>     
-  <% end %>
-  <% f.buttons do %>
-    <%= f.commit_button "Update" %>
-  <% end %>
+  <table>
+    <tr>
+      <td>      
+        <% f.inputs do %> 
+          <%= f.input :name %>  
+          <%= f.input :concept, :label => "Category" %>
+          <%= f.input :photo %>
+          <%= f.input :desc, :label => "Description" %>  
+        <% end %>
+        <% f.buttons do %>
+          <%= f.commit_button "Update" %>
+        <% end %>
+      </td>
+      <td class="dimensions round">
+        <% f.inputs do %> 
+          <%= f.input :price %> 
+          <table> 
+            <% @entity.concept.facts.each do |fact| %> 
+              <tr>
+                <% unless fact.name == 'Price' %>
+                  <td>
+                    <b><%= fact.name %></b>:
+                  </td>
+                  <td>
+                    <% value = FactValue.find_by_fact_id_and_entity_id fact.valuable, @entity %>
+                    <%= text_field_tag "dim:"+fact.id.to_s, value ? value.value : nil %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </td>
+    </tr>
+  </table>
 <% end %>

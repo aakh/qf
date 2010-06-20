@@ -1,6 +1,5 @@
 class FactValuesController < ApplicationController
-  before_filter :check_logged_in
-  before_filter :check_staff_role
+  before_filter :check_staff
   
   def edit
     @fact_value = FactValue.find(params[:id])
