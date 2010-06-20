@@ -16,6 +16,6 @@ class Fact < ActiveRecord::Base
   has_many :entities, :through => :fact_values
   
   def self.find_by_name(name)
-    Dimension.find_by_name_and_valuable_type( 'Price', 'Fact').valuable
+    Dimension.find_by_name_and_valuable_type( name, 'Fact').valuable
   end
 end

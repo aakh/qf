@@ -1,6 +1,6 @@
 class FactsController < ApplicationController
   before_filter :check_logged_in
-  before_filter :check_staff_role, :only => :delete
+  before_filter :check_staff_role
   
   def new
     @fact = Fact.new

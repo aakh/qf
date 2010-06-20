@@ -16,6 +16,6 @@ class Opinion < ActiveRecord::Base
   validates_presence_of :min, :max
   
   def self.find_by_name(name)
-    Dimension.find_by_name_and_valuable_type('Price', 'Opinion').valuable
+    Dimension.find_by_name_and_valuable_type(name, 'Opinion').valuable
   end
 end

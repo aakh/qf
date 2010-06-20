@@ -3,7 +3,7 @@
 <table>
   <% @opinions.each do |o| %>
     <tr>
-      <td>
+      <td class="span-4 last">
         <%= link_to o.name, o %>
       </td>
       <% if current_user %>
@@ -26,7 +26,7 @@
   <table>
     <% @facts.each do |f| %>
       <tr>
-        <td>
+        <td class="span-4 last">
           <%= link_to f.name, f %>
         </td>
         <% if current_user and f.name != "Price" %>

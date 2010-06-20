@@ -7,6 +7,8 @@ class DimensionsController < ApplicationController
     @opinions = Dimension.all :order => "name", :conditions => "valuable_type = 'Opinion'"
   end
   
+  
+  
   def edit
     @dimension = Dimension.find(params[:id])
     if @dimension.valuable_type == "Opinion"
