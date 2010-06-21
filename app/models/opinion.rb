@@ -13,9 +13,9 @@
 class Opinion < ActiveRecord::Base
   has_one :dimension, :as => :valuable, :dependent => :destroy
   accepts_nested_attributes_for :dimension
-  validates_presence_of :min, :max
   
   def self.find_by_name(name)
-    Dimension.find_by_name_and_valuable_type(name, 'Opinion').valuable
+    dim = Dimension.find_by_name_and_valuable_type(name, 'Opinion')
+    dim.valuable if dim
   end
 end

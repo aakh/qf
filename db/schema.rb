@@ -61,8 +61,6 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
   end
 
   create_table "opinions", :force => true do |t|
-    t.float    "min",        :default => 0.0
-    t.float    "max",        :default => 1.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

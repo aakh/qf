@@ -38,4 +38,30 @@ class Dimension < ActiveRecord::Base
     Dimension.all :conditions => "valuable_type = 'Opinion'"
   end
   
+  after_save :create_opinion_if_fact
+  
+  # Create an opinion that goes along with the fact.
+  def create_opinion_if_fact
+    if valuable_type == 'Fact'
+      op = Opinion.find_by_name(name)
+      
+      unless op
+        op = Opinion.new
+        op.dimension = Dimension.new(:name => name)
+      end
+      
+      # with the migrations this table is not created when the default
+      # facts are added in
+      if connection.tables.include? "concepts_dimensions"
+        op.dimension.concepts.clear
+        
+        concepts.each do |c|
+          op.dimension.concepts << c
+        end
+      end
+      
+      op.save
+    end
+  end
+  
 end

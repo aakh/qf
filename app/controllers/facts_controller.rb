@@ -9,7 +9,6 @@ class FactsController < ApplicationController
 
   def create    
     @fact = Fact.new(params[:fact])
-
     if @fact.save
       flash[:notice] = 'Fact was successfully created.'
       redirect_to dimensions_path

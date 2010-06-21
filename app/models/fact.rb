@@ -4,6 +4,7 @@
 # Table name: facts
 #
 #  id         :integer         not null, primary key
+#  template   :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #
