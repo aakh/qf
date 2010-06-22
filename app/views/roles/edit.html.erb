@@ -1,4 +1,4 @@
-<h1>Editing role</h1>
+<h2>Editing role</h2>
 
 <% form_for(@role) do |f| %>
   <%= f.error_messages %>
@@ -8,9 +8,9 @@
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.submit 'Update' %>
+    <%= f.submit "Update" %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @role %> |
-<%= link_to 'Back', roles_path %>
+<%= link_to "Show", @role %> |
+<%= link_to "Back", roles_path %>

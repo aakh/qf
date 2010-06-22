@@ -20,6 +20,20 @@
   padding: 20px;
   white-space:nowrap;
   float: right;
+  border: 3px solid black;
+}
+.ratings {
+  background-color: #ffa4a4;
+  vertical-align: top;
+  padding: 10px;
+  white-space:nowrap;
+  border: 3px solid black;
+}
+
+.ratings .indicator {  
+  border: 1px solid black;
+  background-color: #a4ffa4;
+  padding: 0px;
 }
 
 .dimensions hr {
@@ -183,4 +197,52 @@ h4 {
 hr {
   color: black;
   background-color: black;
+}
+
+.star-rating,
+.star-rating a:hover,
+.star-rating a:active,
+.star-rating a:focus,
+.star-rating .current-rating{
+    background: url('/images/bar_rating.png') left -1000px repeat-x;
+}
+
+.star-rating {
+    position: relative;
+    width: 100px;
+    height: 10px;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-position: left top;
+}
+
+.star-rating li{
+    display: inline;
+    position:absolute;
+    top: 0;
+    left: 0;
+    text-indent: -1000em;
+    outline: none;
+    overflow: hidden;
+    border: none;
+}
+
+.star-rating .current-rating{
+    z-index: 1;
+    background-position: left bottom;
+    line-height: 10px;
+}
+
+.star-rating .one{
+    height: 10px;
+}
+
+.star-rating .two{
+    height: 20px;
+}
+
+.star-rating .three{
+    height: 30px;
 }

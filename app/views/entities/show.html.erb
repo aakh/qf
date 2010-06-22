@@ -5,26 +5,67 @@
   <br>
 <% end %>
 
-<h2><%=h @entity.name %></h2>
+<h2><%=h @entity.name %></h2>   
 
-<div class="dimensions round">
-  <% @ordinal_fact_values.each do |fv| %>
-    <b><%= fv.fact.dimension.name %></b>: <%=h fv.templatize %>
-    <br>
-  <% end %>
-  
-  <% @boolean_fact_values.each do |fv| %>
-    <li><%=h fv.templatize %>
-  <% end %>
-</div>
 <% unless @entity.desc.blank? %>
   <br>
   <b>Description:</b>
   <%=h @entity.desc %>
 <% end %>
+      
+<table>
+  <tr>
+    <td>
+      <% semantic_form_for :entity, :url => { :action => "rate" } do |f| %>
+        <table class="ratings round">
+          <th>Name</th>
+          <th>Current ratings</th>
+          <th>Your ratings</th>
+          <% @entity.concept.opinion_dimensions.each do |dim| %>
+            <tr>
+              <td>
+                <%= dim.name %>
+              </td>
+              <td>
+                <%= display_bar 7.5, 10 %>
+              </td>
+              <td>
+                <span class="indicator"><%= dim.valuable.low_text %></span>
+                <% for i in 1..5 %>
+                  <% val = nil %>
+                  <%= radio_button_tag "dims[#{dim.id}]", i, val %>
+                <% end %>
+                <span class="indicator"><%= dim.valuable.high_text %></span>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <td></td><td></td>
+            <td>
+              <%= f.submit "Apply Rating" %>
+            </td>
+          </tr>
+        </table>   
+      <% end %>
 
-<br><br>
-<%= link_to "Back to " + @entity.concept.name, :controller => :concepts, :action => :show, :id => @entity.concept %>
-<% if role? 'manager' %>
-  | <%= link_to 'Edit', edit_entity_path(@entity) %>
-<% end %>
+      <br><br>
+      <%= link_to "Back to " + @entity.concept.name, :controller => :concepts, :action => :show, :id => @entity.concept %>
+      <% if role? "manager" %>
+        | <%= link_to "Edit", edit_entity_path(@entity) %>
+      <% end %>
+    </td>
+    <td class="dimensions round">
+      <div>
+        <% @ordinal_fact_values.each do |fv| %>
+          <b><%= fv.fact.dimension.name %></b>: <%=h fv.templatize %>
+          <br>
+        <% end %>
+        
+        <% @boolean_fact_values.each do |fv| %>
+          <li><%=h fv.templatize %>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+</table>
+

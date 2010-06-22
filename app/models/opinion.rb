@@ -14,6 +14,15 @@ class Opinion < ActiveRecord::Base
   has_one :dimension, :as => :valuable, :dependent => :destroy
   accepts_nested_attributes_for :dimension
   
+  validates_presence_of :low_text, :high_text
+  
+  before_validation :analyze_attributes
+  
+  def analyze_attributes
+    @attributes['low_text'].capitalize!
+    @attributes['high_text'].capitalize!
+  end
+  
   def self.find_by_name(name)
     dim = Dimension.find_by_name_and_valuable_type(name, 'Opinion')
     dim.valuable if dim

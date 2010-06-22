@@ -34,4 +34,10 @@ module ApplicationHelper
       end
     end
   end
+  
+  def display_bar(rating, max)
+    ret = "<ul class='star-rating'>"
+    ret += "<li class='current-rating one' style='width:#{Integer(rating * (100 / max))}px;'>Currently #{rating}/5 Stars.</li>"
+    ret += "</ul>"
+  end
 end

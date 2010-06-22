@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
 
   create_table "opinions", :force => true do |t|
     t.float    "ideal"
+    t.string   "low_text",   :default => "low"
+    t.string   "high_text",  :default => "high"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

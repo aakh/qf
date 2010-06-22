@@ -19,7 +19,7 @@
           <table> 
             <% @entity.concept.fact_dimensions.each do |fact| %> 
               <tr>
-                <% unless fact.name == 'Price' %>
+                <% unless fact.name == "Price" %>
                   <td>
                     <b><%= fact.name %></b>:
                   </td>

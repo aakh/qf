@@ -8,20 +8,20 @@
   <% if current_user %>
     <li><%= link_to "Edit profile", edit_user_path(:current) %></li>
     <li><%= link_to "Logout", logout_path %></li>
-    <li><%= link_to 'Add Dimension', new_opinion_path %></li>
+    <li><%= link_to "Add Dimension", new_opinion_path %></li>
     <li><%= link_to "View Dimensions", dimensions_path %></li>
   <% else %>
     <li><%= link_to "Login", login_path %></li>
     <li><%= link_to "Sign up", signup_path %></li>
   <% end %>
-  <% if role? 'manager' %>
+  <% if role? "manager" %>
     <br>
     <hr>
-    <li><%= link_to 'Add Fact', new_fact_path %></li>
+    <li><%= link_to "Add Fact", new_fact_path %></li>
     <li> Categories [<%= link_to "Add", new_concept_path %> | <%= link_to "View", concepts_path %>]</li>
     <li> Items [<%= link_to "Add", new_entity_path %> | <%= link_to "View", entities_path %>]</li>
   <% end %>
-  <% if role? 'administrator' %>
+  <% if role? "administrator" %>
     <br>
     <hr>
     <li><%= link_to "View Users", users_path %></li>

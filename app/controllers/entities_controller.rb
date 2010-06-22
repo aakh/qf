@@ -1,9 +1,14 @@
 class EntitiesController < ApplicationController
-  before_filter :check_manager, :except => [:show]
+  before_filter :check_manager, :except => [:show, :rate]
   # GET /entities
   # GET /entities.xml
   def index
     @entities = Entity.all
+  end
+  
+  def rate
+    flash[:error] = "Ratings not implemented"
+    redirect_to :back
   end
 
   # GET /entities/1
