@@ -11,12 +11,7 @@
       </td>
       <% if current_user %>
         <td>
-          [
-          <%= link_to 'Edit', edit_dimension_path(dim) %>
-          <% if role? 'staff' %>
-            | <%= link_to 'Delete', dim.valuable, :confirm => 'Are you sure?', :method => :delete %>
-          <% end %>
-          ]
+          <%= edit_delete_opinion_dimension(dim) %>
         </td>
       <% end %>
     </tr>
@@ -36,12 +31,7 @@
           <%= dim.type_s %>
         </td>
         <td>
-          <% if current_user and dim.name != "Price" %>
-            [
-            <%= link_to 'Edit', edit_dimension_path(dim) %> |
-            <%= link_to 'Delete', dim.valuable, :confirm => 'Are you sure?', :method => :delete %>
-            ]
-          <% end %>
+          <%= edit_delete_fact_dimension(dim) %>
         </td>
       </tr>
     <% end %>

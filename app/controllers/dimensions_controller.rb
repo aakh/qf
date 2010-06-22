@@ -11,8 +11,14 @@ class DimensionsController < ApplicationController
   def edit
     @dimension = Dimension.find(params[:id])
     if @dimension.valuable_type == "Opinion"
-      @opinion = @dimension.valuable
-      render 'opinions/edit'
+      # If there's an fact with the same name, do not allow this opinion to be edited
+      if Dimension.find_by_name_and_valuable_type @dimension.name, 'Fact'
+        flash[:error] = "Not allowed to edit that dimension"
+        redirect_to :back
+      else
+        @opinion = @dimension.valuable
+        render 'opinions/edit'
+      end
     else
       @fact = @dimension.valuable
       render 'facts/edit'
@@ -23,6 +29,6 @@ class DimensionsController < ApplicationController
     @dimension = Dimension.find(params[:id])
     @dimension.destroy
 
-    redirect_to dimensions_url
+    redirect_to :back
   end
 end

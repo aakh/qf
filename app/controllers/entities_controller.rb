@@ -60,7 +60,7 @@ class EntitiesController < ApplicationController
       
       @entity.concept.fact_dimensions.each do |dim|
       
-        break if dim.name == 'Price' # Guard against altering price fact
+        next if dim.name == 'Price' # Guard against altering price fact
         
         # Get what value the user entered for this dimension
         # :dims could be null if everything is left empty.

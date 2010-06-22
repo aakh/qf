@@ -1,7 +1,7 @@
 <h2><%=h @concept.name %></h2>
 <table>
   <tr>
-    <td width=100% style="valign:top;">
+    <td width=100% style="vertical-align: top;">
       <table>
         <% @concept.entities.each do |entity| %>
           <tr>
@@ -28,12 +28,13 @@
         <h4>Associated values:</h4>
         <% @concept.opinion_dimensions.each do |dim| %>
           <li><%= dim.name %>
+          <%= edit_delete_opinion_dimension(dim) %>
         <% end %>
         <% if role? 'staff' %>
           <br><br><hr>
           <h4>Facts</h4>
           <% @concept.fact_dimensions.each do |dim| %>
-            <li><%= dim.name %>
+            <li><%= dim.name %> <%= edit_delete_fact_dimension(dim) %>
           <% end %>
         <% end %>
       </div>
