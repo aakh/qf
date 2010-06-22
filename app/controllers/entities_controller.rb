@@ -10,6 +10,8 @@ class EntitiesController < ApplicationController
   # GET /entities/1.xml
   def show
     @entity = Entity.find(params[:id])
+    @ordinal_fact_values = @entity.fact_values.reject {|elem| elem.fact.dimension.bool? }
+    @boolean_fact_values = @entity.fact_values.reject {|elem| !elem.fact.dimension.bool? }
   end
 
   # GET /entities/new
@@ -50,29 +52,53 @@ class EntitiesController < ApplicationController
     @entity = Entity.find(params[:id])
     
     if @entity.update_attributes(params[:entity])
-      fv = FactValue.get_value(Fact.find_by_name('Price'), @entity)
-      fv.value = @entity.price
-      fv.save
-      flash[:notice] = @entity.concept.facts.length.to_s
-      @entity.concept.facts.each do |fact|
-        val = params["dim:" + fact.id.to_s]
-        if val
-          flash[:notice] += " YES!"
-          fv = FactValue.find_or_create_by_fact_id_and_entity_id fact.valuable, @entity
-          unless val.blank?
-            fv.value = Float(val)
-            fv.fact = fact.valuable
-            fv.entity = @entity
-            fv.save
-          else
-            fv.destroy
-          end
+    
+      # Deal with price fact first
+      price = FactValue.get_value(Fact.find_by_name('Price'), @entity)
+      price.value = @entity.price
+      price.save
+      
+      @entity.concept.fact_dimensions.each do |dim|
+      
+        break if dim.name == 'Price' # Guard against altering price fact
+        
+        # Get what value the user entered for this dimension
+        # :dims could be null if everything is left empty.
+        if params[:dims]
+          entry = params[:dims][dim.id.to_s]
         else
-          flash[:notice] += fact.name + " NO!"
+          entry = nil
+        end
+        
+        # Get a fact value associated with this dimension
+        fv = FactValue.find_by_fact_id_and_entity_id dim.valuable, @entity
+        
+        # Three situations (4th doesn't really have to be handled)
+        # 1 - Entry but no FV: Create FV
+        # 2 - FV but no entry: Delete FV
+        # 3 - FV and entry: Change value
+        # 4 - No FV and no entry: Do nothing
+        we_have_fv = false
+        if fv
+          if !entry or entry.blank?
+            fv.destroy
+          else
+            we_have_fv = true   
+          end
+        elsif entry and !entry.blank?
+          fv = FactValue.create
+          we_have_fv = true
+        end
+        
+        if we_have_fv
+          fv.value = entry
+          fv.fact = dim.valuable
+          fv.entity = @entity
+          fv.save       
         end
       end
-      #dfdf.ff
-      #flash[:notice] = 'Menu Item was successfully updated.'
+      
+      flash[:notice] = 'Menu Item was successfully updated.'
       redirect_to(@entity)
     else
       flash[:error] = 'Could not update Menu Item'

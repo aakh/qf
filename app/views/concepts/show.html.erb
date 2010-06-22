@@ -6,7 +6,7 @@
         <% @concept.entities.each do |entity| %>
           <tr>
             <td>
-              <li> <%= link_to entity.name, entity_path(:id => entity) %>
+              <li> <%= link_to entity.name, entity_path(entity) %>
               (
               $<%= FactValue.get_value(Fact.find_by_name('Price'), entity).value %>
               )
@@ -26,13 +26,13 @@
     <td>
       <div class="dimensions round">
         <h4>Associated values:</h4>
-        <% @concept.opinions.each do |dim| %>
+        <% @concept.opinion_dimensions.each do |dim| %>
           <li><%= dim.name %>
         <% end %>
         <% if role? 'staff' %>
           <br><br><hr>
           <h4>Facts</h4>
-          <% @concept.facts.each do |dim| %>
+          <% @concept.fact_dimensions.each do |dim| %>
             <li><%= dim.name %>
           <% end %>
         <% end %>

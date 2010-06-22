@@ -2,7 +2,6 @@
 <ul>
   <li><%= link_to "Home", root_path %></li>
   <li><%= link_to "Menu", concepts_path %></li>
-  <li><%= link_to "Dimensions", dimensions_path %></li>
   <li><%= link_to "Help", help_path %></li>
   <br>
   <hr>
@@ -10,6 +9,7 @@
     <li><%= link_to "Edit profile", edit_user_path(:current) %></li>
     <li><%= link_to "Logout", logout_path %></li>
     <li><%= link_to 'Add Opinion', new_opinion_path %></li>
+    <li><%= link_to "View Opinions", dimensions_path %></li>
   <% else %>
     <li><%= link_to "Login", login_path %></li>
     <li><%= link_to "Sign up", signup_path %></li>
@@ -18,9 +18,8 @@
     <br>
     <hr>
     <li><%= link_to 'Add Fact', new_fact_path %></li>
-    <li><%= link_to "Add Menu Category", new_concept_path %></li>
-    <li><%= link_to "Add Menu Item", new_entity_path %></li>
-    <li><%= link_to "View All Menu Items", entities_path %></li>
+    <li> Categories [<%= link_to "Add", new_concept_path %> | <%= link_to "View", concepts_path %>]</li>
+    <li> Items [<%= link_to "Add", new_entity_path %> | <%= link_to "View", entities_path %>]</li>
   <% end %>
   <% if role? 'administrator' %>
     <br>

@@ -17,15 +17,21 @@
         <% f.inputs do %> 
           <%= f.input :price %> 
           <table> 
-            <% @entity.concept.facts.each do |fact| %> 
+            <% @entity.concept.fact_dimensions.each do |fact| %> 
               <tr>
                 <% unless fact.name == 'Price' %>
                   <td>
                     <b><%= fact.name %></b>:
                   </td>
                   <td>
-                    <% value = FactValue.find_by_fact_id_and_entity_id fact.valuable, @entity %>
-                    <%= text_field_tag "dim:"+fact.id.to_s, value ? value.value : nil %>
+                    <% fact_value = FactValue.find_by_fact_id_and_entity_id fact.valuable, @entity %>
+                    <% value = fact_value ? fact_value.value : nil %>
+                    <% key = "dims[" + fact.id.to_s + "]" %>
+                    <% if fact.bool? %>
+                      <%= check_box_tag key, true , value %>
+                    <% else %>
+                      <%= text_field_tag key, value %>
+                    <% end %>
                   </td>
                 <% end %>
               </tr>

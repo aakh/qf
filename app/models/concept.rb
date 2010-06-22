@@ -18,11 +18,11 @@ class Concept < ActiveRecord::Base
   validates_uniqueness_of :name, :case_sensitive => false
   has_and_belongs_to_many :dimensions
   
-  def facts
+  def fact_dimensions
     dimensions.find_all { |dim| dim.valuable_type == "Fact" }.sort
   end
   
-  def opinions
+  def opinion_dimensions
     dimensions.find_all { |dim| dim.valuable_type == "Opinion" }.sort
   end
 end

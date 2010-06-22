@@ -1,17 +1,20 @@
 <h2>Value Dimensions</h2>
 
 <table>
-  <% @opinions.each do |o| %>
+  <% @opinion_dimensions.each do |dim| %>
     <tr>
       <td class="span-4 last">
-        <%= link_to o.name, o %>
+        <%= link_to dim.name, dim %>
+      </td>
+      <td>
+        <%= dim.type_s %>
       </td>
       <% if current_user %>
         <td>
           [
-          <%= link_to 'Edit', edit_dimension_path(o) %>
+          <%= link_to 'Edit', edit_dimension_path(dim) %>
           <% if role? 'staff' %>
-            | <%= link_to 'Delete', o.valuable, :confirm => 'Are you sure?', :method => :delete %>
+            | <%= link_to 'Delete', dim.valuable, :confirm => 'Are you sure?', :method => :delete %>
           <% end %>
           ]
         </td>
@@ -24,19 +27,22 @@
 <% if role? 'staff' %>
   <h4>Facts</h4>
   <table>
-    <% @facts.each do |f| %>
+    <% @fact_dimensions.each do |dim| %>
       <tr>
         <td class="span-4 last">
-          <%= link_to f.name, f %>
+          <%= link_to dim.name, dim %>
         </td>
-        <% if current_user and f.name != "Price" %>
-          <td>
+        <td>
+          <%= dim.type_s %>
+        </td>
+        <td>
+          <% if current_user and dim.name != "Price" %>
             [
-            <%= link_to 'Edit', edit_dimension_path(f) %> |
-            <%= link_to 'Delete', f.valuable, :confirm => 'Are you sure?', :method => :delete %>
+            <%= link_to 'Edit', edit_dimension_path(dim) %> |
+            <%= link_to 'Delete', dim.valuable, :confirm => 'Are you sure?', :method => :delete %>
             ]
-          </td>
-        <% end %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </table>

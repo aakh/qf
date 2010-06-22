@@ -4,8 +4,8 @@
   <% f.inputs do %>
     <%= f.input :name %>
     <%= f.input :desc %>
-    <%= f.input :dimensions , :collection => Dimension.facts, :label => "Facts" %>
-    <%= f.input :dimensions , :collection => Dimension.opinions, :label => "Opinions" %>
+    <%= f.input :dimensions , :collection => Dimension.fact_dimensions, :label => "Facts" %>
+    <%= f.input :dimensions , :collection => Dimension.opinion_dimensions, :label => "Opinions" %>
   <% end %>
   <% f.buttons do %>
     <%= f.commit_button "Add Categroy" %>

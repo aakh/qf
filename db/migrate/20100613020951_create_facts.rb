@@ -1,7 +1,7 @@
 class CreateFacts < ActiveRecord::Migration
   def self.up
     create_table :facts do |t|
-      t.string :template
+      t.string :template, :default => '#'
       t.timestamps
     end
     

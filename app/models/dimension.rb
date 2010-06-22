@@ -20,25 +20,35 @@ class Dimension < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :valuable_type, :case_sensitive => false
    
-  before_validation :capitalize
+  before_validation :analyze_attributes
+  after_save :create_opinion_if_fact
   
-  def capitalize
+  def analyze_attributes
     @attributes['name'].capitalize!
+    @attributes['name'].strip!
+    
+    #If name has a question mark at the end (spaces should not be there after strip!)
+    if @attributes['name'] =~ /\?\Z/
+      @attributes['bool'] = true
+    end
   end
   
   def <=>(dim) # Comparison operator for sorting
     name <=> dim.name
   end
   
-  def self.facts
-    Dimension.all :conditions => "valuable_type = 'Fact'"
+  def self.fact_dimensions
+    Dimension.all :conditions => "valuable_type = 'Fact'", :order => "name"
   end
   
-  def self.opinions
-    Dimension.all :conditions => "valuable_type = 'Opinion'"
+  def self.opinion_dimensions
+    Dimension.all :conditions => "valuable_type = 'Opinion'", :order => "name"
   end
   
-  after_save :create_opinion_if_fact
+  def type_s
+    return "boolean" if bool?
+    "ordinal"
+  end
   
   # Create an opinion that goes along with the fact.
   def create_opinion_if_fact
@@ -50,6 +60,7 @@ class Dimension < ActiveRecord::Base
         op.dimension = Dimension.new(:name => name)
       end
       
+      # Give the opinions the same associations as the fact
       # with the migrations this table is not created when the default
       # facts are added in
       if connection.tables.include? "concepts_dimensions"

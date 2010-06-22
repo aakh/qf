@@ -26,8 +26,7 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
   create_table "dimensions", :force => true do |t|
     t.string   "name"
     t.string   "desc"
-    t.float    "ideal",         :default => 0.0
-    t.float    "weight",        :default => 0.0
+    t.boolean  "bool",          :default => false
     t.integer  "valuable_id"
     t.string   "valuable_type"
     t.datetime "created_at"
@@ -47,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
   end
 
   create_table "fact_values", :force => true do |t|
-    t.float    "value"
+    t.string   "value"
     t.integer  "fact_id"
     t.integer  "entity_id"
     t.datetime "created_at"
@@ -55,12 +54,13 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
   end
 
   create_table "facts", :force => true do |t|
-    t.string   "template"
+    t.string   "template",   :default => "#"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "opinions", :force => true do |t|
+    t.float    "ideal"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -2,9 +2,8 @@ class DimensionsController < ApplicationController
   before_filter :check_staff_role, :only => :delete
   
   def index
-    @dimensions = Dimension.all :order => "name"
-    @facts = Dimension.all :order => "name", :conditions => "valuable_type = 'Fact'"
-    @opinions = Dimension.all :order => "name", :conditions => "valuable_type = 'Opinion'"
+    @fact_dimensions = Dimension.fact_dimensions
+    @opinion_dimensions = Dimension.opinion_dimensions
   end
   
   

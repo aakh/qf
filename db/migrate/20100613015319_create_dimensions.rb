@@ -3,8 +3,7 @@ class CreateDimensions < ActiveRecord::Migration
     create_table :dimensions do |t|
       t.string :name
       t.string :desc
-      t.float :ideal, :default => 0
-      t.float :weight, :default => 0
+      t.boolean :bool, :default => false
       t.references :valuable, :polymorphic => true
 
       t.timestamps
