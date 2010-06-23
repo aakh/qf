@@ -22,9 +22,9 @@ class FactsController < ApplicationController
 
     if @fact.update_attributes params[:fact]
       flash[:notice] = 'Fact was updated created.'
-      redirect_to dimensions_path
+      redirect_to session[:last_dimension_page] 
     else
-      render :edit
+      render 'edit'
     end
   end
     
@@ -32,6 +32,6 @@ class FactsController < ApplicationController
     @fact = Fact.find(params[:id])
     @fact.destroy
 
-    redirect_to dimensions_url
+    redirect_to :back
   end
 end

@@ -6,10 +6,9 @@ class DimensionsController < ApplicationController
     @opinion_dimensions = Dimension.opinion_dimensions
   end
   
-  
-  
   def edit
     @dimension = Dimension.find(params[:id])
+    session[:last_dimension_page] = request.env["HTTP_REFERER"] || dimensions_url
     if @dimension.valuable_type == "Opinion"
       # If there's an fact with the same name, do not allow this opinion to be edited
       if Dimension.find_by_name_and_valuable_type @dimension.name, 'Fact'

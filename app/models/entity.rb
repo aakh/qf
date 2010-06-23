@@ -20,7 +20,6 @@ class Entity < ActiveRecord::Base
   
   has_many :fact_values, :dependent => :destroy
   has_many :facts, :through => :fact_values
-  accepts_nested_attributes_for :fact_values
   
   validates_presence_of :name, :concept, :price
   has_attached_file :photo, #:styles => { :thumb => "100x100>" },
@@ -39,5 +38,12 @@ class Entity < ActiveRecord::Base
   end
   
   attr_accessor :price
+  
+  has_many :ratings, :dependent => :destroy
+  has_many :users, :through => :ratings
+  has_many :opinions, :through => :ratings
+  
+  has_many :current_ratings, :dependent => :destroy
+  has_many :opinions, :through => :current_ratings
   
 end
