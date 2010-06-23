@@ -16,33 +16,41 @@
 <table>
   <tr>
     <td>
-      <% semantic_form_for :entity, :url => { :action => "rate" } do |f| %>
+      <% semantic_form_for :entity, :url => { :action => "rate", :id => @entity } do |f| %>
         <table class="ratings round">
           <th>Name</th>
           <th>Current ratings</th>
-          <th>Your ratings</th>
+          <th><center>Your ratings</center></th>
           <% @entity.concept.opinion_dimensions.each do |dim| %>
+          <% next if dim.bool? %>
             <tr>
               <td>
-                <%= dim.name %>
+                <%= dim.name %> <%= edit_delete_opinion_dimension(dim) %>
               </td>
               <td>
-                <%= display_bar 7.5, 10 %>
-              </td>
-              <td>
-                <span class="indicator"><%= dim.valuable.low_text %></span>
-                <% for i in 1..5 %>
-                  <% val = nil %>
-                  <%= radio_button_tag "dims[#{dim.id}]", i, val %>
+                <% cr = CurrentRating.find_by_entity_id_and_opinion_id @entity, dim.valuable %>
+                <% if cr %>
+                  <%= display_bar( (cr.total_rating / cr.num_ratings) -1, 4 ) %>
+                <% else %>
+                  Not available...
                 <% end %>
-                <span class="indicator"><%= dim.valuable.high_text %></span>
+              </td>
+              <td>
+                <center>
+                  <span class="indicator"><%= dim.valuable.low_text %></span>
+                  <% val = Rating.get_value(current_user, @entity, dim.valuable) %>
+                  <% for i in 1..5 %>
+                    <%= radio_button_tag "dims[#{dim.id}]", i, val ? val == i : false %>
+                  <% end %>
+                  <span class="indicator"><%= dim.valuable.high_text %></span>
+                </center>
               </td>
             </tr>
           <% end %>
           <tr>
             <td></td><td></td>
             <td>
-              <%= f.submit "Apply Rating" %>
+              <center><%= f.submit "Apply Rating" %></center>
             </td>
           </tr>
         </table>   

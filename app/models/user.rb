@@ -38,4 +38,10 @@ class User < ActiveRecord::Base
     #return "Full name here"
     [first_name, last_name].join(" ")
   end
+  
+  # Alternatively we may want to set dependent to nullify if we are
+  # going to allow anonymous voting in the future
+  has_many :ratings, :dependent => :destroy
+  has_many :entities, :through => :ratings
+  has_many :opinions, :through => :ratings
 end

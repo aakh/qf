@@ -8,13 +8,18 @@ class OpinionsController < ApplicationController
   end
 
   def create    
+  
     @opinion = Opinion.new(params[:opinion])
-
-    if @opinion.save
-      flash[:notice] = 'Opinion was successfully created.'
-      redirect_to dimensions_path
-    else
+    if params[:opinion][:dimension_attributes][:name] =~ /\?\Z/
+      flash[:error] = "Dimensions cannot be questions."
       render :new
+    else
+      if @opinion.save
+        flash[:notice] = 'Opinion was successfully created.'
+        redirect_to dimensions_path
+      else
+        render :new
+      end
     end
   end
   
@@ -23,9 +28,9 @@ class OpinionsController < ApplicationController
 
     if @opinion.update_attributes params[:opinion]
       flash[:notice] = 'Opinion was updated created.'
-      redirect_to dimensions_path
+      redirect_to session[:last_dimension_page] 
     else
-      render :edit
+      render 'edit'
     end
   end
     

@@ -15,6 +15,8 @@ class Opinion < ActiveRecord::Base
   accepts_nested_attributes_for :dimension
   
   validates_presence_of :low_text, :high_text
+  validates_length_of :low_text, :maximum => 10
+  validates_length_of :high_text, :maximum => 10
   
   before_validation :analyze_attributes
   
@@ -27,4 +29,11 @@ class Opinion < ActiveRecord::Base
     dim = Dimension.find_by_name_and_valuable_type(name, 'Opinion')
     dim.valuable if dim
   end
+  
+  has_many :ratings, :dependent => :destroy
+  has_many :users, :through => :ratings
+  has_many :entities, :through => :ratings
+  
+  has_many :current_ratings, :dependent => :destroy
+  has_many :entities, :through => :current_ratings
 end

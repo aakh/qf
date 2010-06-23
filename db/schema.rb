@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100614023756) do
+ActiveRecord::Schema.define(:version => 20100623024445) do
 
   create_table "concepts", :force => true do |t|
     t.string   "name",       :null => false
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
   create_table "concepts_dimensions", :id => false, :force => true do |t|
     t.integer "concept_id"
     t.integer "dimension_id"
+  end
+
+  create_table "current_ratings", :force => true do |t|
+    t.float    "total_rating", :default => 0.0
+    t.integer  "num_ratings",  :default => 0
+    t.integer  "entity_id"
+    t.integer  "opinion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "dimensions", :force => true do |t|
@@ -63,6 +72,15 @@ ActiveRecord::Schema.define(:version => 20100614023756) do
     t.float    "ideal"
     t.string   "low_text",   :default => "low"
     t.string   "high_text",  :default => "high"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.float    "value"
+    t.integer  "entity_id"
+    t.integer  "user_id"
+    t.integer  "opinion_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
