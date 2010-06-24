@@ -8,7 +8,6 @@ class EntitiesController < ApplicationController
   end
   
   def rate
-  
     @entity = Entity.find params[:id]
     
     unless params[:dims]
@@ -100,45 +99,58 @@ class EntitiesController < ApplicationController
       price.value = @entity.price
       price.save
       
-      @entity.concept.fact_dimensions.each do |dim|
-      
-        next if dim.name == 'Price' # Guard against altering price fact
-        
-        # Get what value the user entered for this dimension
-        # :dims could be null if everything is left empty.
-        if params[:dims]
-          entry = params[:dims][dim.id.to_s]
+      params[:dims].each do |id, entry|
+        dim = Dimension.find id
+        fv = FactValue.find_or_create_by_fact_id_and_entity_id dim.valuable, @entity
+        if entry.blank?
+          fv.destroy
         else
-          entry = nil
-        end
-        
-        # Get a fact value associated with this dimension
-        fv = FactValue.find_by_fact_id_and_entity_id dim.valuable, @entity
-        
-        # Three situations (4th doesn't really have to be handled)
-        # 1 - Entry but no FV: Create FV
-        # 2 - FV but no entry: Delete FV
-        # 3 - FV and entry: Change value
-        # 4 - No FV and no entry: Do nothing
-        we_have_fv = false
-        if fv
-          if !entry or entry.blank?
-            fv.destroy
-          else
-            we_have_fv = true   
-          end
-        elsif entry and !entry.blank?
-          fv = FactValue.create
-          we_have_fv = true
-        end
-        
-        if we_have_fv
           fv.value = entry
           fv.fact = dim.valuable
           fv.entity = @entity
-          fv.save       
+          fv.save   
         end
       end
+      
+      # @entity.concept.fact_dimensions.each do |dim|
+      
+        # next if dim.name == 'Price' # Guard against altering price fact
+        
+        # # Get what value the user entered for this dimension
+        # # :dims could be null if everything is left empty.
+        # if params[:dims]
+          # entry = params[:dims][dim.id.to_s]
+        # else
+          # entry = nil
+        # end
+        
+        # # Get a fact value associated with this dimension
+        # fv = FactValue.find_by_fact_id_and_entity_id dim.valuable, @entity
+        
+        # # Three situations (4th doesn't really have to be handled)
+        # # 1 - Entry but no FV: Create FV
+        # # 2 - FV but no entry: Delete FV
+        # # 3 - FV and entry: Change value
+        # # 4 - No FV and no entry: Do nothing
+        # we_have_fv = false
+        # if fv
+          # if !entry or entry.blank?
+            # fv.destroy
+          # else
+            # we_have_fv = true   
+          # end
+        # elsif entry and !entry.blank?
+          # fv = FactValue.create
+          # we_have_fv = true
+        # end
+        
+        # if we_have_fv
+          # fv.value = entry
+          # fv.fact = dim.valuable
+          # fv.entity = @entity
+          # fv.save       
+        # end
+      # end
       
       flash[:notice] = 'Menu Item was successfully updated.'
       redirect_to(@entity)
@@ -154,6 +166,6 @@ class EntitiesController < ApplicationController
     @entity = Entity.find(params[:id])
     @entity.destroy
 
-    redirect_to(entities_url)
+    redirect_to :back
   end
 end

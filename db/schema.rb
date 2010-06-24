@@ -13,7 +13,7 @@ ActiveRecord::Schema.define(:version => 20100623234744) do
 
   create_table "beliefs", :force => true do |t|
     t.float    "ideal"
-    t.float    "weight"
+    t.integer  "position"
     t.integer  "dimension_id"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(:version => 20100623234744) do
   end
 
   create_table "opinions", :force => true do |t|
-    t.string   "low_text",   :default => "low"
-    t.string   "high_text",  :default => "high"
+    t.string   "low_text",   :default => "bad"
+    t.string   "high_text",  :default => "excellent"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

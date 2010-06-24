@@ -15,6 +15,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :fact_values
 
+  map.beliefs '/beliefs', :controller => 'beliefs', :action => 'edit'
+  
   map.root :controller => 'pages', :action => 'home'
   map.about '/about', :controller => 'pages', :action => 'about'
   map.contact '/contact', :controller => 'pages', :action => 'contact'

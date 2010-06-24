@@ -36,8 +36,13 @@ module ApplicationHelper
   end
   
   def display_bar(rating, max)
+    percent = Integer(rating * (100 / max))
     ret = "<ul class='star-rating'>"
-    ret += "<li class='current-rating one' style='width:#{Integer(rating * (100 / max))}px;'>Currently #{rating}/5 Stars.</li>"
+    ret += "<li class='current-rating one' style='width:#{percent}px;'>Currently #{rating}/5 Stars.</li>"
     ret += "</ul>"
+  end
+  
+  def show_entity_distance(entity)
+    display_bar 5, 10
   end
 end

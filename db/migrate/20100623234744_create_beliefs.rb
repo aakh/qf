@@ -2,7 +2,7 @@ class CreateBeliefs < ActiveRecord::Migration
   def self.up
     create_table :beliefs do |t|
       t.float :ideal
-      t.float :weight
+      t.integer :position
       t.references :dimension, :user
       t.timestamps
     end

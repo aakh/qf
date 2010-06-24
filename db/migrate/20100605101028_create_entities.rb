@@ -24,6 +24,9 @@ class CreateEntities < ActiveRecord::Migration
     add_item(beer, "Montheith's Pilsner")
     add_item(beer, "Montheith's Original")
     add_item(beer, "Heineken" )
+    add_item(beer, "Tiger" )
+    add_item(beer, "Murphy's" )
+    add_item(beer, "Tui" )
     
     mains.save!
     starters.save!

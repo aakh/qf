@@ -46,6 +46,6 @@ class ConceptsController < ApplicationController
     @concept = Concept.find(params[:id])
     @concept.destroy
 
-    redirect_to(concepts_url)
+    redirect_to :back
   end
 end

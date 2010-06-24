@@ -1,0 +1,41 @@
+<h2>Belief System</h2>
+
+<% semantic_form_for :belief, :url => { :action => "update" } do |f| %>
+  <table id="beliefs" class="ratings round">
+    <th>Dimension Name</th>
+    <th><center>Your ideal value</center></th>
+    <th><center>How important?</center></th>
+    <% Dimension.opinion_dimensions.each do |dim| %>
+      <tr id="belief_<%= dim.id %>" class="belief">
+        <td>
+          <%= dim.name %> <%= edit_delete_opinion_dimension(dim) %>
+          <% key = "dims[#{dim.id}]" %>
+          <%= hidden_field_tag key, "" %>
+        </td>
+        <td>
+          <center>
+            <% unless dim.bool? %>
+              <span class="indicator"><%= dim.valuable.low_text %></span>
+              <% for i in 1..5 %>
+                <%= radio_button_tag key, i %>
+              <% end %>
+              <span class="indicator"><%= dim.valuable.high_text %></span>
+            <% else %>
+                <%= check_box_tag key, true %>
+            <% end %>
+          </center>
+        </td>
+        <td>
+          <center>
+            <span class="indicator">Not at all</span>
+            <% for i in 1..5 %>
+              <%= radio_button_tag key, i %>
+            <% end %>
+            <span class="indicator">Very</span>
+          </center>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%= f.submit "Update Beliefs" %>
+<% end %>

@@ -4,6 +4,7 @@ class UserSessionsController < ApplicationController
   def new
     @user_session = UserSession.new
     @title = "Sign in"
+    session[:last_check_path] = request.env['HTTP_REFERER'] || root_url
   end
 
   # POST /user_sessions

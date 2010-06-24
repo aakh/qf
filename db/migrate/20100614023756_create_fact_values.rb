@@ -21,6 +21,9 @@ class CreateFactValues < ActiveRecord::Migration
     set_price(Entity.find_by_name("Montheith's Pilsner"), 8)
     set_price(Entity.find_by_name("Montheith's Original"), 8)
     set_price(Entity.find_by_name("Heineken"), 8.5)
+    set_price(Entity.find_by_name("Tiger"), 8.5)
+    set_price(Entity.find_by_name("Murphy's"), 8.5)
+    set_price(Entity.find_by_name("Tui"), 8.5)
   end
 
   def self.down
