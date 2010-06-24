@@ -22,11 +22,11 @@ class FactValue < ActiveRecord::Base
   end
   
   def templatize
-    #fact.template.gsub("#", value.to_s.sub(/\.0.?/, ''))
+    fact.template.gsub("#", value.to_s.sub(/\.0.?/, ''))
     #Changed value type to string, above was just for float
     if fact.dimension.bool?
       return fact.dimension.name.gsub(/\?\Z/, ".")
     end
-    fact.template.gsub(/#/, value)
+    fact.template.gsub(/#/, value.to_s)
   end
 end

@@ -5,13 +5,15 @@ class FactsController < ApplicationController
   def new
     @fact = Fact.new
     @fact.build_dimension
+    session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url
   end
 
   def create    
     @fact = Fact.new(params[:fact])
     if @fact.save
       flash[:notice] = 'Fact was successfully created.'
-      redirect_to dimensions_path
+      redirect_to session[:last_dimension_path]
+      clear_last_paths
     else
       render :new
     end
@@ -22,7 +24,8 @@ class FactsController < ApplicationController
 
     if @fact.update_attributes params[:fact]
       flash[:notice] = 'Fact was updated created.'
-      redirect_to session[:last_dimension_page] 
+      redirect_to session[:last_dimension_page]
+      clear_last_paths
     else
       render 'edit'
     end

@@ -28,7 +28,7 @@
                     <% value = fact_value ? fact_value.value : nil %>
                     <% key = "dims[" + fact.id.to_s + "]" %>
                     <% if fact.bool? %>
-                      <%= check_box_tag key, true , value %>
+                      <%= check_box_tag key, true, value %>
                     <% else %>
                       <%= text_field_tag key, value %>
                     <% end %>

@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100623024445) do
+ActiveRecord::Schema.define(:version => 20100623234744) do
+
+  create_table "beliefs", :force => true do |t|
+    t.float    "ideal"
+    t.float    "weight"
+    t.integer  "dimension_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "concepts", :force => true do |t|
     t.string   "name",       :null => false
@@ -35,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20100623024445) do
   create_table "dimensions", :force => true do |t|
     t.string   "name"
     t.string   "desc"
+    t.float    "ideal"
+    t.float    "weight"
     t.boolean  "bool",          :default => false
     t.integer  "valuable_id"
     t.string   "valuable_type"
@@ -55,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20100623024445) do
   end
 
   create_table "fact_values", :force => true do |t|
-    t.string   "value"
+    t.float    "value"
     t.integer  "fact_id"
     t.integer  "entity_id"
     t.datetime "created_at"
@@ -69,7 +80,6 @@ ActiveRecord::Schema.define(:version => 20100623024445) do
   end
 
   create_table "opinions", :force => true do |t|
-    t.float    "ideal"
     t.string   "low_text",   :default => "low"
     t.string   "high_text",  :default => "high"
     t.datetime "created_at"

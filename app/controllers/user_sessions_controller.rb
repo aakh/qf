@@ -13,7 +13,12 @@ class UserSessionsController < ApplicationController
 
     if @user_session.save
       flash[:notice] = 'Signed in successfully.'
-      redirect_to root_url
+      if(session[:last_check_path])
+        redirect_to session[:last_check_path]
+        clear_last_paths and return
+      else
+        redirect_to root_url
+      end
     else
       render :action => "new"
     end

@@ -5,6 +5,7 @@ class OpinionsController < ApplicationController
   def new
     @opinion = Opinion.new
     @opinion.build_dimension 
+    session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url
   end
 
   def create    
@@ -16,7 +17,8 @@ class OpinionsController < ApplicationController
     else
       if @opinion.save
         flash[:notice] = 'Opinion was successfully created.'
-        redirect_to dimensions_path
+        redirect_to session[:last_dimension_path]
+        clear_last_paths
       else
         render :new
       end
@@ -28,7 +30,8 @@ class OpinionsController < ApplicationController
 
     if @opinion.update_attributes params[:opinion]
       flash[:notice] = 'Opinion was updated created.'
-      redirect_to session[:last_dimension_page] 
+      redirect_to session[:last_dimension_path]
+      clear_last_paths
     else
       render 'edit'
     end
@@ -38,6 +41,6 @@ class OpinionsController < ApplicationController
     @opinion = Opinion.find(params[:id])
     @opinion.destroy
 
-    redirect_to dimensions_url
+    redirect_to :back
   end
 end

@@ -10,10 +10,12 @@ class ConceptsController < ApplicationController
 
   def new
     @concept = Concept.new
+    session[:last_concept_path] = request.env["HTTP_REFERER"] || concepts_url
   end
 
   def edit
     @concept = Concept.find(params[:id])
+    session[:last_concept_path] = request.env["HTTP_REFERER"] || concepts_url
   end
 
   def create
@@ -21,7 +23,8 @@ class ConceptsController < ApplicationController
 
     if @concept.save
       flash[:notice] = 'Concept was successfully created.'
-      redirect_to(@concept)
+      redirect_to session[:last_concept_path]
+      clear_last_paths
     else
       render :action => "new"
     end
@@ -32,7 +35,8 @@ class ConceptsController < ApplicationController
 
     if @concept.update_attributes(params[:concept])
       flash[:notice] = 'Concept was successfully updated.'
-      redirect_to(@concept)
+      redirect_to session[:last_concept_path]
+      clear_last_paths
     else
       render :action => "edit"
     end

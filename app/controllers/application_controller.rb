@@ -10,9 +10,16 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user, :role?
   
+  def clear_last_paths(which = [:check, :dimension, :concept])
+    which.each do |w|
+      session["last_#{w}_path".intern] = nil
+    end
+  end
+  
   def check_administrator
     unless role? 'administrator'
       flash[:notice] = "You do not have permission to do that."
+      session[:last_check_path] = request.env["HTTP_REFERER"] || :back
       redirect_to login_path
     end
   end
@@ -20,6 +27,7 @@ class ApplicationController < ActionController::Base
   def check_manager
     unless role? 'manager'
       flash[:notice] = "You do not have permission to do that."
+      session[:last_check_path] = request.env["HTTP_REFERER"] || :back
       redirect_to login_path
     end
   end
@@ -27,6 +35,7 @@ class ApplicationController < ActionController::Base
   def check_staff
     unless role? 'staff'
       flash[:notice] = "You do not have permission to do that."
+      session[:last_check_path] = request.env["HTTP_REFERER"] || :back
       redirect_to login_path
     end
   end
@@ -34,6 +43,7 @@ class ApplicationController < ActionController::Base
   def check_logged_in
     unless current_user
       flash[:notice] = "You have to log in first."
+      session[:last_check_path] = request.env["HTTP_REFERER"] || :back
       redirect_to login_path
     end
   end
@@ -51,6 +61,9 @@ class ApplicationController < ActionController::Base
   
   def role?(r)
     current_user and current_user.has_role? r.capitalize
+  end
+  
+  def check_role(name, msg)
   end
   
 end

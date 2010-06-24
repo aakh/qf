@@ -8,7 +8,7 @@
     <% end %>
     <%= f.input :template %>
     <%= dim.input :desc %>
-    <%= dim.input :concepts %>
+    <%= dim.input :concepts, :label => "Apply to:" %>
   <% end %>
   <% f.buttons do %>
     <%= f.commit_button "Update" %>
