@@ -6,32 +6,36 @@
     <th><center>Your ideal value</center></th>
     <th><center>How important?</center></th>
     <% Dimension.opinion_dimensions.each do |dim| %>
-      <tr id="belief_<%= dim.id %>" class="belief">
+      <tr>
         <td>
           <%= dim.name %> <%= edit_delete_opinion_dimension(dim) %>
-          <% key = "dims[#{dim.id}]" %>
-          <%= hidden_field_tag key, "" %>
+          <% ideal_key = "ideals[#{dim.id}]" %>
+          <% weight_key = "weights[#{dim.id}]" %>
+          <% belief = Belief.find_by_opinion_id_and_user_id dim.valuable, current_user %>
+          <% ideal = belief.ideal if belief %>
+          <% weight = belief.weight if belief %>
+          <%= hidden_field_tag ideal_key, "" %>
         </td>
         <td>
           <center>
             <% unless dim.bool? %>
               <span class="indicator"><%= dim.valuable.low_text %></span>
               <% for i in 1..5 %>
-                <%= radio_button_tag key, i %>
+                <%= radio_button_tag ideal_key, i, ideal ? ideal == i : false %>
               <% end %>
               <span class="indicator"><%= dim.valuable.high_text %></span>
             <% else %>
-                <%= check_box_tag key, true %>
+                <%= check_box_tag ideal_key, true, ideal %>
             <% end %>
           </center>
         </td>
         <td>
           <center>
-            <span class="indicator">Not at all</span>
+            <span class="indicator">I care not</span>
             <% for i in 1..5 %>
-              <%= radio_button_tag key, i %>
+              <%= radio_button_tag weight_key, i, weight ? weight == i : false %>
             <% end %>
-            <span class="indicator">Very</span>
+            <span class="indicator">Vital</span>
           </center>
         </td>
       </tr>

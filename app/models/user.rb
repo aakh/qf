@@ -44,4 +44,7 @@ class User < ActiveRecord::Base
   has_many :ratings, :dependent => :destroy
   has_many :entities, :through => :ratings
   has_many :opinions, :through => :ratings
+  
+  has_many :beliefs, :dependent => :destroy
+  has_many :opinions, :through => :beliefs
 end

@@ -8,6 +8,7 @@ class CreateFacts < ActiveRecord::Migration
     f = Fact.create :template => "$# NZD"
     f.dimension = Dimension.new :name => "Price"
     f.save!
+    
   end
 
   def self.down

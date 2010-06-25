@@ -36,4 +36,7 @@ class Opinion < ActiveRecord::Base
   
   has_many :current_ratings, :dependent => :destroy
   has_many :entities, :through => :current_ratings
+  
+  has_many :beliefs, :dependent => :destroy
+  has_many :users, :through => :beliefs
 end
