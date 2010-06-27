@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(:version => 20100623234744) do
   end
 
   create_table "opinions", :force => true do |t|
-    t.string   "low_text",     :default => "bad"
-    t.string   "high_text",    :default => "excellent"
+    t.string   "low_text",     :default => "low"
+    t.string   "high_text",    :default => "high"
     t.float    "total_ideal",  :default => 0.0
     t.integer  "num_ideals",   :default => 0
     t.float    "total_weight", :default => 0.0

@@ -12,7 +12,7 @@ class DimensionsController < ApplicationController
     session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url
     if @dimension.valuable_type == "Opinion"
       # If there's an fact with the same name, do not allow this opinion to be edited
-      if Dimension.find_by_name_and_valuable_type @dimension.name, 'Fact'
+      if Fact.find_by_name @dimension.name, 'Fact'
         flash[:error] = "Not allowed to edit that dimension"
         redirect_to :back
       else

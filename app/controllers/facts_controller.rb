@@ -10,6 +10,7 @@ class FactsController < ApplicationController
 
   def create    
     @fact = Fact.new(params[:fact])
+    @fact.dimension.op_name = params[:fact][:dimension_attributes][:name]
     if @fact.save
       flash[:notice] = 'Fact was successfully created.'
       redirect_to session[:last_dimension_path]
@@ -21,9 +22,10 @@ class FactsController < ApplicationController
   
   def update
     @fact = Fact.find(params[:id])
+    @fact.dimension.op_name = @fact.dimension.name
 
     if @fact.update_attributes params[:fact]
-      flash[:notice] = 'Fact was updated created.'
+      flash[:notice] = 'Fact was updated successfully.'
       redirect_to session[:last_dimension_path]
       clear_last_paths
     else

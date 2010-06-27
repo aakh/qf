@@ -23,20 +23,17 @@ class Dimension < ActiveRecord::Base
    
   before_validation :analyze_attributes
   after_save :create_opinion_if_fact
-  
-  #attr_accessor :old_name
+  attr_writer :op_name
   
   def analyze_attributes
-    @attributes['name'].capitalize!
-    @attributes['name'].strip!
-    
-    # Save name incase a fact name is changed. That means we have to just update
-    # the opinion name and description in the after_save callback
-    #old_name = @attributes['name']
-    
-    #If name has a question mark at the end (spaces should not be there after strip!)
-    if @attributes['name'] =~ /\?\Z/
-      @attributes['bool'] = true
+    if @attributes['name'] 
+      @attributes['name'].capitalize!
+      @attributes['name'].strip!
+      
+      #If name has a question mark at the end (spaces should not be there after strip!)
+      if @attributes['name'] =~ /\?\Z/
+        @attributes['bool'] = true
+      end
     end
   end
   
@@ -60,15 +57,16 @@ class Dimension < ActiveRecord::Base
   # Create an opinion that goes along with the fact.
   def create_opinion_if_fact
     if valuable_type == 'Fact'
-      op = Opinion.find_by_name(name)
-      
+      op = Opinion.find_by_name @op_name
+
       unless op
         op = Opinion.new
         op.dimension = Dimension.new :name => name
       end
       
-      #op.dimension.name = name
-      #op.dimension.desc = desc
+      #op.dimension.update_attributes :name => name, :desc => desc
+      op.dimension.name = name
+      op.dimension.desc = desc
       
       # Give the opinions the same associations as the fact
       # with the migrations this table is not created when the default
@@ -81,7 +79,7 @@ class Dimension < ActiveRecord::Base
         end
       end
       
-      op.save!
+      op.save
     end
   end
   

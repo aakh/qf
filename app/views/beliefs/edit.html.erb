@@ -8,7 +8,7 @@
     <% Dimension.opinion_dimensions.each do |dim| %>
       <tr>
         <td>
-          <%= dim.name %> <%= edit_delete_opinion_dimension(dim) %>
+          <%= dim.name %> <%= edit_delete_dimension(dim) %>
           <% ideal_key = "ideals[#{dim.id}]" %>
           <% weight_key = "weights[#{dim.id}]" %>
           <% belief = Belief.find_by_opinion_id_and_user_id dim.valuable, current_user %>

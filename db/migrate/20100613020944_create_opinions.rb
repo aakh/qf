@@ -1,8 +1,8 @@
 class CreateOpinions < ActiveRecord::Migration
   def self.up
     create_table :opinions do |t|
-      t.string :low_text, :default => "bad"
-      t.string :high_text, :default => "excellent"
+      t.string :low_text, :default => "low"
+      t.string :high_text, :default => "high"
       t.float :total_ideal, :default => 0
       t.integer :num_ideals, :default => 0
       t.float :total_weight, :default => 0

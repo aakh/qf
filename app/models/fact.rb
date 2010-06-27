@@ -20,4 +20,5 @@ class Fact < ActiveRecord::Base
     dim = Dimension.find_by_name_and_valuable_type( name, 'Fact')
     return dim.valuable if dim
   end
+  
 end
