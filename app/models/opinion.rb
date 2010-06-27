@@ -1,13 +1,17 @@
 # == Schema Information
-# Schema version: 20100614023756
+# Schema version: 20100623234744
 #
 # Table name: opinions
 #
-#  id         :integer         not null, primary key
-#  min        :float           default(0.0)
-#  max        :float           default(1.0)
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer         not null, primary key
+#  low_text     :string(255)     default("bad")
+#  high_text    :string(255)     default("excellent")
+#  total_ideal  :float           default(0.0)
+#  num_ideals   :integer         default(0)
+#  total_weight :float           default(0.0)
+#  num_weights  :integer         default(0)
+#  created_at   :datetime
+#  updated_at   :datetime
 #
 
 class Opinion < ActiveRecord::Base

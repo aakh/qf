@@ -24,7 +24,7 @@ class FactsController < ApplicationController
 
     if @fact.update_attributes params[:fact]
       flash[:notice] = 'Fact was updated created.'
-      redirect_to session[:last_dimension_page]
+      redirect_to session[:last_dimension_path]
       clear_last_paths
     else
       render 'edit'

@@ -1,10 +1,10 @@
 # == Schema Information
-# Schema version: 20100614023756
+# Schema version: 20100623234744
 #
 # Table name: facts
 #
 #  id         :integer         not null, primary key
-#  template   :string(255)
+#  template   :string(255)     default("#")
 #  created_at :datetime
 #  updated_at :datetime
 #

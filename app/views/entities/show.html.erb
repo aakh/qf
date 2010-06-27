@@ -22,7 +22,7 @@
           <th>Current ratings</th>
           <th><center>Your ratings</center></th>
           <% @entity.concept.opinion_dimensions.each do |dim| %>
-          <% next if dim.bool? %>
+            <% next if dim.bool? %>
             <tr>
               <td>
                 <%= dim.name %> <%= edit_delete_opinion_dimension(dim) %>

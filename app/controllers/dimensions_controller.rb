@@ -1,5 +1,6 @@
 class DimensionsController < ApplicationController
   before_filter :check_staff, :only => :delete
+  before_filter :check_logged_in
   
   def index
     @fact_dimensions = Dimension.fact_dimensions

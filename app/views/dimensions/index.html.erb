@@ -1,17 +1,34 @@
 <h2>Value Dimensions</h2>
 
-<table>
+<table class="round has_border">
+  <th>Name</th>
+  <th>Type</th>
+  <th>Ideal Value</th>
+  <th>Ideal Weight</th>
+  <% if current_user %><th></th><% end %>
   <% @opinion_dimensions.each do |dim| %>
-    <tr>
-      <td class="span-4 last">
+  <% opinion = dim.valuable %>
+    <tr class="<%= cycle("even", "odd") %>">
+      <td>
         <%= link_to dim.name, dim %>
       </td>
       <td>
         <%= dim.type_s %>
       </td>
+      <td>
+        <% if dim.bool? %>
+          <% yes = (opinion.total_ideal / opinion.num_ideals) > 0.5 %>
+          <%= yes ? "Yes" : "No" if opinion.num_ideals > 0 %>
+        <% else %>
+          <%= display_bar( (opinion.total_ideal / opinion.num_ideals) -1, 4 ) if opinion.num_ideals > 0 %>
+        <% end %>
+      </td>
+      <td>
+        <%= display_bar( (opinion.total_weight / opinion.num_weights) -1, 4 ) if opinion.num_weights > 0 %>
+      </td>
       <% if current_user %>
         <td>
-          <%= edit_delete_opinion_dimension(dim) %>
+          <%= edit_delete_dimension(dim) %>
         </td>
       <% end %>
     </tr>
@@ -31,7 +48,7 @@
           <%= dim.type_s %>
         </td>
         <td>
-          <%= edit_delete_fact_dimension(dim) %>
+          <%= edit_delete_dimension(dim) %>
         </td>
       </tr>
     <% end %>

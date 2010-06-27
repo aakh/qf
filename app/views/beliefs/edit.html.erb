@@ -14,19 +14,10 @@
           <% belief = Belief.find_by_opinion_id_and_user_id dim.valuable, current_user %>
           <% ideal = belief.ideal if belief %>
           <% weight = belief.weight if belief %>
-          <%= hidden_field_tag ideal_key, "" %>
         </td>
         <td>
           <center>
-            <% unless dim.bool? %>
-              <span class="indicator"><%= dim.valuable.low_text %></span>
-              <% for i in 1..5 %>
-                <%= radio_button_tag ideal_key, i, ideal ? ideal == i : false %>
-              <% end %>
-              <span class="indicator"><%= dim.valuable.high_text %></span>
-            <% else %>
-                <%= check_box_tag ideal_key, true, ideal %>
-            <% end %>
+            <%= send(dim.bool? ? :show_booler : :show_rater, dim, ideal_key, ideal) %>
           </center>
         </td>
         <td>

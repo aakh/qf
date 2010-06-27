@@ -1,13 +1,14 @@
 # == Schema Information
-# Schema version: 20100614023756
+# Schema version: 20100623234744
 #
 # Table name: dimensions
 #
 #  id            :integer         not null, primary key
 #  name          :string(255)
 #  desc          :string(255)
-#  ideal         :float           default(0.0)
-#  weight        :float           default(0.0)
+#  ideal         :float
+#  weight        :float
+#  bool          :boolean
 #  valuable_id   :integer
 #  valuable_type :string(255)
 #  created_at    :datetime
@@ -23,9 +24,15 @@ class Dimension < ActiveRecord::Base
   before_validation :analyze_attributes
   after_save :create_opinion_if_fact
   
+  #attr_accessor :old_name
+  
   def analyze_attributes
     @attributes['name'].capitalize!
     @attributes['name'].strip!
+    
+    # Save name incase a fact name is changed. That means we have to just update
+    # the opinion name and description in the after_save callback
+    #old_name = @attributes['name']
     
     #If name has a question mark at the end (spaces should not be there after strip!)
     if @attributes['name'] =~ /\?\Z/
@@ -57,8 +64,11 @@ class Dimension < ActiveRecord::Base
       
       unless op
         op = Opinion.new
-        op.dimension = Dimension.new(:name => name)
+        op.dimension = Dimension.new :name => name
       end
+      
+      #op.dimension.name = name
+      #op.dimension.desc = desc
       
       # Give the opinions the same associations as the fact
       # with the migrations this table is not created when the default
@@ -71,7 +81,7 @@ class Dimension < ActiveRecord::Base
         end
       end
       
-      op.save
+      op.save!
     end
   end
   
