@@ -25,7 +25,7 @@ class FactValue < ActiveRecord::Base
     fact.template.gsub("#", value.to_s.sub(/\.0.?/, ''))
     #Changed value type to string, above was just for float
     if fact.dimension.bool?
-      return fact.dimension.name.gsub(/\?\Z/, ".")
+      return fact.dimension.name + " <b>#{value == 1 ? "Yes" : "No"}</b>"
     end
     fact.template.gsub(/#/, value.to_s)
   end

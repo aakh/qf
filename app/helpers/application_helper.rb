@@ -48,10 +48,10 @@ module ApplicationHelper
     ret << " <span class='indicator'>#{dim.valuable.high_text}</span>"
   end
   
-  def show_booler(dim, key, value)
-    ret = "<span class='indicator'>Like</span> "  
+  def show_booler(dim, key, value, high = "Like", low = "Don't like")
+    ret = "<span class='indicator'>#{high}</span> "  
     ret << radio_button_tag( key, 1, value ? value == 1 : false) << " "
     ret << radio_button_tag( key, 0, value ? value == 0 : false) << " "
-    ret << " <span class='indicator'>Don't like</span>"  
+    ret << " <span class='indicator'>#{low}</span>"  
   end
 end

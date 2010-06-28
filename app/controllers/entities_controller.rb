@@ -99,19 +99,20 @@ class EntitiesController < ApplicationController
       price.value = @entity.price
       price.save
       
-      params[:dims].each do |id, entry|
-        dim = Dimension.find id
-        fv = FactValue.find_or_create_by_fact_id_and_entity_id dim.valuable, @entity
-        if entry.blank?
-          fv.destroy
-        else
-          fv.value = entry
-          fv.fact = dim.valuable
-          fv.entity = @entity
-          fv.save   
+      if params[:dims]
+        params[:dims].each do |id, entry|
+          dim = Dimension.find id
+          fv = FactValue.find_or_create_by_fact_id_and_entity_id dim.valuable, @entity
+          if entry.blank?
+            fv.destroy
+          else
+            fv.value = entry
+            fv.fact = dim.valuable
+            fv.entity = @entity
+            fv.save   
+          end
         end
       end
-      
       # @entity.concept.fact_dimensions.each do |dim|
       
         # next if dim.name == 'Price' # Guard against altering price fact

@@ -7,10 +7,10 @@
   <th>Ideal Weight</th>
   <% if current_user %><th></th><% end %>
   <% @opinion_dimensions.each do |dim| %>
-  <% opinion = dim.valuable %>
+    <% opinion = dim.valuable %>
     <tr class="<%= cycle("even", "odd") %>">
       <td>
-        <%= link_to dim.name, dim %>
+        <%= dim.name %>
       </td>
       <td>
         <%= dim.type_s %>
@@ -34,23 +34,3 @@
     </tr>
   <% end %>
 </table>
-
-
-<% if role? "staff" %>
-  <h4>Facts</h4>
-  <table>
-    <% @fact_dimensions.each do |dim| %>
-      <tr>
-        <td class="span-4 last">
-          <%= link_to dim.name, dim %>
-        </td>
-        <td>
-          <%= dim.type_s %>
-        </td>
-        <td>
-          <%= edit_delete_dimension(dim) %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>

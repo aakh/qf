@@ -25,7 +25,7 @@
             <% next if dim.bool? %>
             <tr>
               <td>
-                <%= dim.name %> <%= edit_delete_opinion_dimension(dim) %>
+                <%= dim.name %> <%= edit_delete_dimension(dim) %>
               </td>
               <td>
                 <% cr = CurrentRating.find_by_entity_id_and_opinion_id @entity, dim.valuable %>
@@ -62,15 +62,15 @@
         | <%= link_to "Edit", edit_entity_path(@entity) %>
       <% end %>
     </td>
-    <td class="dimensions round">
-      <div>
+    <td style="vertical-align:top;">
+      <div class="dimensions round">
         <% @ordinal_fact_values.each do |fv| %>
           <b><%= fv.fact.dimension.name %></b>: <%=h fv.templatize %>
           <br>
         <% end %>
         
         <% @boolean_fact_values.each do |fv| %>
-          <li><%=h fv.templatize %>
+          <li><%= fv.templatize %>
         <% end %>
       </div>
     </td>

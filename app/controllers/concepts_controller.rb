@@ -1,7 +1,7 @@
 class ConceptsController < ApplicationController
   before_filter :check_manager, :except => [:index, :show]
   def index
-    @concepts = Concept.all
+    redirect_to concept_path(Concept.find_by_name 'Mains')
   end
 
   def show

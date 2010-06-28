@@ -13,6 +13,10 @@ class CreateOpinions < ActiveRecord::Migration
     o = Opinion.create
     o.dimension = Dimension.new :name => "Quality"
     o.save!
+    
+    o = Opinion.create
+    o.dimension = Dimension.new :name => "Presentation"
+    o.save!
   end
 
   def self.down

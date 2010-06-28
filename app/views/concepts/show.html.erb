@@ -1,4 +1,6 @@
-<h2><%=h @concept.name %></h2>
+
+<% tabnav :menu do %>
+  
 <table>
   <tr>
     <td width=100% style="vertical-align: top;">
@@ -47,5 +49,6 @@
   </tr>
 </table>
 
-<%= link_to "Back to Menu", concepts_path %>
+
+<% end %>
   

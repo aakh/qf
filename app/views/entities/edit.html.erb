@@ -28,9 +28,7 @@
                     <% value = fact_value ? fact_value.value : nil %>
                     <% key = "dims[" + fact.id.to_s + "]" %>
                     <% if fact.bool? %>
-                      <!-- This ensures that if a checkbox isn't checked, a value for the dimension is still posted -->
-                      <%= hidden_field_tag key, "" %>
-                      <%= check_box_tag key, true, value %>
+                      <%= show_booler fact, key, value, "Yes", "No" %>
                     <% else %>
                       <%= text_field_tag key, value %>
                     <% end %>
