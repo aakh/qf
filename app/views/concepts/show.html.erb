@@ -1,54 +1,62 @@
-
 <% tabnav :menu do %>
-  
-<table>
-  <tr>
-    <td width=100% style="vertical-align: top;">
-      <table class="round has_border">
-        <tr>
-          <th/>
-          <th>
-            <center>Perfection Rating</center>
-          </th>
-          <% if role? "manager" %>
-          <th/>
-          <% end %>
-        </tr>
-        <% @concept.entities.each do |entity| %>
-          <tr class="<%= cycle("even", "odd") %>">
-            <td>
-              <li> <%= link_to entity.name, entity_path(entity) %> 
-              (
-              $<%= FactValue.get_value(Fact.find_by_name("Price"), entity).value %>
-              )
-            </td>
-            <td>
-              <center><%= show_entity_distance(entity) %></center>
-            </td>
+  <table>
+    <tr>
+      <td width=100% style="vertical-align: top;">
+        <table class="round has_border">
+          <tr>
+            <th/>
+            <th>
+              <center>
+                Rating
+                <% tooltip do %>
+                  <p>This column shows you how close to perfection the item is</p>
+                <% end %>
+              </center>
+            </th>
             <% if role? "manager" %>
-              <td>
-                [
-                <%= link_to "Edit", edit_entity_path(entity) %> |
-                <%= link_to "Delete", entity, :confirm => "Are you sure?", :method => :delete %> 
-                ]
-              </td>
+            <th/>
             <% end %>
           </tr>
-        <% end %>
-      </table>
-    </td>
-    <td style="vertical-align: top;">
-      <div class="dimensions round">
-        <h4>Associated values:</h4>
-        <% @concept.opinion_dimensions.each do |dim| %>
-          <li><%= dim.name %>
-          <%= edit_delete_dimension(dim) %>
-        <% end %>
-      </div>
-    </td>
-  </tr>
-</table>
-
-
+          <% @concept.entities.each do |entity| %>
+            <tr class="<%= cycle("even", "odd") %>">
+              <td>
+                <li> <%= link_to entity.name, entity_path(entity) %> 
+                (
+                $<%= FactValue.get_value(Fact.find_by_name("Price"), entity).value %>
+                )
+              </td>
+              <td>
+                <center><%= show_entity_distance(entity) %></center>
+              </td>
+              <% if role? "manager" %>
+                <td>
+                  [
+                  <%= link_to "Edit", edit_entity_path(entity) %> |
+                  <%= link_to "Delete", entity, :confirm => "Are you sure?", :method => :delete %> 
+                  ]
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="dimensions round">
+          <%= show_box_for :associated_values, :link_name => "See values" %>
+          <% detail_box_for :associated_values do %>
+            <h4>Associated values:</h4>
+            <% @concept.opinion_dimensions.each do |dim| %>
+              <li><%= dim.name %>
+              <%= edit_delete_dimension(dim) %>
+            <% end %>
+            <br><br>
+            <span style="float:right;">
+            <%= hide_box_for :associated_values, :link_name => "X" %>
+            </span>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  </table>
 <% end %>
   
