@@ -26,7 +26,9 @@
                 )
               </td>
               <td>
-                <center><%= show_entity_distance(entity) %></center>
+                <center>
+                  <%= show_entity_distance(entity) %>
+                </center>
               </td>
               <% if role? "manager" %>
                 <td>
@@ -42,17 +44,10 @@
       </td>
       <td style="vertical-align: top;">
         <div class="dimensions round">
-          <%= show_box_for :associated_values, :link_name => "See values" %>
-          <% detail_box_for :associated_values do %>
-            <h4>Associated values:</h4>
-            <% @concept.opinion_dimensions.each do |dim| %>
-              <li><%= dim.name %>
-              <%= edit_delete_dimension(dim) %>
-            <% end %>
-            <br><br>
-            <span style="float:right;">
-            <%= hide_box_for :associated_values, :link_name => "X" %>
-            </span>
+          <h4>Associated values:</h4>
+          <% @concept.opinion_dimensions.each do |dim| %>
+            <li><%= dim.name %>
+            <%= edit_delete_dimension(dim) %>
           <% end %>
         </div>
       </td>

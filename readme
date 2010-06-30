@@ -7,3 +7,4 @@ plugins:
 - annotate_models
 - validation_reflection
 - paperclip
+- rails widgets
