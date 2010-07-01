@@ -9,7 +9,10 @@
   <% @entities.each do |entity| %>
     <tr class="<%= cycle("even", "odd") %>">
       <td><%= link_to entity.name, entity %></td>
-      <td><%= show_entity_distance(entity) %></td>
+      <td>
+        <% num_dims_used, distance = entity.get_distance_from_ideal %>
+        <%= show_distance_bar(num_dims_used, distance) %>
+      </td>
       <td>
         [
           <%= link_to "Edit", edit_entity_path(entity) %> |

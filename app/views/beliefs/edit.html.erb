@@ -1,5 +1,16 @@
 <h2>Belief System</h2>
 
+<p>
+  Your belief system tells us <b>what you value</b> and what you think is important. <b>You decide</b>.
+  For each value dimension that has been created, you may define which value you prefer, and how important that
+  value dimension is to you.
+</p>
+
+<p>
+  You may click on the question icon next to each value dimension to see which menu categories that value
+  dimension affects
+</p>
+
 <% semantic_form_for :belief, :url => { :action => "update" } do |f| %>
   <table id="beliefs" class="ratings round">
     <th>Dimension Name</th>
@@ -8,7 +19,10 @@
     <% Dimension.opinion_dimensions.each do |dim| %>
       <tr>
         <td>
-          <%= dim.name %> <%= edit_delete_dimension(dim) %>
+          <%= dim.name %> <%= edit_delete_dimension(dim) %>          
+          <% tooltip do %>
+            <p>This column shows you how close to perfection the item is</p>
+          <% end %>
           <% ideal_key = "ideals[#{dim.id}]" %>
           <% weight_key = "weights[#{dim.id}]" %>
           <% belief = Belief.find_by_opinion_id_and_user_id dim.valuable, current_user %>

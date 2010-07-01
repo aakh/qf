@@ -47,4 +47,12 @@ class User < ActiveRecord::Base
   
   has_many :beliefs, :dependent => :destroy
   has_many :opinions, :through => :beliefs
+  
+  before_destroy :fix_global_ideals
+  
+  def fix_global_ideals
+    beliefs = Belief.find_by_user_id self
+    beleifs.each do |b|
+    end
+  end
 end

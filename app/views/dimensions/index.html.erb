@@ -2,7 +2,6 @@
 
 <table class="round has_border">
   <th>Name</th>
-  <th>Type</th>
   <th>Ideal Value</th>
   <th>Ideal Weight</th>
   <% if current_user %><th></th><% end %>
@@ -11,9 +10,6 @@
     <tr class="<%= cycle("even", "odd") %>">
       <td>
         <%= dim.name %>
-      </td>
-      <td>
-        <%= dim.type_s %>
       </td>
       <td>
         <% if dim.bool? %>

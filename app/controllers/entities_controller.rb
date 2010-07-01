@@ -4,7 +4,12 @@ class EntitiesController < ApplicationController
   # GET /entities
   # GET /entities.xml
   def index
-    @entities = Entity.all
+    @entities = Entity.all.collect do |e|
+      n, d = e.get_distance_from_ideal
+      e.distance = d
+      e.num_dims_used = n
+      e
+    end.sort
   end
   
   def rate
