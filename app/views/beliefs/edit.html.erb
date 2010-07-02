@@ -7,8 +7,8 @@
 </p>
 
 <p>
-  You may click on the question icon next to each value dimension to see which menu categories that value
-  dimension affects
+  Move the mouse over the question mark icon next to each value dimension to see which menu categories that value
+  dimension affects, and it's description.
 </p>
 
 <% semantic_form_for :belief, :url => { :action => "update" } do |f| %>
@@ -19,10 +19,8 @@
     <% Dimension.opinion_dimensions.each do |dim| %>
       <tr>
         <td>
-          <%= dim.name %> <%= edit_delete_dimension(dim) %>          
-          <% tooltip do %>
-            <p>This column shows you how close to perfection the item is</p>
-          <% end %>
+          <%= dim.name %> <%= edit_delete_dimension(dim) %>         
+          <%= show_tooltip_for dim %>
           <% ideal_key = "ideals[#{dim.id}]" %>
           <% weight_key = "weights[#{dim.id}]" %>
           <% belief = Belief.find_by_opinion_id_and_user_id dim.valuable, current_user %>

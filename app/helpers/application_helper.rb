@@ -25,7 +25,7 @@ module ApplicationHelper
       elsif fact.name != 'Price' and role? 'staff'
         ret << "[#{link_to 'Edit', edit_dimension_path(fact)}"
         ret << " | #{link_to 'Delete', fact.valuable, :confirm => 'Are you sure?', :method => :delete}"
-        ret << "] " << image_tag("/images/star.png", :title => "This is a Factual dimension")
+        ret << "] <span title='This is a Factual dimension'>" << image_tag("/images/star.png") << "</span>"
       end
     end
   end
@@ -59,5 +59,17 @@ module ApplicationHelper
     ret << radio_button_tag( key, 1, value ? value == 1 : false) << " "
     ret << radio_button_tag( key, 0, value ? value == 0 : false) << " "
     ret << " <span class='indicator'>#{low}</span>"  
+  end
+  
+  def show_tooltip_for(dim)
+    these_concepts = ""
+    dim.concepts.each {|x| these_concepts << "<li>" << x.name}
+    unless dim.desc.blank?
+      these_concepts << "<br><hr><u>Description:</u><br>" << dim.desc
+    end
+  
+    title = "<span title='<u>Affects:</u><br>#{these_concepts}'>"
+    title << image_tag("tooltip.gif") << "</span>"
+    return title
   end
 end

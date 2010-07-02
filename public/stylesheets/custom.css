@@ -273,3 +273,17 @@ th {
 .star-rating .three{
     height: 30px;
 }
+
+div#qTip {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 3px;
+  border: 2px solid #660000;
+  display: none;
+  background: #990000;
+  color: #FFF;
+  font: 9px Verdana, Arial, sans-serif;
+  text-align: left;
+  position: absolute;
+  z-index: 1000;
+}
