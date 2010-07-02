@@ -49,6 +49,9 @@ class Entity < ActiveRecord::Base
   attr_accessor :distance, :num_dims_used
   
   def <=>(ent) # Comparison operator for sorting, only works when distance accessor is set
+    return 1 if num_dims_used == 0 and ent.num_dims_used > 0
+    return -1 if num_dims_used > 0 and ent.num_dims_used == 0
+    return 0 if num_dims_used == 0 and ent.num_dims_used == 0
     a_percent = Integer((@num_dims_used - @distance) * (100 / @num_dims_used))
     b_percent = Integer((ent.num_dims_used - ent.distance) * (100 / ent.num_dims_used))
     b_percent <=> a_percent
