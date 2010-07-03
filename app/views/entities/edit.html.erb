@@ -13,31 +13,33 @@
           <%= f.commit_button "Update" %>
         <% end %>
       </td>
-      <td class="dimensions round">
-        <% f.inputs do %> 
-          <%= f.input :price %> 
-          <table> 
-            <% @entity.concept.fact_dimensions.each do |fact| %> 
-              <tr>
-                <% unless fact.name == "Price" %>
-                  <td>
-                    <b><%= fact.name %></b>:
-                  </td>
-                  <td>
-                    <% fact_value = FactValue.find_by_fact_id_and_entity_id fact.valuable, @entity %>
-                    <% value = fact_value ? fact_value.value : nil %>
-                    <% key = "dims[" + fact.id.to_s + "]" %>
-                    <% if fact.bool? %>
-                      <%= show_booler fact, key, value, "Yes", "No" %>
-                    <% else %>
-                      <%= text_field_tag key, value %>
-                    <% end %>
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
-          </table>
-        <% end %>
+      <td style="vertical-align: top;">
+        <div class="dimensions round has_border">
+          <% f.inputs do %> 
+            <%= f.input :price %> 
+            <table> 
+              <% @entity.concept.fact_dimensions.each do |fact| %> 
+                <tr>
+                  <% unless fact.name == "Price" %>
+                    <td>
+                      <b><%= fact.name %></b>:
+                    </td>
+                    <td>
+                      <% fact_value = FactValue.find_by_fact_id_and_entity_id fact.valuable, @entity %>
+                      <% value = fact_value ? fact_value.value : nil %>
+                      <% key = "dims[" + fact.id.to_s + "]" %>
+                      <% if fact.bool? %>
+                        <%= show_booler fact, key, value, "Yes", "No" %>
+                      <% else %>
+                        <%= text_field_tag key, value %>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </table>
+          <% end %>
+        </div>
       </td>
     </tr>
   </table>

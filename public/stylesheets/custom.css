@@ -13,18 +13,12 @@
   padding-top: 35px;
 }
 
-.menu {
-  width: 200px;
-  vertical-align: top;
-}
-
 .dimensions {
   background-color: #a4ffa4;
-  vertical-align: top;
+  /* vertical-align: top;*/
   padding: 10px;
-  white-space:nowrap;
-  float: right;
-  border: 3px solid black;
+  /*float: right;*/
+  white-space: nowrap;
 }
 .ratings {
   background-color: #ffa4a4;
@@ -57,16 +51,21 @@
 }
 
 .even {
-  background-color: #bbb;
+  background-color: #dddddd;
 }
 
 .odd {
-  background-color: #eee;
+  background-color: #cccccc;
 }
 
-#menu {
-  padding: 20px 0 20px 0;
-  background-color: #fff;
+.menu {
+  padding: 8px 0 8px 0;
+  background-color: #ccffcc;
+  border: 2px solid #000000;
+  font-family: verdana;
+  color: #000;
+  white-space: nowrap;
+  font-size: 10px;
 }
 
 .menu hr {
@@ -75,14 +74,15 @@
 }
 
 .menu li a {
-  color: #000;
+  color: #660000;
 }
 
 .menu li a:visited {
-  color: #000;
+  color: #660000;
 }
 
 .menu li a:hover {
+  color: #660000;
   text-decoration: underline;
 }
 
@@ -92,8 +92,9 @@
   padding-left: 0px;
   float: left; 
   padding-top: 50px;
-  text-decoration: underline;
-  font-family: arial;
+  border-bottom: 3px white double;
+  font-family: Verdana;
+  color: silver;
 }
 
 .logo {
@@ -131,11 +132,11 @@ a.signup_button {
   display: block;
   text-align: center;
   width: 190px;
-  color: #660000;
-  background-color: #a4ffa4;
+  background-color: #fff;
+  border: black 2px solid;
   font-size: 150%;
   font-weight: bold;
-  padding: 20px;
+  padding: 15px;
 }
 
 #header {
@@ -153,7 +154,8 @@ a.signup_button {
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
-  background: #fff;
+  background-color: #ccffcc;
+  border: 2px solid #000000;
 }
 
 .footer {
@@ -186,29 +188,35 @@ ul.footer {
 
 .content {
   margin-top: 0em;
-  padding: 20px;
+  padding: 8px;
   background: #fff;
-  border: #000 4px;
   vertical-align: top;
+  background-color: #ccffcc;
+  font-family: verdana;
+  font-size: 11px;
+  color: #000;
+  border: 2px solid #000000;
+
 }
 
 body {
-  background-color: rgb(234,197,111);
+  /*background-color: rgb(234,197,111);*/
+  background-color: #000044;
   /*background-image: url(/images/background.jpg);*/
 }
 
 a {
-  color: #555555;
+  color: #660000;
   text-decoration: none;
 }
 
 a:hover {
-  color: #000;
+  color: #660000;
   text-decoration: underline;
 }
 
 a:visited {
-  color: #555555;
+  color: #660000;
 }
 
 h4 {
@@ -223,7 +231,7 @@ hr {
 }
 
 th {
-  background-color: #ffa4a4;
+  background-color: #a4a4ff;
 }
 
 .star-rating,

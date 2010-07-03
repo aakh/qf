@@ -25,7 +25,9 @@ module ApplicationHelper
       elsif fact.name != 'Price' and role? 'staff'
         ret << "[#{link_to 'Edit', edit_dimension_path(fact)}"
         ret << " | #{link_to 'Delete', fact.valuable, :confirm => 'Are you sure?', :method => :delete}"
-        ret << "] <span title='This is a Factual dimension'>" << image_tag("/images/star.png") << "</span>"
+        more = ""
+        more = "<br>You cannot edit a fact." unless role? 'staff'
+        ret << "] <span title='This is a Factual dimension#{more}'>" << image_tag("/images/star.png") << "</span>"
       end
     end
   end

@@ -49,6 +49,7 @@ class Entity < ActiveRecord::Base
   attr_accessor :distance, :num_dims_used
   
   def <=>(ent) # Comparison operator for sorting, only works when distance accessor is set
+    return self.name <=> ent.name unless num_dims_used and ent.num_dims_used
     return 1 if num_dims_used == 0 and ent.num_dims_used > 0
     return -1 if num_dims_used > 0 and ent.num_dims_used == 0
     return 0 if num_dims_used == 0 and ent.num_dims_used == 0

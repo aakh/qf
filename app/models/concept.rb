@@ -14,7 +14,7 @@ class Concept < ActiveRecord::Base
   validates_presence_of :name
   validates_length_of :name, :within => 2..255
   validates_length_of :desc, :maximum => 1000
-  has_many :entities, :dependent => :destroy
+  has_many :entities, :dependent => :destroy, :order => :name
   validates_uniqueness_of :name, :case_sensitive => false
   has_and_belongs_to_many :dimensions
   

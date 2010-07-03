@@ -14,7 +14,7 @@
             <th/>
             <% end %>
           </tr>
-          <% @concept.sorted_entities.each do |entity| %>
+          <% @concept.entities.each do |entity| %>
             <tr class="<%= cycle("even", "odd") %>">
               <td>
                 <li> <%= link_to entity.name, entity_path(entity) %> 
@@ -41,7 +41,7 @@
         </table>
       </td>
       <td style="vertical-align: top;">
-        <div class="dimensions round">
+        <div class="dimensions round has_border">
           <h4>Associated values:</h4>
           <% @concept.opinion_dimensions.each do |dim| %>
             <li><%= dim.name %>

@@ -6,11 +6,11 @@
   <br>
   <hr>
   <% if current_user %>
-    <li><%= link_to "Edit profile", edit_user_path(:current) %></li>
-    <li><%= link_to "Logout", logout_path %></li>
+    <li><%= link_to "My Beliefs", beliefs_path %></li>
     <li><%= link_to "Add Dimension", new_opinion_path %></li>
     <li><%= link_to "View Dimensions", dimensions_path %></li>
-    <li><%= link_to "Beliefs", beliefs_path %></li>
+    <li><%= link_to "Edit profile", edit_user_path(:current) %></li>
+    <li><%= link_to "Logout", logout_path %></li>
   <% else %>
     <li><%= link_to "Login", login_path %></li>
     <li><%= link_to "Sign up", signup_path %></li>

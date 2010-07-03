@@ -15,21 +15,19 @@
       </div>
       <table>
         <tr>
-          <td class="menu">
-            <div id="menu" class="round">
+          <td style="vertical-align:top; width: 180px;" rowspan="2">
+            <div class="menu round">
               <%= render "layouts/main_menu" %>
             </div>
           </td>
-          <td class="content round">
-            <div id="content">
+          <td style="vertical-align:top;">
+            <div class="content round">
               <%= yield %>
             </div>
           </td>
         </tr>
         <tr>
-          <td>
-          </td>
-          <td>
+          <td style="vertical-align:top;">
             <div id="footer" class="round">
               <%= render "layouts/footer" %>
             </div>

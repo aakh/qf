@@ -62,7 +62,7 @@
       <% end %>
     </td>
     <td style="vertical-align:top;">
-      <div class="dimensions round">
+      <div class="dimensions round has_border">
         <% @ordinal_fact_values.each do |fv| %>
           <b><%= fv.fact.dimension.name %></b>: <%=h fv.templatize %>
           <br>
