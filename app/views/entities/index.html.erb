@@ -3,22 +3,24 @@
 <table class="round has_border">
   <tr>
     <th>Name</th>
+    <th>Belongs to</th>
     <th>Rating</th>
-    <th>Admin</th>
+    <% if role? "manager" %>
+      <th>Admin</th>
+    <% end %>
   </tr>
   <% @entities.each do |entity| %>
     <tr class="<%= cycle("even", "odd") %>">
       <td><%= link_to entity.name, entity %></td>
+      <td><%= link_to entity.concept.name, entity.concept %></td>
       <td>
-        <% num_dims_used, distance = entity.get_distance_from_ideal %>
-        <%= show_distance_bar(num_dims_used, distance) %>
+        <%= show_distance_bar(get_rating_from_10_for entity) %>
       </td>
-      <td>
-        [
-          <%= link_to "Edit", edit_entity_path(entity) %> |
-          <%= link_to "Delete", entity, :confirm => "Are you sure?", :method => :delete %>
-        ]
-      </td>
+      <% if role? "manager" %>
+        <td>
+          [<%= link_to "Edit", edit_entity_path(entity) %>|<%= link_to "Delete", entity, :confirm => "Are you sure?", :method => :delete %>]
+        </td>
+      <% end %>
     </tr>
   <% end %>
 </table>

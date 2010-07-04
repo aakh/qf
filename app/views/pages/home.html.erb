@@ -1,9 +1,40 @@
-<h3>Welcome</h3>
-<p>
-Welcome to the Queen's Ferry Hotel, the oldest pub in Auckland.
-</p>
-<% unless current_user %>
-  <%= link_to "Sign up", signup_path, :class => "signup_button round" %>
-<% end %>
+<h2>Welcome</h2>
 
+<table>
+  <tr>
+    <td style="vertical-align:top;">
+      <p>
+      Welcome to the Queen's Ferry Hotel, the oldest pub in Auckland.
+      </p>
+      <%= image_tag "theferry.jpg", :class=>"has_border round" %>
+    </td>
+    <td style="vertical-align:top;">
+      <% unless current_user %>
+        <%= link_to "Sign up", signup_path, :class => "signup_button round" %>
+      <% end %>
+      <br><br>
+      <table class="round has_border">
+        <th>Our best <%= @top %> menu items.</th>
+        <% 
+          count = 1
+          @topten.each do |entity| 
+        %>
+          <tr class="<%= cycle "odd", "even" %>">
+            <td>
+              <%= count.to_s + ") " %>
+              <% 
+                count += 1
+                rating = get_rating_from_10_for entity
+              %>
+              <span title="<%= entity.desc %>">
+              <%= link_to entity.name, entity_path(entity) %>
+              </span>
+              <%= " (#{'%.1f' % rating}/10)" %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>
 

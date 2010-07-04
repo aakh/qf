@@ -1,3 +1,15 @@
+
+<% form_tag @concept, :method => :get do %>
+  <%= label_tag "Sort by:" %>
+  <%= select_tag(:sort_by, options_for_select(["Alphabetical", "Ratings"], @selected_sort_order)) %>
+  <% if current_user %>
+    <%= label_tag "Use belief:" %>
+    <%= select_tag(:belief, options_for_select(["Global", "Mine"], @selected_belief)) %>
+    <%= insert_tooltip "Tell the system if you want the rankings to be<br>based on your own belief system or a universal one" %>
+  <% end %>
+  <%= submit_tag "Go" %>
+<% end %>
+<br>
 <% tabnav :menu do %>
   <table>
     <tr>
@@ -14,7 +26,7 @@
             <th/>
             <% end %>
           </tr>
-          <% @concept.entities.each do |entity| %>
+          <% @entities.each do |entity| %>
             <tr class="<%= cycle("even", "odd") %>">
               <td>
                 <li> <%= link_to entity.name, entity_path(entity) %> 
@@ -24,16 +36,12 @@
               </td>
               <td>
                 <center>
-                  <% num_dims_used, distance = entity.get_distance_from_ideal %>
-                  <%= show_distance_bar(num_dims_used, distance, entity_path(entity)) %>
+                  <%= show_distance_bar(get_rating_from_10_for(entity, @selected_belief == "Mine"), entity_path(entity)) %>
                 </center>
               </td>
               <% if role? "manager" %>
                 <td>
-                  [
-                  <%= link_to "Edit", edit_entity_path(entity) %> |
-                  <%= link_to "Delete", entity, :confirm => "Are you sure?", :method => :delete %> 
-                  ]
+                  [<%= link_to "Edit", edit_entity_path(entity) %>|<%= link_to "Delete", entity, :confirm => "Are you sure?", :method => :delete %>]
                 </td>
               <% end %>
             </tr>

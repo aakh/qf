@@ -1,9 +1,10 @@
 class EntitiesController < ApplicationController
-  before_filter :check_manager, :except => [:show, :rate]
-  before_filter :check_logged_in, :except => [:show]
+  before_filter :check_manager, :except => [:show, :rate, :index]
+  before_filter :check_logged_in, :except => [:show, :index]
   # GET /entities
   # GET /entities.xml
   def index
+    #local = if params[:options] then params[:options][:local] else nil end
     @entities = Entity.all.collect do |e|
       n, d = e.get_distance_from_ideal
       e.distance = d

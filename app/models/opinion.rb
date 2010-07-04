@@ -4,8 +4,8 @@
 # Table name: opinions
 #
 #  id           :integer         not null, primary key
-#  low_text     :string(255)     default("bad")
-#  high_text    :string(255)     default("excellent")
+#  low_text     :string(255)     default("low")
+#  high_text    :string(255)     default("high")
 #  total_ideal  :float           default(0.0)
 #  num_ideals   :integer         default(0)
 #  total_weight :float           default(0.0)

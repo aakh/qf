@@ -5,7 +5,7 @@
   <br>
 <% end %>
 
-<h2><%=h @entity.name %></h2>   
+<h2><%=h @entity.name << " (" << "%.1f" % get_rating_from_10_for(@entity) << "/10)" %></h2>   
 
 <% unless @entity.desc.blank? %>
   <br>

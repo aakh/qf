@@ -3,10 +3,10 @@
 <% semantic_form_for @opinion do |f| %>
   <% f.inputs :for => :dimension do |dim| %> 
     <%= dim.input :name %>
-    <%= f.input :low_text %>
-    <%= f.input :high_text %>
+    <%= f.input :low_text, :hint => "Tells the system what signifies a low value (e.g 'cold' for dimension 'tempratue') on the rating spectrum." %>
+    <%= f.input :high_text, :hint => "Tells the system what signifies a high value (e.g 'hot' for dimension 'tempratue') on the rating spectrum." %>
     <%= dim.input :desc %>
-    <%= dim.input :concepts, :label => "Apply to:" %>
+    <%= dim.input :concepts, :label => "Apply to:", :hint => "Tells system which menu categories this dimension can affect (e.g 'price' applies to all but 'sweetness' may just apply to desserts." %>
   <% end %>
   <% f.buttons do %>
     <%= f.commit_button "Add Dimension" %>

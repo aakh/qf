@@ -15,7 +15,7 @@
       <td>
         <% if dim.bool? %>
           <% yes = (opinion.total_ideal / opinion.num_ideals) > 0.5 %>
-          <%= yes ? "Yes" : "No" if opinion.num_ideals > 0 %>
+          <%= yes ? "Mostly liked" : "Mostly disliked" if opinion.num_ideals > 0 %>
         <% else %>
           <%= display_bar( (opinion.total_ideal / opinion.num_ideals) -1, 4 ) if opinion.num_ideals > 0 %>
         <% end %>

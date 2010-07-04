@@ -3,7 +3,8 @@ render_tabnav :menu, :generate_css => false do
   Concept.all.each do |concept|
     add_tab do |t|
       t.named concept.name
-      t.links_to :controller => "concepts", :action => "show", :id => concept
+      t.links_to :controller => "concepts", :action => "show", :id => concept, 
+        :sort_by => @selected_sort_order, :belief => @selected_belief
     end
   end 
 end 

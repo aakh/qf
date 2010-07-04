@@ -58,38 +58,42 @@ class Entity < ActiveRecord::Base
     b_percent <=> a_percent
   end
   
-  def get_distance_from_ideal()
-    get_distance_from nil
+  def get_distance_from_ideal(user = nil)
+    get_distance_from nil, user
   end
   
-  def get_distance_from(other)
+  def get_distance_from(other, user)
     dist = 0
     num_dims_used = 0
     self.concept.opinion_dimensions.each do |dim|
-      #For each dimension that this entity can be rated over
-      # Get ideal and weight value
-      # Get rating for this entity over the dimension
-      # Get percentage of rating within ideal
       opinion = dim.valuable
       
       weight = opinion.total_weight / opinion.num_weights
+      weight = 4 unless opinion.num_weights > 0
+      
+      if user
+        belief = Belief.find_by_opinion_id_and_user_id opinion, user
+        next unless belief.ideal
+        ideal = belief.ideal
+        weight = belief.weight ? belief.weight : 2 # set it to lowest so rating can be carried out
+      end
       
       # If no ideal then there's nothing to calculate the distance from, carry on
-      if other
-        ideal = other.get_rating_for dim
-        next unless ideal
-      else
-        ideal = opinion.total_ideal / opinion.num_ideals
-        next unless opinion.num_ideals > 0
+      unless user
+        if other
+          ideal = other.get_rating_for dim
+          next unless ideal
+        else
+          ideal = opinion.total_ideal / opinion.num_ideals
+          next unless opinion.num_ideals > 0
+        end
       end
       
       # if weight is I don't care then this dimension should be ignored
       next if weight == 1
-      
-      weight = 4 unless opinion.num_weights > 0
-      weight = (weight - 1) / 4
-
       next unless rating = get_rating_for(dim)
+      
+      weight = (weight - 1) / 4
       
       # Put in range of [1,4] if it's a boolean type
       if dim.bool?

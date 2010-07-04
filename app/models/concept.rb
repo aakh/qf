@@ -26,9 +26,9 @@ class Concept < ActiveRecord::Base
     dimensions.find_all { |dim| dim.valuable_type == "Opinion" }.sort
   end
   
-  def sorted_entities
+  def sorted_entities(user = nil)
     entities.collect do |e|
-      n, d = e.get_distance_from_ideal
+      n, d = e.get_distance_from_ideal user
       e.distance = d
       e.num_dims_used = n
       e

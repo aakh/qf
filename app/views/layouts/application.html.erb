@@ -9,13 +9,13 @@
     <%= javascript_include_tag "qTip" %>
   </head>
   <body>
-    <div class="container">
+    <div style="width: 90%; align: center; margin: auto;">
       <div id="header">
         <%= render "layouts/header" %>
       </div>
       <table>
         <tr>
-          <td style="vertical-align:top; width: 180px;" rowspan="2">
+          <td style="vertical-align:top; width: 200px;" rowspan="2">
             <div class="menu round">
               <%= render "layouts/main_menu" %>
             </div>
@@ -34,7 +34,8 @@
           </td>
         </tr>
       </table>
-      <%= debug params if Rails.env.development? %>
+      <%= #debug params if Rails.env.development? 
+      %>
     </div>
   </body>
 </html>

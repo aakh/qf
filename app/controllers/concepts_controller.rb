@@ -6,6 +6,23 @@ class ConceptsController < ApplicationController
 
   def show
     @concept = Concept.find(params[:id])
+    unless params[:belief]
+      user = nil
+    else
+      user = current_user if params[:belief] == "Mine"
+    end
+    
+    if params[:sort_by] and params[:sort_by] == "Ratings"
+      @entities = @concept.sorted_entities user
+    else
+      @entities = @concept.entities
+    end
+    
+    @selected_sort_order = params[:sort_by]
+    @selected_belief = params[:belief]
+    
+    @selected_sort_order = "Alphabetical" unless params[:sort_by]
+    @selected_belief = "Global" unless params[:belief]
   end
 
   def new
@@ -39,7 +56,7 @@ class ConceptsController < ApplicationController
       clear_last_paths
     else
       render :action => "edit"
-    end
+    end 
   end
 
   def destroy

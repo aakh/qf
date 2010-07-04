@@ -19,15 +19,15 @@ module ApplicationHelper
         ret << "[#{link_to 'Edit', edit_dimension_path(dim)}"
         #Only staff can delete
         if role? 'staff'
-          ret << " | #{link_to 'Delete', dim.valuable, :confirm => 'Are you sure?', :method => :delete}"
+          ret << "|#{link_to 'Delete', dim.valuable, :confirm => 'Are you sure?', :method => :delete}"
         end
         ret << "]"
       elsif fact.name != 'Price' and role? 'staff'
         ret << "[#{link_to 'Edit', edit_dimension_path(fact)}"
-        ret << " | #{link_to 'Delete', fact.valuable, :confirm => 'Are you sure?', :method => :delete}"
+        ret << "|#{link_to 'Delete', fact.valuable, :confirm => 'Are you sure?', :method => :delete}"
         more = ""
         more = "<br>You cannot edit a fact." unless role? 'staff'
-        ret << "] <span title='This is a Factual dimension#{more}'>" << image_tag("/images/star.png") << "</span>"
+        ret << "]<span title='This is a Factual dimension#{more}'>" << image_tag("/images/star.png") << "</span>"
       end
     end
   end
@@ -38,11 +38,17 @@ module ApplicationHelper
     ret += "<li class='current-rating one' style='width:#{percent}px;'>#{rating}/5.</li>"
     ret += "</ul>#{link ? '</a>' : ''}"
   end
+  
+  def get_rating_from_10_for(entity, local = false)
+    num_dims_used, distance = entity.get_distance_from_ideal local ? current_user : nil
+    return nil unless num_dims_used > 0
+    (num_dims_used - distance) / num_dims_used * 10
+  end
     
-  def show_distance_bar(num_dims_used, distance, link = nil)
-    if num_dims_used > 0
+  def show_distance_bar(out_of_10, link = nil)
+    if out_of_10
       #return dist.to_s
-      display_bar(num_dims_used - distance, num_dims_used, link)
+      "<span title='<b>#{'%.1f' % out_of_10}/10</b>'>" + display_bar(out_of_10, 10, link) + "</span>" 
     else
       "Not available"
     end
@@ -64,14 +70,16 @@ module ApplicationHelper
   end
   
   def show_tooltip_for(dim)
-    these_concepts = ""
+    these_concepts = "<u>Affects:</u><br>"
     dim.concepts.each {|x| these_concepts << "<li>" << x.name}
     unless dim.desc.blank?
       these_concepts << "<br><hr><u>Description:</u><br>" << dim.desc
     end
   
-    title = "<span title='<u>Affects:</u><br>#{these_concepts}'>"
-    title << image_tag("tooltip.gif") << "</span>"
-    return title
+    return insert_tooltip these_concepts
+  end
+  
+  def insert_tooltip(text)
+    "<span title='#{text}'>" + image_tag("tooltip.gif") + "</span>"
   end
 end
