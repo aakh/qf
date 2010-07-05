@@ -4,8 +4,11 @@
   </center>
   <br>
 <% end %>
-
-<h2><%=h @entity.name << " (" << "%.1f" % get_rating_from_10_for(@entity) << "/10)" %></h2>   
+<%
+  from_10 = get_rating_from_10_for(@entity)
+  from_10 = from_10 ? (" (" << "%.1f" % from_10 << "/10)") : ""
+%>
+<h2><%=h @entity.name << from_10 %></h2>   
 
 <% unless @entity.desc.blank? %>
   <br>

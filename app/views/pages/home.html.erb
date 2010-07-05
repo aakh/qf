@@ -16,16 +16,15 @@
       <table class="round has_border">
         <th>Our best <%= @top %> menu items.</th>
         <% 
-          count = 1
+          count = 0
           @topten.each do |entity| 
+          rating = get_rating_from_10_for entity
+          next unless rating
+          count += 1
         %>
           <tr class="<%= cycle "odd", "even" %>">
             <td>
               <%= count.to_s + ") " %>
-              <% 
-                count += 1
-                rating = get_rating_from_10_for entity
-              %>
               <span title="<%= entity.desc %>">
               <%= link_to entity.name, entity_path(entity) %>
               </span>

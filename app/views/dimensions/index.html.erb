@@ -1,5 +1,9 @@
 <h2>Value Dimensions</h2>
 
+<p>
+  Here you will find the ideal values for each value dimension that is defined in the system. The ideal value is
+  calculated as an aggregate of everyone's <%= link_to "belief system", beliefs_path %>.
+</p>
 <table class="round has_border">
   <th>Name</th>
   <th>Ideal Value</th>
@@ -17,7 +21,9 @@
           <% yes = (opinion.total_ideal / opinion.num_ideals) > 0.5 %>
           <%= yes ? "Mostly liked" : "Mostly disliked" if opinion.num_ideals > 0 %>
         <% else %>
+          <span class='indicator'><%= dim.valuable.low_text %></span>
           <%= display_bar( (opinion.total_ideal / opinion.num_ideals) -1, 4 ) if opinion.num_ideals > 0 %>
+          <span class='indicator'><%= dim.valuable.high_text %></span>
         <% end %>
       </td>
       <td>
