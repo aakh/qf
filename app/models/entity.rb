@@ -16,6 +16,7 @@
 #
 
 class Entity < ActiveRecord::Base
+  has_many :comments, :as => :commentable, :dependent => :destroy
   belongs_to :concept
   
   has_many :fact_values, :dependent => :destroy

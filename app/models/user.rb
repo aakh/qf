@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
   def fix_global_ideals
     beliefs = Belief.find_by_user_id self
     beleifs.each do |b|
+      #TODO delete global ideal information if the user is deleted
     end
   end
 end

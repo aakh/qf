@@ -8,3 +8,9 @@ plugins:
 - validation_reflection
 - paperclip
 - rails widgets
+- acts_as_commentable
+
+javascripts
+- popupjs
+- qTip
+- lowpro

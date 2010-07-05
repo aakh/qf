@@ -267,7 +267,7 @@ th {
 }
 
 .star-rating .current-rating{
-    z-index: 1;
+    z-index: 0;
     background-position: left bottom;
     line-height: 10px;
 }
@@ -296,4 +296,28 @@ div#qTip {
   text-align: left;
   position: absolute;
   z-index: 1000;
+}
+
+.popup {
+  padding: 10px
+}
+.popup h3.title {
+  font-size: 110%;
+  background-color: #000044;
+  border: 2px solid #660000;
+  color: white;
+  font-weight: bold;
+  margin: -10px -10px 0 -10px;
+  padding: 5px 9px;
+}
+.popup .popup_content {
+  font-size: 90%;
+  border: 2px solid #660000;
+  background-color: #ccffcc;
+  border-top: none;
+  margin: 0 -10px -10px -10px;
+  padding: 1px 9px;
+}
+.popup.draggable h3.title {
+  cursor: move;
 }

@@ -29,6 +29,7 @@ module ApplicationHelper
         more = "<br>You cannot edit a fact." unless role? 'staff'
         ret << "]<span title='This is a Factual dimension#{more}'>" << image_tag("/images/star.png") << "</span>"
       end
+      ret << link_to(image_tag("belief.gif"), one_belief_path(dim), :title => "Set belief for this dimension", :class => "popup" )
     end
   end
   
@@ -48,7 +49,8 @@ module ApplicationHelper
   def show_distance_bar(out_of_10, link = nil)
     if out_of_10
       #return dist.to_s
-      "<span title='<b>#{'%.1f' % out_of_10}/10</b>'>" + display_bar(out_of_10, 10, link) + "</span>" 
+      "<span title='<b>#{'%.1f' % out_of_10}/10</b>'>" + display_bar(out_of_10, 10, link) + "</span>"
+      
     else
       "Not available"
     end

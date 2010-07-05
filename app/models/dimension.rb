@@ -16,6 +16,8 @@
 #
 
 class Dimension < ActiveRecord::Base
+  has_many :comments, :as => :commentable, :dependent => :destroy
+  
   belongs_to :valuable, :polymorphic => true
   has_and_belongs_to_many :concepts
   validates_presence_of :name

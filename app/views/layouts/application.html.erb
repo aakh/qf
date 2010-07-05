@@ -7,6 +7,11 @@
     <%= render "layouts/stylesheets" %>
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag "qTip" %>
+    <%= javascript_include_tag "lowpro" %>
+    <%= javascript_include_tag "popup" %>
+    <script type='text/javascript'>
+      Event.addBehavior({ 'a.popup': Popup.TriggerBehavior() });
+    </script>
   </head>
   <body>
     <div style="width: 90%; align: center; margin: auto;">
