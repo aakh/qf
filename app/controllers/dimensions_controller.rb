@@ -7,6 +7,28 @@ class DimensionsController < ApplicationController
     @opinion_dimensions = Dimension.opinion_dimensions
   end
   
+  def show
+    @dimension = Dimension.find(params[:id])
+    @opinion = @dimension.valuable
+    beliefs = Belief.find_by_opinion_id @dimension.valuable
+    @num_who_care = @opinion.num_ideals
+    if @opinion.num_weights > 0
+      @weight = '%.1f' % (@opinion.total_weight / @opinion.num_weights)
+    else
+      @weight = "Not available..."
+    end
+    
+    if @num_who_care > 0
+      if @dimension.bool?
+        @ideal = (@opinion.total_ideal / @opinion.num_ideals) > 0.5 ? "Mostly liked" : "Mostly disliked"
+      else
+        @ideal = '%.1f' % ((@opinion.total_ideal / @opinion.num_ideals) * 2)
+      end
+    else
+      @ideal = "Not available..."
+    end
+  end
+  
   def edit
     @dimension = Dimension.find(params[:id])
     session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url

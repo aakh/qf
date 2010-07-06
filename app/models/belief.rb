@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100623234744
+# Schema version: 20100705154452
 #
 # Table name: beliefs
 #

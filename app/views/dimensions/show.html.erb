@@ -1,0 +1,23 @@
+<h2><%= @dimension.name %></h2>
+<% if @dimension.concepts.length > 0 %>
+  This dimension affects:
+  <ul>
+    <% @dimension.concepts.each do |c| %>
+      <li><%= link_to c.name, c %>
+    <% end %>
+  </ul>
+<% end %>
+
+<%
+%>
+
+Stats:
+<ul>
+  <li>Number of people who care: <%= @num_who_care %>
+  <li>Importance (out of 5): <%= @weight %>
+  <li>Ideal value: <%= @ideal %> (with 0 representing <%= @opinion.low_text %> and 10 representing <%= @opinion.high_text %>)
+  
+</ul>
+<hr>
+<%= render :partial => "shared/comments", :locals => { :commentable => @dimension } %>
+<%= edit_delete_dimension(@dimension) %><%= set_belief_for(@dimension) %>

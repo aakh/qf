@@ -1,7 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :concepts
   
-  map.resources :entities
+  map.resources :entities, :dimensions do |commentable|
+    commentable.resources :comments, :only => [:create, :destroy]
+  end
 
   map.resources :roles
 
@@ -9,7 +11,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users
   
-  map.resources :dimensions
   map.resources :facts
   map.resources :opinions
   

@@ -34,7 +34,7 @@ module ApplicationHelper
   
   def set_belief_for(dim)
     if dim and current_user
-      link_to(image_tag("belief.gif"), one_belief_path(dim), :title => "Set belief for this dimension", :class => "popup" )
+      link_to(image_tag("belief.gif"), one_belief_path(dim), :title => "Set your belief for this dimension", :class => "popup" )
     else
       ""
     end

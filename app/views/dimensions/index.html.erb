@@ -13,7 +13,7 @@
     <% opinion = dim.valuable %>
     <tr class="<%= cycle("even", "odd") %>">
       <td>
-        <%= dim.name %>
+        <%= link_to dim.name, dim %>
         <%= set_belief_for(dim) %><%= show_tooltip_for dim %>
       </td>
       <td>

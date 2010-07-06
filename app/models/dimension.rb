@@ -1,13 +1,11 @@
 # == Schema Information
-# Schema version: 20100623234744
+# Schema version: 20100705154452
 #
 # Table name: dimensions
 #
 #  id            :integer         not null, primary key
 #  name          :string(255)
 #  desc          :string(255)
-#  ideal         :float
-#  weight        :float
 #  bool          :boolean
 #  valuable_id   :integer
 #  valuable_type :string(255)
