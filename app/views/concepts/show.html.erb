@@ -53,7 +53,7 @@
           <h4>Associated values:</h4>
           <% @concept.opinion_dimensions.each do |dim| %>
             <li><%= dim.name %>
-            <%= edit_delete_dimension(dim) %>
+            <%= edit_delete_dimension(dim) %><%= set_belief_for(dim) %>
           <% end %>
         </div>
       </td>

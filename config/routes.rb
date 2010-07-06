@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.beliefs '/beliefs', :controller => 'beliefs', :action => 'edit'
   
-  map.one_belief '/one_belief/:id', :controller => 'popups', :action => 'one_belief'
+  map.one_belief '/edit_belief/:id', :controller => 'popups', :action => 'edit_belief'
   
   map.root :controller => 'pages', :action => 'home'
   map.about '/about', :controller => 'pages', :action => 'about'

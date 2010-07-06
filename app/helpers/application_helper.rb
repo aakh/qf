@@ -29,7 +29,14 @@ module ApplicationHelper
         more = "<br>You cannot edit a fact." unless role? 'staff'
         ret << "]<span title='This is a Factual dimension#{more}'>" << image_tag("/images/star.png") << "</span>"
       end
-      ret << link_to(image_tag("belief.gif"), one_belief_path(dim), :title => "Set belief for this dimension", :class => "popup" )
+    end
+  end
+  
+  def set_belief_for(dim)
+    if dim and current_user
+      link_to(image_tag("belief.gif"), one_belief_path(dim), :title => "Set belief for this dimension", :class => "popup" )
+    else
+      ""
     end
   end
   

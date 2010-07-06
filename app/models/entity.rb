@@ -74,7 +74,7 @@ class Entity < ActiveRecord::Base
       
       if user
         belief = Belief.find_by_opinion_id_and_user_id opinion, user
-        next unless belief.ideal
+        next unless belief and belief.ideal
         ideal = belief.ideal
         weight = belief.weight ? belief.weight : 2 # set it to lowest so rating can be carried out
       end

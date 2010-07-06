@@ -44,7 +44,7 @@ class BeliefsController < ApplicationController
     end
     
     flash[:notice] = "Beliefs updated."
-    redirect_to beliefs_path
+    redirect_to :back
   end
 
 end

@@ -1,0 +1,39 @@
+<div class='popup' id='<%= @dimension %>'>
+  <h3 class='title'>Set Dimension Belief</h3>
+  <div class='popup_content'>
+    <br>
+    <p>Setting your belief allows the system to take what <b>you</b> beleive in into<br>account when ranking items</p>
+    <% semantic_form_for :belief, :url => { :controller => :beliefs, :action => "update", :id => @dimension } do |f| %>
+      <table id="beliefs" class="ratings round">
+        <tr>
+          <td>Dimension Name:</td>
+          <td>
+            <%= @dimension.name %>
+            <% ideal_key = "ideals[#{@dimension.id}]" %>
+            <% weight_key = "weights[#{@dimension.id}]" %>
+            <% belief = Belief.find_by_opinion_id_and_user_id @dimension.valuable, current_user %>
+            <% ideal = belief.ideal if belief %>
+            <% weight = belief.weight if belief %>
+          </td>
+        </tr>
+        <tr>
+          <td>Ideal Value:</td>
+          <td>
+            <%= send(@dimension.bool? ? :show_booler : :show_rater, @dimension, ideal_key, ideal) %>
+          </td>
+        </tr>
+          <td>How important?:</td>
+          <td>
+            <span class="indicator">I care not</span>
+            <% for i in 1..5 %>
+              <%= radio_button_tag weight_key, i, weight ? weight == i : false %>
+            <% end %>
+            <span class="indicator">Vital</span>
+          </td>
+        </tr>
+      </table>
+      <%= submit_tag "Set Belief" %>
+      <a style="float:right;" href="javascript: Element.closePopup('<%= @dimension %>')">Close</a>
+    <% end %>
+  </div>
+</div>

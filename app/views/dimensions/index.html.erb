@@ -14,7 +14,7 @@
     <tr class="<%= cycle("even", "odd") %>">
       <td>
         <%= dim.name %>
-        <%= show_tooltip_for dim %>
+        <%= set_belief_for(dim) %><%= show_tooltip_for dim %>
       </td>
       <td>
         <% if dim.bool? %>
