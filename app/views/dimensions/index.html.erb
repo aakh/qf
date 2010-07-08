@@ -13,17 +13,17 @@
     <% opinion = dim.valuable %>
     <tr class="<%= cycle("even", "odd") %>">
       <td>
-        <%= link_to dim.name, dim %>
+        <%= link_to h(dim.name), dim %>
         <%= set_belief_for(dim) %><%= show_tooltip_for dim %>
       </td>
       <td>
         <% if dim.bool? %>
           <% yes = (opinion.total_ideal / opinion.num_ideals) > 0.5 %>
           <%= yes ? "Mostly liked" : "Mostly disliked" if opinion.num_ideals > 0 %>
-        <% else %>
-          <span class='indicator'><%= dim.valuable.low_text %></span>
+        <% elsif opinion.num_ideals > 0 %>
+          <span class='indicator'><%=h dim.valuable.low_text %></span>
           <%= display_bar( (opinion.total_ideal / opinion.num_ideals) -1, 4 ) if opinion.num_ideals > 0 %>
-          <span class='indicator'><%= dim.valuable.high_text %></span>
+          <span class='indicator'><%=h dim.valuable.high_text %></span>
         <% end %>
       </td>
       <td>

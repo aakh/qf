@@ -4,7 +4,7 @@
   <% f.inputs do %>
     <%= f.input :name %>
     <%= f.input :desc %>
-    <%= f.input :dimensions , :collection => Dimension.fact_dimensions, :label => "Facts" %>
+    <%= f.input :dimensions , :collection => Dimension.fact_dimensions, :label => "Facts", :hint => "Each fact has a corresponsing opinion, make sure you select those too from the box below." %>
     <%= f.input :dimensions , :collection => Dimension.opinion_dimensions, :label => "Opinions" %>
   <% end %>
   <% f.buttons do %>

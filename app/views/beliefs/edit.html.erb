@@ -19,7 +19,7 @@
     <% Dimension.opinion_dimensions.each do |dim| %>
       <tr>
         <td>
-          <%= dim.name %> <%= edit_delete_dimension(dim) %>         
+          <%=h dim.name %> <%= edit_delete_dimension(dim) %>         
           <%= show_tooltip_for dim %>
           <% ideal_key = "ideals[#{dim.id}]" %>
           <% weight_key = "weights[#{dim.id}]" %>

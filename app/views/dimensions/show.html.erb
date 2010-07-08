@@ -1,9 +1,9 @@
-<h2><%= @dimension.name %></h2>
+<h2><%=h @dimension.name %></h2>
 <% if @dimension.concepts.length > 0 %>
   This dimension affects:
   <ul>
     <% @dimension.concepts.each do |c| %>
-      <li><%= link_to c.name, c %>
+      <li><%= link_to h(c.name), c %>
     <% end %>
   </ul>
 <% end %>
@@ -15,7 +15,7 @@ Stats:
 <ul>
   <li>Number of people who care: <%= @num_who_care %>
   <li>Importance (out of 5): <%= @weight %>
-  <li>Ideal value: <%= @ideal %> (with 0 representing <%= @opinion.low_text %> and 10 representing <%= @opinion.high_text %>)
+  <li>Ideal value: <%= @ideal %> (with 0 representing <%=h @opinion.low_text %> and 10 representing <%=h @opinion.high_text %>)
   
 </ul>
 <hr>

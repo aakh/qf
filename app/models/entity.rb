@@ -66,17 +66,17 @@ class Entity < ActiveRecord::Base
   def get_distance_from(other, user)
     dist = 0
     num_dims_used = 0
+
     self.concept.opinion_dimensions.each do |dim|
       opinion = dim.valuable
       
-      weight = opinion.total_weight / opinion.num_weights
-      weight = 4 unless opinion.num_weights > 0
+      weight = (opinion.num_weights > 0) ? (opinion.total_weight / opinion.num_weights) : 5
       
       if user
         belief = Belief.find_by_opinion_id_and_user_id opinion, user
         next unless belief and belief.ideal
         ideal = belief.ideal
-        weight = belief.weight ? belief.weight : 2 # set it to lowest so rating can be carried out
+        weight = (belief.weight and belief.weight > 0) ? belief.weight : 5
       end
       
       # If no ideal then there's nothing to calculate the distance from, carry on

@@ -7,11 +7,11 @@
       <tr>
         <td>
           <% unless comment.title.blank? %>
-            Title: <b><%= comment.title %></b>
+            Title: <b><%=h comment.title %></b>
             <br>
           <% end %>
           <% if comment.user %>
-            <i>By: <%= comment.user.full_name %></i>
+            <i>By: <%=h comment.user.full_name %></i>
           <% else %>
             <i>By: Anonymous Monkey</i>
           <% end %>
@@ -22,20 +22,23 @@
       </tr>
       <tr class="ratings round" style="white-space:normal;">
         <td>
-          <%= comment.body %>
+          <%=h comment.body %>
         </td>
       </tr>
     <% end %>
   </table>
 <% end %>
-<br><br>
-<h4>Add Comment</h4>
-<% semantic_form_for [commentable, Comment.new()] do |f| %>
-  <% f.inputs do %>
-    <%= f.input :title %>
-    <%= f.input :body %>
-  <% end %>
-  <% f.buttons do %>
-    <%= f.commit_button "Add Comment" %>
+<br>
+<% if current_user %>
+  <br>
+  <h4>Add Comment</h4>
+  <% semantic_form_for [commentable, Comment.new()] do |f| %>
+    <% f.inputs do %>
+      <%= f.input :title %>
+      <%= f.input :body %>
+    <% end %>
+    <% f.buttons do %>
+      <%= f.commit_button "Add Comment" %>
+    <% end %>
   <% end %>
 <% end %>

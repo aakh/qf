@@ -15,7 +15,7 @@
   <b>Description:</b>
   <%=h @entity.desc %>
 <% end %>
-      
+<br><br>
 <table>
   <tr>
     <td>
@@ -28,7 +28,7 @@
             <% next if dim.bool? %>
             <tr>
               <td>
-                <%= dim.name %>
+                <%=link_to h(dim.name), dimension_path(dim) %>
                 <%= edit_delete_dimension(dim) %><%= set_belief_for(dim) %><%= show_tooltip_for dim %>
               </td>
               <td>
@@ -41,12 +41,12 @@
               </td>
               <td>
                 <center>
-                  <span class="indicator"><%= dim.valuable.low_text %></span>
+                  <span class="indicator"><%=h dim.valuable.low_text %></span>
                   <% val = Rating.get_value(current_user, @entity, dim.valuable) %>
                   <% for i in 1..5 %>
                     <%= radio_button_tag "dims[#{dim.id}]", i, val ? val == i : false %>
                   <% end %>
-                  <span class="indicator"><%= dim.valuable.high_text %></span>
+                  <span class="indicator"><%=h dim.valuable.high_text %></span>
                 </center>
               </td>
             </tr>
@@ -69,7 +69,7 @@
     <td style="vertical-align:top;">
       <div class="dimensions round has_border">
         <% @ordinal_fact_values.each do |fv| %>
-          <b><%= fv.fact.dimension.name %></b>: <%=h fv.templatize %>
+          <%= fv.templatize %>
           <br>
         <% end %>
         

@@ -9,14 +9,6 @@ class CreateOpinions < ActiveRecord::Migration
       t.integer :num_weights, :default => 0
       t.timestamps
     end
-    
-    o = Opinion.create
-    o.dimension = Dimension.new :name => "Quality"
-    o.save!
-    
-    o = Opinion.create
-    o.dimension = Dimension.new :name => "Presentation"
-    o.save!
   end
 
   def self.down

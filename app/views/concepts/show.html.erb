@@ -29,7 +29,7 @@
           <% @entities.each do |entity| %>
             <tr class="<%= cycle("even", "odd") %>">
               <td>
-                <li> <%= link_to entity.name, entity_path(entity) %> 
+                <li> <%= link_to h(entity.name), entity_path(entity) %> 
                 (
                 $<%= FactValue.get_value(Fact.find_by_name("Price"), entity).value %>
                 )
@@ -52,7 +52,7 @@
         <div class="dimensions round has_border">
           <h4>Associated values:</h4>
           <% @concept.opinion_dimensions.each do |dim| %>
-            <li><%= dim.name %>
+            <li><%=h dim.name %>
             <%= edit_delete_dimension(dim) %><%= set_belief_for(dim) %>
           <% end %>
         </div>

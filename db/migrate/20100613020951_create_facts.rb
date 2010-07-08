@@ -5,10 +5,6 @@ class CreateFacts < ActiveRecord::Migration
       t.timestamps
     end
     
-    f = Fact.create :template => "$# NZD"
-    f.dimension = Dimension.new :name => "Price"
-    f.save!
-    
   end
 
   def self.down
