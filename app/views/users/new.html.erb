@@ -1,6 +1,18 @@
 <h2>Sign up</h2>
 
+
 <% semantic_form_for @user do |f| %>
+  <div class="ratings round">
+    <%= label_tag "Aswer this CAPTCHA question to prove you're not a robot before signing up." %>
+    <br>
+    <%= h(@question) %>
+    <br>
+    <%= text_field_tag :captcha_user_answer %>
+    <% @answers.each do |a| %>
+      <%= hidden_field_tag "captcha_answers[]", a %>
+    <% end %>
+  </div>
+  <br><br>
   <% f.inputs do %>
     <%= f.input :email %>
     <%= f.input :password %>

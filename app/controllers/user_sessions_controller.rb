@@ -1,4 +1,4 @@
-class UserSessionsController < ApplicationController
+class UserSessionsController < ApplicationController  
   # GET /user_sessions/new
   # GET /user_sessions/new.xml
   def new
