@@ -6,6 +6,7 @@
     <%= f.input :high_text %>
     <%= dim.input :desc %>
     <%= dim.input :concepts, :label => "Apply to:" %>
+    <%= dim.input :edited_by, :as => :hidden %>
   <% end %>
   <% f.buttons do %>
     <%= f.commit_button "Update" %>

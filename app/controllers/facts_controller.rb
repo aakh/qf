@@ -5,6 +5,7 @@ class FactsController < ApplicationController
   def new
     @fact = Fact.new
     @fact.build_dimension
+    @fact.dimension.created_by = current_user.id
     session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url
   end
 

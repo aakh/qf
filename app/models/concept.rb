@@ -19,11 +19,11 @@ class Concept < ActiveRecord::Base
   has_and_belongs_to_many :dimensions
   
   def fact_dimensions
-    dimensions.find_all { |dim| dim.valuable_type == "Fact" }.sort
+    dimensions.find_all { |dim| dim.valuable_type == "Fact" and dim.enabled? }.sort
   end
   
   def opinion_dimensions
-    dimensions.find_all { |dim| dim.valuable_type == "Opinion" }.sort
+    dimensions.find_all { |dim| dim.valuable_type == "Opinion" and dim.enabled? }.sort
   end
   
   def sorted_entities(user = nil)

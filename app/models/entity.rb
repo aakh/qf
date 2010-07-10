@@ -68,6 +68,9 @@ class Entity < ActiveRecord::Base
     num_dims_used = 0
 
     self.concept.opinion_dimensions.each do |dim|
+      
+      next unless dim.enabled?
+      
       opinion = dim.valuable
       
       weight = (opinion.num_weights > 0) ? (opinion.total_weight / opinion.num_weights) : 5

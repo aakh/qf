@@ -32,7 +32,7 @@
                 <li> <%= link_to h(entity.name), entity_path(entity) %> 
                 (
                 $<%= FactValue.get_value(Fact.find_by_name("Price"), entity).value %>
-                )
+                ) <%= rate entity %></li>
               </td>
               <td>
                 <center>
@@ -53,7 +53,7 @@
           <h4>Associated values:</h4>
           <% @concept.opinion_dimensions.each do |dim| %>
             <li><%=h dim.name %>
-            <%= edit_delete_dimension(dim) %><%= set_belief_for(dim) %>
+            <%= edit_delete_dimension(dim) %> <%= set_belief_for(dim) %>
           <% end %>
         </div>
       </td>

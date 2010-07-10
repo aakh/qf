@@ -17,6 +17,7 @@
     <th><center>Your ideal value</center></th>
     <th><center>How important?</center></th>
     <% Dimension.opinion_dimensions.each do |dim| %>
+      <% next unless dim.enabled? %>
       <tr>
         <td>
           <%=h dim.name %> <%= edit_delete_dimension(dim) %>         

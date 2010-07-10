@@ -15,20 +15,35 @@ module ApplicationHelper
     if current_user
       # Can't edit a dimension associated with a fact
       fact = Dimension.find_by_name_and_valuable_type dim.name, 'Fact'
+      enabled_text = dim.enabled? ?  "Disable": "Enable"
+      
       if !fact
         ret << "[#{link_to 'Edit', edit_dimension_path(dim)}"
         #Only staff can delete
         if role? 'staff'
           ret << "|#{link_to 'Delete', dim.valuable, :confirm => 'Are you sure?', :method => :delete}"
         end
+        # Only I can disable
+        if role? 'administrator'
+          ret << "|#{link_to enabled_text, {:controller => :dimensions, :action => :enable, :id => dim}, :confirm => 'Are you sure?', :method => :post}"
+        end
         ret << "]"
       elsif fact.name != 'Price' and role? 'staff'
         ret << "[#{link_to 'Edit', edit_dimension_path(fact)}"
         ret << "|#{link_to 'Delete', fact.valuable, :confirm => 'Are you sure?', :method => :delete}"
+        ret << "|#{link_to enabled_text, {:controller => :dimensions, :action => :enable, :id => dim}, :confirm => 'Are you sure?', :method => :post}"
         more = ""
         more = "<br>You cannot edit a fact." unless role? 'staff'
         ret << "]<span title='This is a Factual dimension#{more}'>" << image_tag("/images/star.png") << "</span>"
       end
+    end
+  end
+  
+  def rate(entity)
+    if entity and current_user
+      "<font style='font-size:9px;'>[#{link_to "rate me", rate_path(entity), :class => "popup", :style => "padding: 0px;"}]</font>"
+    else
+      ""
     end
   end
   
@@ -42,7 +57,7 @@ module ApplicationHelper
         image = image_tag("belief_set.gif")
         title = ""
       end
-      link_to(image, one_belief_path(dim), :title => title, :class => "popup" )
+      link_to(image, edit_belief_path(dim), :title => title, :class => "popup", :style => "padding: 0px;" )
     else
       ""
     end

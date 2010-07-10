@@ -10,8 +10,17 @@
   <th>Ideal Weight</th>
   <% if current_user %><th></th><% end %>
   <% @opinion_dimensions.each do |dim| %>
-    <% opinion = dim.valuable %>
-    <tr class="<%= cycle("even", "odd") %>">
+    <% 
+      next unless dim.enabled? or role? "administrator"
+      opinion = dim.valuable 
+      row_style = ""
+      unless dim.enabled?
+        row_style = "style='background-color: yellow;'"
+      else
+        row_style = "class='#{cycle("even", "odd")}'"
+      end
+    %>
+    <tr <%= row_style %> >
       <td>
         <%= link_to h(dim.name), dim %>
         <%= set_belief_for(dim) %><%= show_tooltip_for dim %>

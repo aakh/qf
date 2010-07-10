@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100705154452) do
+ActiveRecord::Schema.define(:version => 20100710113040) do
 
   create_table "beliefs", :force => true do |t|
     t.float    "ideal"
@@ -59,6 +59,9 @@ ActiveRecord::Schema.define(:version => 20100705154452) do
     t.string   "valuable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "created_by"
+    t.integer  "edited_by"
+    t.boolean  "enabled",       :default => true
   end
 
   create_table "entities", :force => true do |t|

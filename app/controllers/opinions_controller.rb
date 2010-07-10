@@ -5,6 +5,7 @@ class OpinionsController < ApplicationController
   def new
     @opinion = Opinion.new
     @opinion.build_dimension 
+    @opinion.dimension.created_by = current_user.id
     session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url
   end
 

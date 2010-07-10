@@ -1,10 +1,30 @@
 class DimensionsController < ApplicationController
   before_filter :check_staff, :only => :delete
   before_filter :check_logged_in
+  before_filter :check_administrator, :only => :enable
   
   def index
     @fact_dimensions = Dimension.fact_dimensions
     @opinion_dimensions = Dimension.opinion_dimensions
+  end
+  
+  def enable
+    @dimension = Dimension.find(params[:id])
+    @dimension.enabled = !@dimension.enabled?
+    @dimension.save!
+    
+    if @dimension.valuable_type = 'Fact'
+      vt = 'Opinion'
+    else
+      vt = 'Fact'
+    end
+    
+    @other = Dimension.find_by_name_and_valuable_type @dimension.name, vt
+    @other.enabled = @dimension.enabled
+    @other.save!
+    
+    flash[:notice] = (@dimension.enabled? ? "Enabled" : "Disabled") + " " + @dimension.name
+    redirect_to :back
   end
   
   def show
@@ -31,6 +51,8 @@ class DimensionsController < ApplicationController
   
   def edit
     @dimension = Dimension.find(params[:id])
+    
+    
     session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url
     if @dimension.valuable_type == "Opinion"
       # If there's a fact with the same name, do not allow this opinion to be edited
@@ -39,10 +61,12 @@ class DimensionsController < ApplicationController
         redirect_to :back
       else
         @opinion = @dimension.valuable
+        @opinion.dimension.edited_by = current_user.id
         render 'opinions/edit'
       end
     else
       @fact = @dimension.valuable
+      @fact.dimension.edited_by = current_user.id
       render 'facts/edit'
     end
   end

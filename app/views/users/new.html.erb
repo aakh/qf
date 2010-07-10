@@ -20,7 +20,7 @@
     <hr>
     <%= f.input :first_name %>
     <%= f.input :last_name %>
-    <%= f.input :birthday %>
+    <%= f.input :birthday, :start_year => Time.now.year - 100, :end_year => Time.now.year %>
     <%= f.input :country %>
   <% end %>
   <% f.buttons do %>
