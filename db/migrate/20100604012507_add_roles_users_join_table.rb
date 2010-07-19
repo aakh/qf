@@ -15,6 +15,12 @@ class AddRolesUsersJoinTable < ActiveRecord::Migration
     ali.roles << r1 << r2 << r3 
     
     ali.save!
+    
+    User.create!(:email => "test1@test.com", :password => "test", :password_confirmation => "test")
+    User.create!(:email => "test2@test.com", :password => "test", :password_confirmation => "test")
+    User.create!(:email => "test3@test.com", :password => "test", :password_confirmation => "test")
+    User.create!(:email => "test4@test.com", :password => "test", :password_confirmation => "test")
+    
   end
 
   def self.down

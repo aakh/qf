@@ -14,43 +14,43 @@ class EntitiesController < ApplicationController
   end
   
   def rate
+  
     @entity = Entity.find params[:id]
     
     unless params[:dims]
       flash[:error] = "You have to rate stuff first."
       redirect_to :back # no ratings to apply
-    end
-    
-    
-    params[:dims].each do |id, entry|
-      dim = Dimension.find id
-      r = Rating.find_or_create_by_opinion_id_and_entity_id_and_user_id dim.valuable, @entity, current_user
-      cr = CurrentRating.find_by_entity_id_and_opinion_id @entity, dim.valuable
-      
-      if r.value #if this user is rating again then we have a current_rating for this dim/entity
-        cr.total_rating -= r.value
-        cr.num_ratings -= 1
+    else
+      params[:dims].each do |id, entry|
+        dim = Dimension.find id
+        r = Rating.find_or_create_by_opinion_id_and_entity_id_and_user_id dim.valuable, @entity, current_user
+        cr = CurrentRating.find_by_entity_id_and_opinion_id @entity, dim.valuable
+        
+        if r.value #if this user is rating again then we have a current_rating for this dim/entity
+          cr.total_rating -= r.value
+          cr.num_ratings -= 1
+        end
+        
+        r.value = entry.to_i
+        r.opinion = dim.valuable
+        r.entity = @entity
+        r.user = current_user
+        r.save 
+        
+        # Apply it to the current_ratings table
+        unless cr
+          cr = CurrentRating.create :entity => @entity, :opinion => dim.valuable
+        end
+        
+        cr.total_rating += entry.to_i
+        cr.num_ratings += 1
+        cr.save
+        
       end
       
-      r.value = entry.to_i
-      r.opinion = dim.valuable
-      r.entity = @entity
-      r.user = current_user
-      r.save 
-      
-      # Apply it to the current_ratings table
-      unless cr
-        cr = CurrentRating.create :entity => @entity, :opinion => dim.valuable
-      end
-      
-      cr.total_rating += entry.to_i
-      cr.num_ratings += 1
-      cr.save
-      
+      flash[:notice] = "Thank you for you rating."
+      redirect_to :back
     end
-      
-    flash[:notice] = "Thank you for you rating."
-    redirect_to :back
   end
 
   # GET /entities/1
