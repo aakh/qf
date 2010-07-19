@@ -11,7 +11,7 @@
   </tr>
   <% @entities.each do |entity| %>
     <tr class="<%= cycle("even", "odd") %>">
-      <td><%= link_to h(entity.name), entity %></td>
+      <td><%= link_to h(entity.name), entity %> <%= rate entity %></td>
       <td><%= link_to h(entity.concept.name), entity.concept %></td>
       <td>
         <%= show_distance_bar(get_rating_from_10_for entity) %>
