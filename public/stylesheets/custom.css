@@ -315,7 +315,7 @@ div#qTip {
 }
 .popup h3.title {
   font-size: 110%;
-  background-color: #000044;
+  background-color: #444444;
   border: 2px solid #660000;
   color: white;
   font-weight: bold;
@@ -325,7 +325,7 @@ div#qTip {
 .popup .popup_content {
   font-size: 90%;
   border: 2px solid #660000;
-  background-color: #ccffcc;
+  background-color: #f0f0f0;
   border-top: none;
   margin: 0 -10px -10px -10px;
   padding: 1px 9px;

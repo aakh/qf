@@ -66,7 +66,7 @@ module ApplicationHelper
   def display_bar(rating, max, link = nil)
     percent = Integer(rating * (100 / max))
     ret = "#{link ? '<a href=' + link + '>' : ''}<ul class='star-rating'>"
-    ret += "<li class='current-rating one' style='width:#{percent}px;'>#{rating}/5.</li>"
+    ret += "<li class='current-rating three' style='width:#{percent}px;'>#{rating}/5.</li>"
     ret += "</ul>#{link ? '</a>' : ''}"
   end
   
