@@ -43,4 +43,21 @@ class Opinion < ActiveRecord::Base
   
   has_many :beliefs, :dependent => :destroy
   has_many :users, :through => :beliefs
+  
+  def weight
+    self.num_weights > 0 ? (self.total_weight / self.num_weights) : 5
+  end
+  
+  def ideal
+    val = nil
+    if self.num_ideals > 0
+      val = self.total_ideal / self.num_ideals
+      
+      # Tranform range [0,1] into range [1,5] if boolean dimension
+      if dimension.bool?
+        val = val * 4 + 1
+      end
+    end
+    val
+  end
 end

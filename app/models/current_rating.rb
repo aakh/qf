@@ -16,5 +16,11 @@ class CurrentRating < ActiveRecord::Base
   belongs_to :entity
   belongs_to :opinion
   
-  
+  def rating
+    if self.num_ratings > 0 
+      self.total_rating / self.num_ratings
+    else
+      nil
+    end
+  end
 end

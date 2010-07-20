@@ -56,4 +56,20 @@ class User < ActiveRecord::Base
       #TODO delete global ideal information if the user is deleted
     end
   end
+  
+  def get_ideal_and_weight_for(opinion)
+    belief = Belief.find_by_opinion_id_and_user_id opinion, self
+    unless belief and belief.ideal
+      return nil, nil
+    end
+    ideal = belief.ideal
+    weight = (belief.weight and belief.weight > 0) ? belief.weight : 5
+    
+    if opinion.dimension.bool?
+      # Transform boolean 0|1 values into either 1|5
+      ideal = ideal * 4 + 1
+    end
+    
+    return ideal, weight
+  end
 end

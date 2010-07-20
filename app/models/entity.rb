@@ -54,8 +54,8 @@ class Entity < ActiveRecord::Base
     return 1 if num_dims_used == 0 and ent.num_dims_used > 0
     return -1 if num_dims_used > 0 and ent.num_dims_used == 0
     return 0 if num_dims_used == 0 and ent.num_dims_used == 0
-    a_percent = Integer((@num_dims_used - @distance) * (100 / @num_dims_used))
-    b_percent = Integer((ent.num_dims_used - ent.distance) * (100 / ent.num_dims_used))
+    a_percent = Integer((@num_dims_used - @distance) * (100.0 / @num_dims_used))
+    b_percent = Integer((ent.num_dims_used - ent.distance) * (100.0 / ent.num_dims_used))
     b_percent <=> a_percent
   end
   
@@ -69,70 +69,94 @@ class Entity < ActiveRecord::Base
 
     self.concept.opinion_dimensions.each do |dim|
       
+      # If this dimension has been disabled, then carry on to next
       next unless dim.enabled?
+      
+      # If this dimension has not been rated then ignore it
+      next unless rating = rating_for(dim)
       
       opinion = dim.valuable
       
-      weight = (opinion.num_weights > 0) ? (opinion.total_weight / opinion.num_weights) : 5
-      
+      # If user supplied then we want to use the user's ideal value and weight
+      # else we use the global one
       if user
-        belief = Belief.find_by_opinion_id_and_user_id opinion, user
-        next unless belief and belief.ideal
-        ideal = belief.ideal
-        weight = (belief.weight and belief.weight > 0) ? belief.weight : 5
-      end
-      
-      # If no ideal then there's nothing to calculate the distance from, carry on
-      unless user
+        ideal, weight = user.get_ideal_and_weight_for opinion
+      else
+        # If other supplied then we need to calculate distance between
+        # this entity and 'other' entity, so use other.rating as ideal
         if other
-          ideal = other.get_rating_for dim
-          next unless ideal
+          ideal = other.rating_for dim
         else
-          ideal = opinion.total_ideal / opinion.num_ideals
-          next unless opinion.num_ideals > 0
+          # Use global ideal value
+          ideal = opinion.ideal
         end
+        
+        # Use global weight
+        weight = opinion.weight
       end
       
-      # if weight is I don't care then this dimension should be ignored
+      # If we don't have an ideal at this point then go to next value dimension
+      next unless ideal
+      
+      # if weight is "I don't care" (i.e. 1) then this dimension should be ignored
       next if weight == 1
-      next unless rating = get_rating_for(dim)
       
-      weight = (weight - 1) / 4
+      # Transform weights from [2,5] into [0,1]
+      weight = (weight - 2) / 3
       
-      # Put in range of [1,4] if it's a boolean type
-      if dim.bool?
-        ideal = ideal * 4 + 1
-        rating = rating * 4 + 1
-      end
-
-      # Simple distance calculation
-      # dist += ((ideal - rating).abs + 1) * weight
+      # Values all in the range of 1 to 5.
+      min = 1
+      max = 5
       
-      x = (1 - rating) / (1 - 5)
-      y = (1 - ideal) / (1 - 5)
+      # This takes into account situations where ideal is not either 1 or 5 so the
+      # max and min becomes different. If ideal is 3 for example, then the maximum 
+      # difference between the ideal and the actual rating can be 2 (instead of 4
+      # when using the range [1,5])
+      
+      # right = 5 - ideal
+      # left = ideal - 1
+      # max = right > left ? right : left
+      # if rating > ideal
+        # min = ideal
+        # max = ideal + max
+      # else
+        # min = ideal - max
+        # max = ideal
+      # end
+      
+      x = (min - rating) / (min - max)
+      y = (min - ideal) / (min - max)
       num_dims_used += 1
       
+      # If rating is the same as ideal then rating is perfect!
       next if x == y
       
+      # calculate distance between rating and ideal and add it to total_distance
       x *= weight
       y *= weight
       dist += 0.5 * (1 + (x - y).abs - (1 - x - y).abs)
     end
+    
+    # The max distance is never bigger than the number of dimensions used
+    # in the caluclation since the max distance for each of ratings from
+    # the ideal is 1.
+    # We return both so we can display a bar graph depicting a rating instead 
+    # of just a distance.
     return num_dims_used, dist
   end
   
   private
   
-  def get_rating_for(dim)
+  def rating_for(dim)
+    # If it's a boolean then this entity either has it or doesn't
+    # Retirn 0|1 in the range of 1|5
     if dim.bool?
       fv = FactValue.get_value(Fact.find_by_name(dim.name), self)
-      return nil unless fv
-      if fv then fv.value else nil end
+      return fv.value * 4 + 1 if fv
     else
       cr = CurrentRating.find_by_entity_id_and_opinion_id(self, dim.valuable)
-      # If this dimension doesn't have a rating then carry on with the next.
-      return nil unless cr
-      if cr.num_ratings > 0 then cr.total_rating / cr.num_ratings else nil end
+      return cr.rating if cr
     end
+    nil
   end
 end
