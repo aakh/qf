@@ -29,7 +29,9 @@
             <tr>
               <td>
                 <%=link_to h(dim.name), dimension_path(dim) %>
-                <%= edit_delete_dimension(dim) %><%= set_belief_for(dim) %><%= show_tooltip_for dim %>
+                <%= edit_delete_dimension(dim) %>
+                <%= set_belief_for(dim) %>
+                <%= show_tooltip_for dim %>
               </td>
               <td>
                 <% cr = CurrentRating.find_by_entity_id_and_opinion_id @entity, dim.valuable %>

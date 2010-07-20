@@ -6,8 +6,8 @@
 </p>
 <table class="round has_border">
   <th>Name</th>
-  <th>Ideal Value</th>
-  <th>Ideal Weight</th>
+  <th><center>Ideal Value</center></th>
+  <th><center>Ideal Weight</center></th>
   <% if current_user %><th></th><% end %>
   <% @opinion_dimensions.each do |dim| %>
     <% 
@@ -23,20 +23,23 @@
     <tr <%= row_style %> >
       <td>
         <%= link_to h(dim.name), dim %>
-        <%= set_belief_for(dim) %><%= show_tooltip_for dim %>
+        <%= set_belief_for(dim) %>
+        <%= show_tooltip_for dim %>
       </td>
-      <td>
+      <td><center>
         <% if dim.bool? %>
           <% yes = (opinion.total_ideal / opinion.num_ideals) > 0.5 %>
-          <%= yes ? "Mostly liked" : "Mostly disliked" if opinion.num_ideals > 0 %>
+          <b><%= yes ? "Mostly liked" : "Mostly disliked" if opinion.num_ideals > 0 %></b>
         <% elsif opinion.num_ideals > 0 %>
           <span class='indicator'><%=h dim.valuable.low_text %></span>
           <%= display_bar( (opinion.total_ideal / opinion.num_ideals) -1, 4 ) if opinion.num_ideals > 0 %>
           <span class='indicator'><%=h dim.valuable.high_text %></span>
         <% end %>
-      </td>
+      </center></td>
       <td>
+        <center>
         <%= display_bar( (opinion.total_weight / opinion.num_weights) -1, 4 ) if opinion.num_weights > 0 %>
+        </center>
       </td>
       <% if current_user %>
         <td>

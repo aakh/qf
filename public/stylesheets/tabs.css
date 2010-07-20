@@ -23,6 +23,7 @@
   -moz-border-top-right-radius: 4px;
 	color: #000000;
 	background: #ccffcc;
+  background: #fAe8aA;
 	font-weight: bold;
 	border: 2px solid black;
 	padding: 2px 5px 2px 5px;
@@ -31,12 +32,12 @@
 }
  
 .menu_tabnav a.active {
-	background: #f5f5f5;
-	border-bottom: 2px solid #f5f5f5; 
+	background: #f0f0f0;
+	border-bottom: 2px solid #f0f0f0; 
 }
  
 .menu_tabnav a:hover {
-	color: #f5f5f5;
+	color: #f0f0f0;
 	background: #CCCCCC; 
 }
  
@@ -45,14 +46,14 @@
 }
  
 .menu_tabnav a.active:hover {
-	background: #f5f5f5;
+	background: #f0f0f0;
 	color: #000000; 
 }
  
 .menu_tabnav_content {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
-	background: #f5f5f5;
+	background: #f0f0f0;
 	padding: 10px;
 	border: 2px solid black;
 	z-index: 2;

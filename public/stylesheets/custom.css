@@ -15,6 +15,7 @@
 
 .dimensions {
   background-color: #a4ffa4;
+  background-color: #fAe8aA;
   /* vertical-align: top;*/
   padding: 10px;
   /*float: right;*/
@@ -35,6 +36,7 @@
 .indicator {  
   border: 1px solid black;
   background-color: #a4ffa4;
+  background-color: #fA886A;
   padding: 0px;
   display: inline-block;
   width: 60px;
