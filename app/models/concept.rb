@@ -26,6 +26,7 @@ class Concept < ActiveRecord::Base
     dimensions.find_all { |dim| dim.valuable_type == "Opinion" and dim.enabled? }.sort
   end
   
+  # If user passed in then local ideal candidate is used
   def sorted_entities(user = nil)
     entities.collect do |e|
       n, d = e.get_distance_from_ideal user

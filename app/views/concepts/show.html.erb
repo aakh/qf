@@ -27,7 +27,7 @@
             <% end %>
           </tr>
           <% @entities.each do |entity| %>
-            <tr class="<%= cycle("even", "odd") %>">
+            <tr class="<%= cycle("first", "second") %>">
               <td>
                 <li> <%= link_to h(entity.name), entity_path(entity) %> 
                 (

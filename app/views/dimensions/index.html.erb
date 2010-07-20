@@ -15,9 +15,9 @@
       opinion = dim.valuable 
       row_style = ""
       unless dim.enabled?
-        row_style = "style='background-color: yellow;'"
+        row_style = "style='background-color: red;'"
       else
-        row_style = "class='#{cycle("even", "odd")}'"
+        row_style = "class='#{cycle("first", "second")}'"
       end
     %>
     <tr <%= row_style %> >

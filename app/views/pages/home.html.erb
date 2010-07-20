@@ -6,14 +6,16 @@
       <p>
       Welcome to the Queen's Ferry Hotel, the oldest pub in Auckland.
       </p>
-      <%= image_tag "theferry.jpg", :class=>"has_border round" %>
+      <center>
+      <%= image_tag "theferry.png" %>
+      </center>
     </td>
     <td style="vertical-align:top;">
       <% unless current_user %>
         <%= link_to "Sign up", signup_path, :class => "signup_button round" %>
+        <br><br>
       <% end %>
-      <br><br>
-      <table class="round has_border" style="white-space:nowrap;">
+      <table class="round has_border" style="width: 250px">
         <th>Our best <%= @top %> menu items.</th>
         <% 
           count = 0
@@ -22,7 +24,7 @@
           next unless rating
           count += 1
         %>
-          <tr class="<%= cycle "odd", "even" %>">
+          <tr class="<%= cycle("first", "second") %>">
             <td>
               <%= count.to_s + ") " %>
               <span title="<%=h entity.desc %>">

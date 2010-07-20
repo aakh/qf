@@ -1,17 +1,21 @@
 <h2>Listing users</h2>
 
-<table>
+<table class="has_border round">
   <tr>
     <th>Name</th>
     <th>Email</th>
+    <th>Admin</th>
   </tr>
 
 <% @users.each do |user| %>
-  <tr>
+  <tr class=<%=cycle "first", "second" %>>
     <td><%= user.full_name %></td>
     <td><%= user.email %></td>
-    <td><%= link_to "Edit", edit_user_path(user) %></td>
-    <td><%= link_to "Delete", user, :confirm => "Are you sure?", :method => :delete %></td>
+    <td>
+      [<%= link_to "Edit", edit_user_path(user) %>
+      |
+      <%= link_to "Delete", user, :confirm => "Are you sure?", :method => :delete %>]
+    </td>
   </tr>
 <% end %>
 </table>

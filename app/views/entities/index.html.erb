@@ -10,7 +10,7 @@
     <% end %>
   </tr>
   <% @entities.each do |entity| %>
-    <tr class="<%= cycle("even", "odd") %>">
+    <tr class="<%= cycle("first", "second") %>">
       <td><%= link_to h(entity.name), entity %> <%= rate entity %></td>
       <td><%= link_to h(entity.concept.name), entity.concept %></td>
       <td>

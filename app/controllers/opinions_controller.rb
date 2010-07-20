@@ -30,7 +30,7 @@ class OpinionsController < ApplicationController
     @opinion = Opinion.find(params[:id])
 
     if @opinion.update_attributes params[:opinion]
-      flash[:notice] = 'Opinion was updated created.'
+      flash[:notice] = 'Opinion was updated successfully.'
       redirect_to session[:last_dimension_path]
       clear_last_paths
     else

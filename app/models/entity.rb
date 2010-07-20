@@ -49,15 +49,23 @@ class Entity < ActiveRecord::Base
   
   attr_accessor :distance, :num_dims_used
   
-  def <=>(ent) # Comparison operator for sorting, only works when distance accessor is set
+  protected
+  def percent
+    (@num_dims_used - @distance) * (100.0 / @num_dims_used)
+  end
+  
+  public
+  # Comparison operator for sorting, if the distance and num_dims_used accessor 
+  # is set on both entities before calling this then it is sorted by rating
+  # else it is sorted alphabetically.
+  def <=>(ent) 
     return self.name <=> ent.name unless num_dims_used and ent.num_dims_used
     return 1 if num_dims_used == 0 and ent.num_dims_used > 0
     return -1 if num_dims_used > 0 and ent.num_dims_used == 0
     return 0 if num_dims_used == 0 and ent.num_dims_used == 0
-    a_percent = Integer((@num_dims_used - @distance) * (100.0 / @num_dims_used))
-    b_percent = Integer((ent.num_dims_used - ent.distance) * (100.0 / ent.num_dims_used))
-    b_percent <=> a_percent
+    ent.percent <=> self.percent
   end
+  
   
   def get_distance_from_ideal(user = nil)
     get_distance_from nil, user
@@ -112,17 +120,22 @@ class Entity < ActiveRecord::Base
       # max and min becomes different. If ideal is 3 for example, then the maximum 
       # difference between the ideal and the actual rating can be 2 (instead of 4
       # when using the range [1,5])
+      # This allows things to be as bad as possible because if the ideal is 2.5 and 
+      # the rating is 5, that's as bad as it can get, but without this modification
+      # the algorithim assumes the rating is 2.5 points away in a range of [1,5] so 
+      # that leaves wiggle room. With this modification, the rating is 2.5 points
+      # away in a range of [2.5, 5]
       
-      # right = 5 - ideal
-      # left = ideal - 1
-      # max = right > left ? right : left
-      # if rating > ideal
-        # min = ideal
-        # max = ideal + max
-      # else
-        # min = ideal - max
-        # max = ideal
-      # end
+      right = 5 - ideal
+      left = ideal - 1
+      max = right > left ? right : left
+      if rating > ideal
+        min = ideal
+        max = ideal + max
+      else
+        min = ideal - max
+        max = ideal
+      end
       
       x = (min - rating) / (min - max)
       y = (min - ideal) / (min - max)
@@ -132,8 +145,14 @@ class Entity < ActiveRecord::Base
       next if x == y
       
       # calculate distance between rating and ideal and add it to total_distance
-      x *= weight
-      y *= weight
+      # NOTE: If the weight is not vital (1) then even if the rating is as far apart
+      # from the ideal as possible (also 1) then distance gets some value in it
+      # Is this what is supposed to happen???
+      # So this means if it has a high rating on a dimension that matters a lot it will
+      # get farther away from the ideal than on a dimension that matters a little... Sounds good!
+      x *= (weight)
+      y *= (weight)
+      
       dist += 0.5 * (1 + (x - y).abs - (1 - x - y).abs)
     end
     

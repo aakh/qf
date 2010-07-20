@@ -13,15 +13,18 @@ class DimensionsController < ApplicationController
     @dimension.enabled = !@dimension.enabled?
     @dimension.save!
     
-    if @dimension.valuable_type = 'Fact'
+    if @dimension.valuable_type == 'Fact'
       vt = 'Opinion'
     else
       vt = 'Fact'
     end
     
+    # Disable/Enable the corresponding fact/opinion if there is one
     @other = Dimension.find_by_name_and_valuable_type @dimension.name, vt
-    @other.enabled = @dimension.enabled
-    @other.save!
+    if @other
+      @other.enabled = @dimension.enabled
+      @other.save!
+    end
     
     flash[:notice] = (@dimension.enabled? ? "Enabled" : "Disabled") + " " + @dimension.name
     redirect_to :back

@@ -4,7 +4,7 @@
 }
 
 .has_border {
-  border: 3px solid black;
+  border: 2px solid black;
 }
 
 .flash_notice {
@@ -21,7 +21,7 @@
   white-space: nowrap;
 }
 .ratings {
-  background-color: #ffa4a4;
+  background-color: #fAe8aA;
   vertical-align: top;
   padding: 5px;
   white-space:nowrap;
@@ -29,7 +29,7 @@
 }
 
 .ratings th {
-  background-color: #ffa4a4;
+  background-color: #fAe8aA;
 }
 
 .indicator {  
@@ -51,17 +51,25 @@
 }
 
 .even {
-  background-color: #dddddd;
+  background-color: #00ff00;
 }
 
 .odd {
-  background-color: #cccccc;
+  background-color: #00ff00;
+}
+
+.first {
+  background-color: #eeeeee;
+}
+
+.second {
+  background-color: #dddddd;
 }
 
 .menu {
   padding: 8px 0 8px 0;
-  background-color: #ccffcc;
-  border: 2px solid #000000;
+  background-color: #ffffff;
+  border: 2px solid #000;
   font-family: verdana;
   color: #000;
   white-space: nowrap;
@@ -154,7 +162,7 @@ a.signup_button {
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
-  background-color: #ccffcc;
+  background-color: #ffffff;
   border: 2px solid #000000;
 }
 
@@ -191,17 +199,17 @@ ul.footer {
   padding: 15px;
   background: #fff;
   vertical-align: top;
-  background-color: #ccffcc;
+  background-color: #ffffff;
   font-family: verdana;
   font-size: 11px;
   color: #000;
-  border: 3px solid #000000;
+  border: 2px solid #000;
 
 }
 
 body {
   /*background-color: rgb(234,197,111);*/
-  background-color: #000044;
+  background-color: #444444;
   /*background-image: url(/images/background.jpg);*/
 }
 
@@ -232,6 +240,8 @@ hr {
 
 th {
   background-color: #a4a4ff;
+  background-color: #fA983A;
+  background-color: #fAe8aA;
   border-bottom: 2px solid black;
 }
 

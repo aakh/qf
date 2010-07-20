@@ -9,7 +9,7 @@ class FactsController < ApplicationController
     session[:last_dimension_path] = request.env["HTTP_REFERER"] || dimensions_url
   end
 
-  def create    
+  def create
     @fact = Fact.new(params[:fact])
     @fact.dimension.op_name = params[:fact][:dimension_attributes][:name]
     if @fact.save
@@ -36,7 +36,13 @@ class FactsController < ApplicationController
     
   def destroy
     @fact = Fact.find(params[:id])
+    
+    # Destroy associated opinion as well (if present)
+    op = Opinion.find_by_name @fact.dimension.name
+    
     @fact.destroy
+    
+    op.destroy if op
 
     redirect_to :back
   end

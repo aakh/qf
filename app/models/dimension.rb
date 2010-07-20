@@ -57,7 +57,7 @@ class Dimension < ActiveRecord::Base
   # Create an opinion that goes along with the fact.
   def create_opinion_if_fact
     if valuable_type == 'Fact'
-      op = Opinion.find_by_name @op_name
+      op = Opinion.find_by_name name
 
       unless op
         op = Opinion.new
