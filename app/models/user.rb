@@ -72,4 +72,25 @@ class User < ActiveRecord::Base
     
     return ideal, weight
   end
+  
+  def similarity(other)
+    return 1 if self.id == other.id
+    
+    beliefs = Belief.find :all, :conditions => "user_id = #{self.id}"
+    sims = 0
+    num = 0
+    
+    beliefs.each do |mine|
+      his = Belief.find_by_user_id_and_opinion_id other, mine.opinion_id
+
+      # Check next belief if other user has no belief set for this one.
+      next unless his
+      
+      sims += mine.similarity_to his
+      num += 1
+    end
+    
+    return sims / num if num > 0
+    return nil
+  end
 end

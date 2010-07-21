@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   def home
     @title = "Home"
-    @top = 5
+    @top = 10
     @topten = Entity.all.collect do |e|
       n, d = e.get_distance_from_ideal
       e.distance = d

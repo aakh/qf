@@ -15,4 +15,39 @@
 class Belief < ActiveRecord::Base
   belongs_to :user
   belongs_to :opinion
+  
+  def similarity_to(other)
+    i1 = ideal
+    i2 = other.ideal
+    
+    # Change boolean ideals from range [0,1] to [1,5]
+    if opinion.dimension.bool?
+      i1 = i1 * 4 + 1 
+      i2 = i2 * 4 + 1
+    end
+    
+    d1 = i1 / 5.0
+    d2 = i2 / 5.0
+    
+    sim = 1.0 - (d2 - d1).abs
+    
+    # Modify similarity by how close the weights are
+    # If weights are the same then sim stays the same as above
+    if weight
+      w1 = weight / 5.0
+    else
+      w1 = 0.1
+    end
+    
+    if other.weight
+      w2 = other.weight / 5.0
+    else
+      w2 = 0.1
+    end
+    
+    w = 1.0 - (w1 - w2).abs
+    
+    sim *= w
+  end
+  
 end

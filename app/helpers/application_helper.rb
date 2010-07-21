@@ -76,11 +76,19 @@ module ApplicationHelper
     (num_dims_used - distance) / num_dims_used * 10
   end
     
-  def show_distance_bar(out_of_10, link = nil)
+  def show_distance_bar(out_of_10, count, link = nil)
     if out_of_10
       #return dist.to_s
-      "<span title='<b>#{'%.1f' % out_of_10}/10</b>'>" + display_bar(out_of_10, 10, link) + "</span>"
-      
+      "<span title='<b>#{'%.1f' % out_of_10}/10 rated #{count} times</b>'>" + display_bar(out_of_10, 10, link) + "</span>"
+    else
+      "Not available"
+    end
+  end
+  
+  def similarity_bar(sim)
+    if sim
+      sim *= 100
+      "<span title='<b>#{'%.i' % sim}% similar</b>'>" + display_bar(sim, 100) + "</span>"
     else
       "Not available"
     end

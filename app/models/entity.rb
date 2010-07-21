@@ -74,6 +74,7 @@ class Entity < ActiveRecord::Base
   def get_distance_from(other, user)
     dist = 0
     num_dims_used = 0
+    num_users_rated = 0
 
     self.concept.opinion_dimensions.each do |dim|
       
@@ -162,6 +163,10 @@ class Entity < ActiveRecord::Base
     # We return both so we can display a bar graph depicting a rating instead 
     # of just a distance.
     return num_dims_used, dist
+  end
+  
+  def num_rated
+  
   end
   
   private

@@ -7,8 +7,10 @@
 <%
   from_10 = get_rating_from_10_for(@entity)
   from_10 = from_10 ? (" (" << "%.1f" % from_10 << "/10)") : ""
+  from_10 << " rated " << Rating.count(@entity).to_s << " time(s)"
 %>
 <h2><%=h @entity.name << from_10 %></h2>   
+
 
 <% unless @entity.desc.blank? %>
   <br>

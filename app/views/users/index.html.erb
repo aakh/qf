@@ -4,6 +4,7 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
+    <th>Similarity</th>
     <th>Admin</th>
   </tr>
 
@@ -11,6 +12,7 @@
   <tr class=<%=cycle "first", "second" %>>
     <td><%= user.full_name %></td>
     <td><%= user.email %></td>
+    <td><%= similarity_bar(current_user.similarity(user)) %></td>
     <td>
       [<%= link_to "Edit", edit_user_path(user) %>
       |
