@@ -64,6 +64,20 @@
         </table>   
       <% end %>
       
+      <% 
+        if @percent_accurate 
+        is_enough = @percent_accurate > 80
+        notice_class = is_enough ? "successExplanation" : "errorExplanation"
+      %>
+        <div class="<%= notice_class %> round">
+          Estimated accuracy of recommendations: <%= @percent_accurate %>%. <%= insert_tooltip "Based on the number of beliefs you have set" %>
+          <% unless is_enough %>
+            <br>You may want to <%= link_to "set a few more beliefs", beliefs_path %> to get more accurate recommendations.
+          <% end %>
+        </div>
+        <br>
+      <% end %>
+      
       <table class="round has_border">
         <th>If you like this then you may also like...</th>
         <th>Similarity to <%= h @entity.name %></th>

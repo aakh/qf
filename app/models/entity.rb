@@ -72,6 +72,35 @@ class Entity < ActiveRecord::Base
   end
   
   def get_distance_from(other, user)
+  
+    if other && user
+      # User has to have some beliefs set for this to work
+      if Belief.find_by_user_id(user) == nil
+        return nil, nil
+      end
+      
+      # This is a special case. We want the distance similarity between 2 entities
+      # based on the user's local stuff. A little extra processing is in order
+      
+      # Get distance for entity 1 from user's beleif system
+      n1, d1 = get_distance_from nil, user
+      
+      # Get distance for entity 2 from user's beleif system
+      n2, d2 = other.get_distance_from nil, user
+      
+      if n1 == 0 || n2 == 0
+        # This means the user has no union between his set beliefs
+        # and the dimensions rated for this entity and the other entity
+        return nil, nil
+      end
+      r1 = d1 / n1
+      r2 = d2 / n2
+      
+      # Don't forget this function has to return a num_dims_used as well.
+      # This is in the calculation so let's just set it to 1
+      return 1, (r1 - r2).abs
+    end
+    
     dist = 0
     num_dims_used = 0
 

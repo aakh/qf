@@ -83,8 +83,9 @@ class User < ActiveRecord::Base
     beliefs.each do |mine|
       his = Belief.find_by_user_id_and_opinion_id other, mine.opinion_id
 
-      #If this user doesn't have a belief set then either go to next one
+      #If this user doesn't have a belief set then go to next one
       next unless his
+      
       # Or subtract some from similarity and go to next one??
       # unless his
         # sims += 0.1
