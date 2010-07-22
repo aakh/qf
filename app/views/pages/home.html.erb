@@ -31,6 +31,7 @@
               <%= link_to h(entity.name), entity_path(entity) %>
               </span>
               <%= " (#{'%.1f' % rating}/10)" %>
+              <%= rate entity %>
             </td>
           </tr>
         <% end %>
