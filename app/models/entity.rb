@@ -74,7 +74,6 @@ class Entity < ActiveRecord::Base
   def get_distance_from(other, user)
     dist = 0
     num_dims_used = 0
-    num_users_rated = 0
 
     self.concept.opinion_dimensions.each do |dim|
       
@@ -165,12 +164,7 @@ class Entity < ActiveRecord::Base
     return num_dims_used, dist
   end
   
-  def num_rated
-  
-  end
-  
-  private
-  
+  # returns in range [1,5]
   def rating_for(dim)
     # If it's a boolean then this entity either has it or doesn't
     # Retirn 0|1 in the range of 1|5
@@ -182,5 +176,9 @@ class Entity < ActiveRecord::Base
       return cr.rating if cr
     end
     nil
+  end
+  
+  def rated_yet?
+    Rating.find_by_entity_id(self) != nil
   end
 end

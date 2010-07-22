@@ -4,12 +4,14 @@ class EntitiesController < ApplicationController
   # GET /entities
   # GET /entities.xml
   def index
-    #local = if params[:options] then params[:options][:local] else nil end
-    @entities = Entity.all.collect do |e|
-      n, d = e.get_distance_from_ideal
-      e.distance = d
-      e.num_dims_used = n
-      e
+  @entities = Entity.all.select do |e|
+      e.num_dims_used = 0;
+      if e.rated_yet?
+        n, d = e.get_distance_from_ideal
+        e.distance = d
+        e.num_dims_used = n
+      end
+      true
     end.sort
   end
   
@@ -59,6 +61,24 @@ class EntitiesController < ApplicationController
     @entity = Entity.find(params[:id])
     @ordinal_fact_values = @entity.fact_values.reject {|elem| elem.fact.dimension.bool? }
     @boolean_fact_values = @entity.fact_values.reject {|elem| !elem.fact.dimension.bool? }
+    
+    num_to_show = 10
+    
+    @similar_entities = Entity.all.select do |e|
+      n = 0
+      if @entity.rated_yet? && e.rated_yet?
+        n, d = @entity.get_distance_from e, nil
+        e.distance = d
+        e.num_dims_used = n
+      end
+      n != 0 && e != @entity
+    end
+    
+    num_to_show = num_to_show < @similar_entities.length ? num_to_show : @similar_entities.length
+    
+    if num_to_show > 0
+      @similar_entities = @similar_entities.sort[1..num_to_show]
+    end
   end
 
   # GET /entities/new

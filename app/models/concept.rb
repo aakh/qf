@@ -28,11 +28,14 @@ class Concept < ActiveRecord::Base
   
   # If user passed in then local ideal candidate is used
   def sorted_entities(user = nil)
-    entities.collect do |e|
-      n, d = e.get_distance_from_ideal user
-      e.distance = d
-      e.num_dims_used = n
-      e
+    entities.select do |e|
+      e.num_dims_used = 0;
+      if e.rated_yet?
+        n, d = e.get_distance_from_ideal
+        e.distance = d
+        e.num_dims_used = n
+      end
+      true
     end.sort
   end
 end
