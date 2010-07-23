@@ -13,10 +13,20 @@
 
 Stats:
 <ul>
-  <li>Number of people who care: <%= @num_who_care %>
-  <li>Importance (out of 5): <%= @weight %>
-  <li>Ideal value: <%= @ideal %> (with 0 representing <%=h @opinion.low_text %> and 10 representing <%=h @opinion.high_text %>)
-  
+  <li>Number of people who care: <%= @num_who_care %></li>
+  <li>Importance: <%= show_ideal_weight_string @weight %></li>
+  <li>Ideal value: <%= show_ideal_value_string @ideal, @dimension.valuable %></li>
+  <li> Ideal weights and value by country:</li>
+  <ul>
+    <% @countries.each do |key, val| %>
+      <li>
+        <%= key %>:
+        <%= show_ideal_value_string val[:ideal], @dimension.valuable %>
+        and
+        <%= show_ideal_weight_string val[:weight] %>
+      </li>
+    <% end %>
+  </ul>
 </ul>
 <hr>
 <%= render :partial => "shared/comments", :locals => { :commentable => @dimension } %>

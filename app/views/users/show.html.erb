@@ -1,6 +1,20 @@
 <p>
   <b>Name:</b>
   <%=h @user.full_name %>
+  <br>
+  <b>Country:</b>
+  <%=h @user.country %>
+  <br>
+  <b>Entities rated:</b>
+  <%= @num_ratings %>
+  <ul>
+  <% @ratings.each do |r| %>
+    <li> <%= link_to r.entity.name, entity_path(r.entity) %></li>
+  <% end %>
+  </ul>
+  
+  
+  <%= render :partial => "shared/show_beliefs", :locals => { :user => @user, :beliefs => @beliefs } %>
 </p>
 
 <%= link_to "Edit", edit_user_path(@user) %>

@@ -10,8 +10,11 @@
 
 <% @users.each do |user| %>
   <tr class=<%=cycle "first", "second" %>>
-    <td><%= user.full_name %></td>
-    <td><%= user.email %></td>
+    <% 
+      name = user.full_name.blank? ? "N/A" : user.full_name
+    %>
+    <td><%= link_to h(name), user_path(user) %></td>
+    <td><%=h user.email %></td>
     <td><%= similarity_bar(current_user.similarity(user)) %></td>
     <td>
       [<%= link_to "Edit", edit_user_path(user) %>

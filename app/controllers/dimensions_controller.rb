@@ -33,23 +33,59 @@ class DimensionsController < ApplicationController
   def show
     @dimension = Dimension.find(params[:id])
     @opinion = @dimension.valuable
-    beliefs = Belief.find_by_opinion_id @dimension.valuable
+    
     @num_who_care = @opinion.num_ideals
+    
     if @opinion.num_weights > 0
-      @weight = '%.1f' % (@opinion.total_weight / @opinion.num_weights)
+      @weight = @opinion.total_weight / @opinion.num_weights
     else
-      @weight = "Not available..."
+      @weight = nil
     end
     
     if @num_who_care > 0
-      if @dimension.bool?
-        @ideal = (@opinion.total_ideal / @opinion.num_ideals) > 0.5 ? "Mostly liked" : "Mostly disliked"
-      else
-        @ideal = '%.1f' % ((@opinion.total_ideal / @opinion.num_ideals) * 2)
-      end
+      @ideal = @opinion.total_ideal / @opinion.num_ideals
     else
-      @ideal = "Not available..."
+      @ideal = nil
     end
+    
+    @countries = Hash.new
+    
+    beliefs = Belief.find :all, :conditions => "opinion_id=#{@opinion.id.to_s}"
+    
+    beliefs.each do |b|
+      unless b.user.country.blank?
+        unless @countries[b.user.country]
+          @countries[b.user.country] = Hash.new
+        end
+        @countries[b.user.country][:num_ideals] = 0 unless @countries[b.user.country][:num_ideals]
+        @countries[b.user.country][:num_ideals] += 1
+        @countries[b.user.country][:total_ideal] = 0 unless @countries[b.user.country][:total_ideal]
+        @countries[b.user.country][:total_ideal] += b.ideal
+        if b.weight
+          @countries[b.user.country][:num_weights] = 0 unless @countries[b.user.country][:num_weights]
+          @countries[b.user.country][:num_weights] += 1
+          @countries[b.user.country][:total_weight] = 0 unless @countries[b.user.country][:total_weight]
+          @countries[b.user.country][:total_weight] += b.weight
+        end
+      end
+    end
+    
+    @countries.each do |key, val|
+      if val[:num_ideals]
+        val[:ideal] = val[:total_ideal] / val[:num_ideals]
+      else
+        val[:ideal] = 0
+      end
+      if val[:num_weights]
+        val[:weight] = val[:total_weight] / val[:num_weights]
+      else
+        val[:weight] = 0
+      end
+    end
+    
+    params[:countries] = @countries
+    #ss.ss
+    
   end
   
   def edit

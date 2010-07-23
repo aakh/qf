@@ -7,7 +7,7 @@
 <%
   from_10 = get_rating_from_10_for(@entity)
   from_10 = from_10 ? (" (" << "%.1f" % from_10 << "/10)") : ""
-  from_10 << " rated " << Rating.count(@entity).to_s << " time(s)"
+  from_10 << " rated " << @num_ratings.to_s << " time(s)"
 %>
 <h2><%=h @entity.name + from_10 %></h2>   
 
@@ -64,45 +64,52 @@
         </table>   
       <% end %>
       
-      <% 
-        if @percent_accurate 
-        is_enough = @percent_accurate > 80
-        notice_class = is_enough ? "successExplanation" : "errorExplanation"
-      %>
-        <div class="<%= notice_class %> round">
-          Estimated accuracy of recommendations: <%= @percent_accurate %>%. <%= insert_tooltip "Based on the number of beliefs you have set" %>
-          <% unless is_enough %>
-            <br>You may want to <%= link_to "set a few more beliefs", beliefs_path %> to get more accurate recommendations.
+      <% if @num_ratings > 0 %>
+        <% 
+          if @percent_accurate 
+          is_enough = @percent_accurate > 80
+          notice_class = is_enough ? "successExplanation" : "errorExplanation"
+        %>
+          <div class="<%= notice_class %> round">
+            Estimated accuracy of recommendations: <%= @percent_accurate %>%. <%= insert_tooltip "Based on the number of beliefs you have set" %>
+            <% unless is_enough %>
+              <br>You may want to <%= link_to "set a few more beliefs", beliefs_path %> to get more accurate recommendations.
+            <% end %>
+          </div>
+          <br>
+        <% end %>
+        
+        <table class="round has_border">
+          <th>If you like this then you may also like...</th>
+          <th>Similarity to <%= h @entity.name %></th>
+          <% 
+            count = 0
+            @similar_entities.each do |entity| 
+              rating = get_rating_from_10_for entity
+              next unless rating
+              count += 1
+          %>
+            <tr class="<%= cycle("first", "second") %>">
+              <td>
+                <%= count.to_s + ") " %>
+                <span title="<%=h entity.desc %>">
+                <%= link_to h(entity.name), entity_path(entity) %>
+                </span>
+                <%= " (#{'%.1f' % rating}/10)" %>
+                <%= rate entity %>
+              </td>
+              <td>
+                <%= similarity_bar(1.0 - (entity.distance / entity.num_dims_used)) %>
+              </td>
+            </tr>
           <% end %>
+        </table>
+      <% else %>        
+        <div class="errorExplanation round">
+          This item has not been rated yet. Be the first.
         </div>
         <br>
       <% end %>
-      
-      <table class="round has_border">
-        <th>If you like this then you may also like...</th>
-        <th>Similarity to <%= h @entity.name %></th>
-        <% 
-          count = 0
-          @similar_entities.each do |entity| 
-            rating = get_rating_from_10_for entity
-            next unless rating
-            count += 1
-        %>
-          <tr class="<%= cycle("first", "second") %>">
-            <td>
-              <%= count.to_s + ") " %>
-              <span title="<%=h entity.desc %>">
-              <%= link_to h(entity.name), entity_path(entity) %>
-              </span>
-              <%= " (#{'%.1f' % rating}/10)" %>
-              <%= rate entity %>
-            </td>
-            <td>
-              <%= similarity_bar(1.0 - (entity.distance / entity.num_dims_used)) %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
       <%= render :partial => "shared/comments", :locals => { :commentable => @entity } %>
       <br>
       <%= link_to "Back to " + @entity.concept.name, :controller => :concepts, :action => :show, :id => @entity.concept %>

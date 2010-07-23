@@ -36,7 +36,7 @@
               </td>
               <td>
                 <center>
-                  <%= show_distance_bar(get_rating_from_10_for(entity, @selected_belief == "Mine"), Rating.count(entity), entity_path(entity)) %>
+                  <%= show_distance_bar(get_rating_from_10_for(entity, @selected_belief == "Mine"), Rating.entity_count(entity), entity_path(entity)) %>
                 </center>
               </td>
               <% if role? "manager" %>

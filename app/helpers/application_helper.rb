@@ -41,7 +41,7 @@ module ApplicationHelper
   
   def rate(entity)
     if entity and current_user
-      "<font style='font-size:9px;'>[#{link_to "rate me", rate_path(entity), :class => "popup", :style => "padding: 0px;"}]</font>"
+      "<font style='font-size:9px;'>[#{link_to "rate me", rate_path(entity, :ccw => true), :class => "popup", :style => "padding: 0px;"}]</font>"
     else
       ""
     end
@@ -57,7 +57,7 @@ module ApplicationHelper
         image = image_tag("belief_set.gif")
         title = ""
       end
-      link_to(image, edit_belief_path(dim), :title => title, :class => "popup", :style => "padding: 0px;" )
+      link_to(image, edit_belief_path(dim, :ccw => true), :title => title, :class => "popup", :style => "padding: 0px;" )
     else
       ""
     end
@@ -121,5 +121,36 @@ module ApplicationHelper
   
   def insert_tooltip(text)
     "<span title='#{text}'>" + image_tag("tooltip.gif") + "</span>"
+  end
+  
+  def show_ideal_value_string(i, opinion)
+    if i
+      if opinion.dimension.bool?
+        return i > 0.5 ? "Liked" : "Disliked"
+      end
+      low = opinion.low_text
+      high = opinion.high_text
+      if i >= 4.5 then high
+      elsif i >= 3.5 then "Almost " + high
+      elsif i >= 2.5 then "In between " + low + " and " + high
+      elsif i >= 1.5 then "Almost " + low
+      elsif i >= 0.5 then low
+      end
+    else
+      "Not set"
+    end
+  end
+  
+  def show_ideal_weight_string(w)
+    if w
+      if w >= 4.5 then "Vital"
+      elsif w >= 3.5 then "Important"
+      elsif w >= 2.5 then "Matters"
+      elsif w >= 1.5 then "Indifferent"
+      elsif w >= 0.5 then "Doesn't care"
+      end
+    else
+      "Not set"
+    end
   end
 end

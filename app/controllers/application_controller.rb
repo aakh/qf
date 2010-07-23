@@ -63,7 +63,4 @@ class ApplicationController < ActionController::Base
     current_user and current_user.has_role? r.capitalize
   end
   
-  def check_role(name, msg)
-  end
-  
 end

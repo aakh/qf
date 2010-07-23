@@ -64,27 +64,31 @@ class EntitiesController < ApplicationController
     
     num_to_show = 10
     
-    @percent_accurate = nil
-    if current_user
-      @total_dimensions = Dimension.count :conditions => "valuable_type = 'Opinion'"
-      @total_beliefs_set = Belief.count :conditions => "user_id = #{current_user.id}"
-      @percent_accurate = Integer((Float(@total_beliefs_set) / Float(@total_dimensions)) * 100)
-    end
+    @num_ratings = Rating.entity_count(@entity)
     
-    @similar_entities = Entity.all.select do |e|
-      n = 0
-      if @entity.rated_yet? && e.rated_yet?
-        n, d = @entity.get_distance_from e, current_user
-        e.distance = d
-        e.num_dims_used = n
+    if @num_ratings > 0
+      @percent_accurate = nil
+      if current_user
+        @total_dimensions = Dimension.count :conditions => "valuable_type = 'Opinion'"
+        @total_beliefs_set = Belief.count :conditions => "user_id = #{current_user.id}"
+        @percent_accurate = Integer((Float(@total_beliefs_set) / Float(@total_dimensions)) * 100)
       end
-      n && n != 0 && e != @entity
-    end
-    
-    num_to_show = num_to_show < @similar_entities.length ? num_to_show : @similar_entities.length
-    
-    if num_to_show > 0
-      @similar_entities = @similar_entities.sort[1..num_to_show]
+      
+      @similar_entities = Entity.all.select do |e|
+        n = 0
+        if @entity.rated_yet? && e.rated_yet?
+          n, d = @entity.get_distance_from e, current_user
+          e.distance = d
+          e.num_dims_used = n
+        end
+        n && n != 0 && e != @entity
+      end
+      
+      num_to_show = num_to_show < @similar_entities.length ? num_to_show : @similar_entities.length
+      
+      if num_to_show > 0
+        @similar_entities = @similar_entities.sort[1..num_to_show]
+      end
     end
   end
 

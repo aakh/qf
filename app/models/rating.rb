@@ -23,8 +23,11 @@ class Rating < ActiveRecord::Base
     r ? r.value : nil
   end
   
-  def self.count(entity)
-    num_raters = Rating.find(:all, :select => "DISTINCT user_id", :conditions => "entity_id = #{entity.id}")
-    num_raters.length
+  def self.entity_count(entity)
+    Rating.count :select => "DISTINCT user_id", :conditions => "entity_id = #{entity.id}"
+  end
+  
+  def self.user_count(user)
+    Rating.count :select => "DISTINCT entity_id", :conditions => "user_id = #{user.id}"
   end
 end

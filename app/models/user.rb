@@ -81,6 +81,8 @@ class User < ActiveRecord::Base
     num = 0
     
     beliefs.each do |mine|
+      next unless mine.opinion.dimension.enabled?
+      
       his = Belief.find_by_user_id_and_opinion_id other, mine.opinion_id
 
       #If this user doesn't have a belief set then go to next one

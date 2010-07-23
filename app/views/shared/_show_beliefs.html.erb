@@ -1,0 +1,21 @@
+<table class="round has_border">
+  <th>Dimension</th>
+  <th>Preference</th>
+  <th>Importance</th>
+  <% 
+    beliefs.each do |b| 
+    next unless b.opinion.dimension.enabled?
+  %>
+    <tr class="<%= cycle "first", "second" %>">
+      <td>
+        <%= link_to h(b.opinion.dimension.name), b.opinion.dimension %>
+      </td>
+      <td>
+        <%= show_ideal_value_string b.ideal, b.opinion %>
+      </td>
+      <td>
+        <%= show_ideal_weight_string b.weight %>
+      </td>
+    </tr>
+  <% end %>
+</table>

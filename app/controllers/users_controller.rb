@@ -5,8 +5,8 @@ require 'rexml/document'
 require 'md5'
   
 class UsersController < ApplicationController  
-  before_filter :check_administrator, :only => [:index, :destroy]
-  before_filter :check_logged_in, :only => [:edit, :show, :update]
+  before_filter :check_administrator, :only => [:index, :destroy, :show]
+  before_filter :check_logged_in, :only => [:edit, :update]
   # GET /users
   # GET /users.xml
   def index
@@ -19,6 +19,11 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @title = @user.full_name
+    
+    @beliefs = Belief.all :conditions => 'user_id=' + @user.id.to_s
+    
+    @num_ratings = Rating.user_count(@user)
+    @ratings = Rating.find :all, :select => "DISTINCT entity_id", :conditions => "user_id = #{@user.id}"
   end
 
   # GET /users/new
