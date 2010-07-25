@@ -69,8 +69,8 @@ class EntitiesController < ApplicationController
     if @num_ratings > 0
       @percent_accurate = nil
       if current_user
-        @total_dimensions = Dimension.count :conditions => "valuable_type = 'Opinion'"
-        @total_beliefs_set = Belief.count :conditions => "user_id = #{current_user.id}"
+        @total_dimensions = Dimension.count :conditions => {:valuable_type => 'Opinion', :enabled => true}
+        @total_beliefs_set = Belief.count :joins => {:opinion => :dimension}, :conditions => {:user_id => current_user.id, :dimensions => {:enabled => true}}
         @percent_accurate = Integer((Float(@total_beliefs_set) / Float(@total_dimensions)) * 100)
       end
       
