@@ -4,14 +4,14 @@ class EntitiesController < ApplicationController
   # GET /entities
   # GET /entities.xml
   def index
-  @entities = Entity.all.select do |e|
+    @entities = Entity.all.select do |e|
       e.num_dims_used = 0;
       if e.rated_yet?
         n, d = e.get_distance_from_ideal
         e.distance = d
         e.num_dims_used = n
       end
-      true
+      e.num_dims_used > 0
     end.sort
   end
   
@@ -62,7 +62,7 @@ class EntitiesController < ApplicationController
     @ordinal_fact_values = @entity.fact_values.reject {|elem| elem.fact.dimension.bool? }
     @boolean_fact_values = @entity.fact_values.reject {|elem| !elem.fact.dimension.bool? }
     
-    num_to_show = 10
+    num_to_show = 5
     
     @num_ratings = Rating.entity_count(@entity)
     
@@ -75,19 +75,20 @@ class EntitiesController < ApplicationController
       end
       
       @similar_entities = Entity.all.select do |e|
-        n = 0
         if @entity.rated_yet? && e.rated_yet?
-          n, d = @entity.get_distance_from e, current_user
+          n, d = e.get_distance_from @entity, current_user
           e.distance = d
           e.num_dims_used = n
+          n && e != @entity
+        #else
+         # false
         end
-        n && n != 0 && e != @entity
       end
       
       num_to_show = num_to_show < @similar_entities.length ? num_to_show : @similar_entities.length
       
       if num_to_show > 0
-        @similar_entities = @similar_entities.sort[1..num_to_show]
+        @similar_entities = @similar_entities.sort[0...num_to_show]
       end
     end
   end

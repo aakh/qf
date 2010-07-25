@@ -45,7 +45,7 @@ class Opinion < ActiveRecord::Base
   has_many :users, :through => :beliefs
   
   def weight
-    self.num_weights > 0 ? (self.total_weight / self.num_weights) : 5
+    w = self.num_weights > 0 ? (self.total_weight / self.num_weights) : 5
   end
   
   def ideal

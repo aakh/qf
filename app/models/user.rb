@@ -63,6 +63,8 @@ class User < ActiveRecord::Base
       return nil, nil
     end
     ideal = belief.ideal
+    
+    # If weight not given, set to full... why am I doing this?
     weight = (belief.weight and belief.weight > 0) ? belief.weight : 5
     
     if opinion.dimension.bool?
@@ -101,5 +103,21 @@ class User < ActiveRecord::Base
     
     return sims / num if num > 0
     return nil
+  end
+  
+  def rating_for(entity)
+    ratings = Rating.all :conditions => "entity_id=#{entity.id} and user_id=#{self.id}"
+    return nil unless ratings and ratings.length > 0
+    
+    dist = 0
+    num = 0
+    ratings.each do |rating|
+      weight = rating.opinion.weight
+      next if weight < 1.1
+      dist += Dimension.distance(rating.value, rating.opinion.ideal, weight)
+      num += 1
+    end
+    
+    ((1 - dist / num) * 10.0)
   end
 end

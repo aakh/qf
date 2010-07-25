@@ -9,7 +9,7 @@
   <%= @num_ratings %>
   <ul>
   <% @ratings.each do |r| %>
-    <li> <%= link_to r.entity.name, entity_path(r.entity) %></li>
+    <li> Rated <%= link_to r.entity.name, entity_path(r.entity) %> <%= "%.1f"% @user.rating_for(r.entity) %>/10</li>
   <% end %>
   </ul>
   

@@ -82,8 +82,11 @@ class Entity < ActiveRecord::Base
       # This is a special case. We want the distance similarity between 2 entities
       # based on the user's local stuff. A little extra processing is in order
       
+      # If entities are the same then tada
+      return 1, 1 if other == self
+      
       # Get distance for entity 1 from user's beleif system
-      n1, d1 = get_distance_from nil, user
+      n1, d1 = self.get_distance_from nil, user
       
       # Get distance for entity 2 from user's beleif system
       n2, d2 = other.get_distance_from nil, user
@@ -93,6 +96,7 @@ class Entity < ActiveRecord::Base
         # and the dimensions rated for this entity and the other entity
         return nil, nil
       end
+      
       r1 = d1 / n1
       r2 = d2 / n2
       
@@ -136,53 +140,10 @@ class Entity < ActiveRecord::Base
       next unless ideal
       
       # if weight is "I don't care" (i.e. 1) then this dimension should be ignored
-      next if weight == 1
+      next if weight < 1.1
       
-      # Transform weights from [2,5] into [0,1]
-      weight = (weight - 2) / 3
-      
-      # Values all in the range of 1 to 5.
-      min = 1
-      max = 5
-      
-      # This takes into account situations where ideal is not either 1 or 5 so the
-      # max and min becomes different. If ideal is 3 for example, then the maximum 
-      # difference between the ideal and the actual rating can be 2 (instead of 4
-      # when using the range [1,5])
-      # This allows things to be as bad as possible because if the ideal is 2.5 and 
-      # the rating is 5, that's as bad as it can get, but without this modification
-      # the algorithim assumes the rating is 2.5 points away in a range of [1,5] so 
-      # that leaves wiggle room. With this modification, the rating is 2.5 points
-      # away in a range of [2.5, 5]
-      
-      right = 5 - ideal
-      left = ideal - 1
-      max = right > left ? right : left
-      if rating > ideal
-        min = ideal
-        max = ideal + max
-      else
-        min = ideal - max
-        max = ideal
-      end
-      
-      x = (min - rating) / (min - max)
-      y = (min - ideal) / (min - max)
+      dist += Dimension.distance(rating, ideal, weight)
       num_dims_used += 1
-      
-      # If rating is the same as ideal then rating is perfect!
-      next if x == y
-      
-      # calculate distance between rating and ideal and add it to total_distance
-      # NOTE: If the weight is not vital (1) then even if the rating is as far apart
-      # from the ideal as possible (also 1) then distance gets some value in it
-      # Is this what is supposed to happen???
-      # So this means if it has a high rating on a dimension that matters a lot it will
-      # get farther away from the ideal than on a dimension that matters a little... Sounds good!
-      x *= (weight)
-      y *= (weight)
-      
-      dist += 0.5 * (1 + (x - y).abs - (1 - x - y).abs)
     end
     
     # The max distance is never bigger than the number of dimensions used
@@ -208,6 +169,6 @@ class Entity < ActiveRecord::Base
   end
   
   def rated_yet?
-    Rating.find_by_entity_id(self) != nil
+    Rating.find_by_entity_id(self.id) != nil
   end
 end
