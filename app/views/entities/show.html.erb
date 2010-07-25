@@ -9,7 +9,10 @@
   from_10 = from_10 ? (" (" << "%.1f" % from_10 << "/10)") : ""
   from_10 << " rated " << @num_ratings.to_s << " time(s)"
 %>
-<h2><%=h @entity.name + from_10 %></h2>   
+<h2><%=h @entity.name + from_10 %></h2>
+<% if current_user %>
+  <%= @local_rating %>
+<% end %>
 
 
 <% unless @entity.desc.blank? %>

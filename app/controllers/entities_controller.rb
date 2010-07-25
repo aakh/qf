@@ -62,9 +62,24 @@ class EntitiesController < ApplicationController
     @ordinal_fact_values = @entity.fact_values.reject {|elem| elem.fact.dimension.bool? }
     @boolean_fact_values = @entity.fact_values.reject {|elem| !elem.fact.dimension.bool? }
     
+    
     num_to_show = 5
     
     @num_ratings = Rating.entity_count(@entity)
+    
+    # Show the user his local "predicted" rating if the user has not rated this
+    if current_user and @num_ratings > 0
+      n, d = @entity.get_distance_from nil, current_user
+      prating = (1 - (d / n)) * 10.0
+      @local_rating = "<li>Predicted rating: %.1f/10" % prating    
+      
+      if current_user.has_rated? @entity
+        prating = current_user.rating_for @entity
+        @local_rating += "</li><li>You rated this: %.1f/10" % prating
+      end  
+      
+      @local_rating << "</li>"
+    end
     
     if @num_ratings > 0
       @percent_accurate = nil

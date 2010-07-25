@@ -105,6 +105,7 @@ class User < ActiveRecord::Base
     return nil
   end
   
+  # Returns rating out of 10
   def rating_for(entity)
     ratings = Rating.all :conditions => "entity_id=#{entity.id} and user_id=#{self.id}"
     return nil unless ratings and ratings.length > 0
@@ -119,5 +120,11 @@ class User < ActiveRecord::Base
     end
     
     ((1 - dist / num) * 10.0)
+  end
+  
+  def has_rated?(entity)
+    ratings = Rating.all :conditions => "entity_id=#{entity.id} and user_id=#{self.id}"
+    return false unless ratings and ratings.length > 0
+    true
   end
 end

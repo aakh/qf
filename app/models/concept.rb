@@ -31,7 +31,7 @@ class Concept < ActiveRecord::Base
     entities.select do |e|
       e.num_dims_used = 0;
       if e.rated_yet?
-        n, d = e.get_distance_from_ideal
+        n, d = e.get_distance_from_ideal user
         e.distance = d
         e.num_dims_used = n
       end
