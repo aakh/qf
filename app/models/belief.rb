@@ -16,7 +16,7 @@ class Belief < ActiveRecord::Base
   belongs_to :user
   belongs_to :opinion
   
-  def similarity_to(other)    
+  def similarity_to(other, use_calude = false)    
     i1 = ideal
     i2 = other.ideal
     
@@ -42,7 +42,16 @@ class Belief < ActiveRecord::Base
     
     w = 1.0 - (w1 - w2).abs
     
+    # Dist(x,y) != Dist(y,x) ????
+    if use_calude
+      return 1 - (Dimension.distance( i1 * w1, i2 * w2, 5))
+    end
+      #return 1 - (Dimension.distance( i2 * w2, i1 * w1, 5))
+    
     sim *= w
+    
+    # What's this? Which one should I use??
+    # i1 > i2 ? ((i2 / i1) * w) : ((i1 / i2) * w)
   end
   
 end

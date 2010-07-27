@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @title = @user.full_name
     
-    @beliefs = Belief.all :conditions => 'user_id=' + @user.id.to_s
+    @beliefs = Belief.all :conditions => {:user_id => @user.id}, :include => {:opinion => :dimension}, :order => "dimensions.name ASC"
     
     @num_ratings = Rating.user_count(@user)
     @ratings = Rating.find :all, :select => "DISTINCT entity_id", :conditions => "user_id = #{@user.id}"

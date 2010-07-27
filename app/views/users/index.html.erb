@@ -5,6 +5,8 @@
     <th>Name</th>
     <th>Email</th>
     <th>Similarity</th>
+    <th>Cos Similarity</th>
+    <th>Calude Similarity</th>
     <th>Admin</th>
   </tr>
 
@@ -15,7 +17,27 @@
     %>
     <td><%= link_to h(name), user_path(user) %></td>
     <td><%=h user.email %></td>
-    <td><%= similarity_bar(current_user.similarity(user)) %></td>
+    <td>
+      <%= 
+          similarity_bar(
+            current_user.similarity(user)
+            ) 
+      %>
+    </td>
+    <td>
+      <%= 
+          similarity_bar(
+            current_user.cos_similarity(user)
+            ) 
+      %>
+    </td>
+    <td>
+      <%= 
+          similarity_bar(
+            current_user.calude_similarity(user)
+            ) 
+      %>
+    </td>
     <td>
       [<%= link_to "Edit", edit_user_path(user) %>
       |

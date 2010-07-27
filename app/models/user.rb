@@ -75,12 +75,27 @@ class User < ActiveRecord::Base
     return ideal, weight
   end
   
-  def similarity(other)
+  def cos_similarity(other)
+    similarity(other, true)
+  end
+  
+  def calude_similarity(other)
+    similarity(other, false, true)
+  end
+  
+  def similarity(other, use_cos = false, use_calude = false)
     return 1 if self.id == other.id
     
     beliefs = Belief.find :all, :conditions => "user_id = #{self.id}"
-    sims = 0
     num = 0
+    
+    unless use_cos
+      sims = 0
+    else
+      sum_mine_his = 0
+      sum_his_sq = 0
+      sum_mine_sq = 0
+    end
     
     beliefs.each do |mine|
       next unless mine.opinion.dimension.enabled?
@@ -90,18 +105,40 @@ class User < ActiveRecord::Base
       #If this user doesn't have a belief set then go to next one
       next unless his
       
-      # Or subtract some from similarity and go to next one??
-      # unless his
-        # sims += 0.1
-        # num += 1
-        # next
-      # end
+      unless use_cos
+        sims += mine.similarity_to his, use_calude
+      else
+        if mine.opinion.dimension.bool?
+          mine_i = mine.ideal * 4 + 1
+          his_i = his.ideal * 4 + 1
+        else
+          mine_i = mine.ideal
+          his_i = his.ideal
+        end
+        
+        mine_i *= (mine.weight ? mine.weight / 5 : 0.2)
+        his_i *= (his.weight ? his.weight / 5 : 0.2)
+        
+        sum_mine_his += mine_i * his_i
+        sum_mine_sq += mine_i * mine_i
+        sum_his_sq += his_i * his_i
+      end
       
-      sims += mine.similarity_to his
       num += 1
     end
+
+    if use_cos
+      return (sum_mine_his / (Math.sqrt(sum_mine_sq) * Math.sqrt(sum_his_sq))) if num > 0
+    elsif num > 0
+      ret = sims / num
+      
+      if use_calude
+        return ret
+      else
+        return ret
+      end
+    end
     
-    return sims / num if num > 0
     return nil
   end
   
