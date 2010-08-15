@@ -37,16 +37,16 @@ class Belief < ActiveRecord::Base
     w1 = weight ? weight : 1
     w2 = other.weight ? other.weight : 1
     
+    # Dist(x,y) != Dist(y,x) ????
+    if use_calude
+      return (1 - Dimension.distance( i1, i2, 5)) + (1 - Dimension.distance(w1, w2, 5))
+    end
+      #return 1 - (Dimension.distance( i2 * w2, i1 * w1, 5))
+    
     w1 /= 5.0
     w2 /= 5.0
     
     w = 1.0 - (w1 - w2).abs
-    
-    # Dist(x,y) != Dist(y,x) ????
-    if use_calude
-      return 1 - (Dimension.distance( i1 * w1, i2 * w2, 5))
-    end
-      #return 1 - (Dimension.distance( i2 * w2, i1 * w1, 5))
     
     sim *= w
     

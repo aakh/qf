@@ -5,7 +5,7 @@ class ConceptsController < ApplicationController
   end
 
   def show
-    @concept = Concept.find(params[:id])
+    @concept = Concept.find(params[:id], :include => [:entities, :dimensions])
     unless params[:belief]
       user = nil
     else

@@ -4,7 +4,7 @@ class EntitiesController < ApplicationController
   # GET /entities
   # GET /entities.xml
   def index
-    @entities = Entity.all.select do |e|
+    @entities = Entity.all(:include => [{:concept => :dimensions}]).select do |e|
       e.num_dims_used = 0;
       if e.rated_yet?
         n, d = e.get_distance_from_ideal
@@ -58,7 +58,7 @@ class EntitiesController < ApplicationController
   # GET /entities/1
   # GET /entities/1.xml
   def show
-    @entity = Entity.find(params[:id])
+    @entity = Entity.find(params[:id], :include => [:fact_values => {:fact => :dimension}])
     @ordinal_fact_values = @entity.fact_values.reject {|elem| elem.fact.dimension.bool? }
     @boolean_fact_values = @entity.fact_values.reject {|elem| !elem.fact.dimension.bool? }
     
@@ -71,7 +71,7 @@ class EntitiesController < ApplicationController
     if current_user and @num_ratings > 0
       n, d = @entity.get_distance_from nil, current_user
       prating = (1 - (d / n)) * 10.0
-      @local_rating = "<li>Predicted rating: %.1f/10" % prating    
+      @local_rating = "<li>Predicted rating A: %.1f/10" % prating
       
       if current_user.has_rated? @entity
         prating = current_user.rating_for @entity
@@ -89,7 +89,7 @@ class EntitiesController < ApplicationController
         @percent_accurate = Integer((Float(@total_beliefs_set) / Float(@total_dimensions)) * 100)
       end
       
-      @similar_entities = Entity.all.select do |e|
+      @similar_entities = Entity.all(:include => {:concept => :dimensions}).select do |e|
         if @entity.rated_yet? && e.rated_yet?
           n, d = e.get_distance_from @entity, current_user
           e.distance = d

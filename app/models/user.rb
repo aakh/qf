@@ -107,6 +107,7 @@ class User < ActiveRecord::Base
       
       unless use_cos
         sims += mine.similarity_to his, use_calude
+        num += 1 if use_calude
       else
         if mine.opinion.dimension.bool?
           mine_i = mine.ideal * 4 + 1
@@ -118,10 +119,12 @@ class User < ActiveRecord::Base
         
         mine_i *= (mine.weight ? mine.weight / 5 : 0.2)
         his_i *= (his.weight ? his.weight / 5 : 0.2)
+        # mine_w = (mine.weight ? mine.weight : 1)
+        # his_w = (his.weight ? his.weight : 1)
         
-        sum_mine_his += mine_i * his_i
-        sum_mine_sq += mine_i * mine_i
-        sum_his_sq += his_i * his_i
+        sum_mine_his += mine_i * his_i #+ mine_w * his_w
+        sum_mine_sq += mine_i * mine_i #+ mine_w * mine_w
+        sum_his_sq += his_i * his_i #+ his_w * his_w
       end
       
       num += 1
@@ -131,12 +134,7 @@ class User < ActiveRecord::Base
       return (sum_mine_his / (Math.sqrt(sum_mine_sq) * Math.sqrt(sum_his_sq))) if num > 0
     elsif num > 0
       ret = sims / num
-      
-      if use_calude
-        return ret
-      else
-        return ret
-      end
+      return ret
     end
     
     return nil
