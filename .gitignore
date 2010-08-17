@@ -5,3 +5,4 @@ script/
 db/*.sqlite3
 spec/
 test/
+db/*.sql

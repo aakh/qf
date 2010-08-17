@@ -69,13 +69,51 @@ class EntitiesController < ApplicationController
     
     # Show the user his local "predicted" rating if the user has not rated this
     if current_user and @num_ratings > 0
+      n, d = @entity.get_distance_from_ideal
+      prating = (1 - (d / n)) * 10.0
+      @local_rating = "<li>Rating A: %.1f/10" % prating
+      
       n, d = @entity.get_distance_from nil, current_user
       prating = (1 - (d / n)) * 10.0
-      @local_rating = "<li>Predicted rating A: %.1f/10" % prating
+      @local_rating += "<li>Rating B: %.1f/10" % prating
+      
+      
+      nh = @entity.get_users_who_rated
+      
+      unless nh.length == 1 and nh[0] == current_user
+        sims = Hash.new
+        z1 = z2 = z3 = 0
+        p1 = p2 = p3 = 0
+        p1_adj = 0
+        nh.each do |u|
+          next if u == current_user
+          avg = u.get_avg_rating
+          ur = u.rating_for(@entity)
+          # sim1 = current_user.similarity(u)
+          sim1 = current_user.cos_similarity(u)
+          # sim3 = current_user.calude_similarity(u)
+          z1 += sim1 if sim1
+          # z2 += sim2 if sim2
+          # z3 += sim3 if sim3
+          p1 += sim1 * ur if sim1
+          p1_adj += sim1 * (ur - avg) if sim1
+          # p2 += sim2 * ur if sim2
+          # p3 += sim3 * ur if sim3
+        end
+        
+        z1 = 1 / z1 if z1 > 0
+        # z2 = 1 / z2 if z2 > 0
+        # z3 = 1 / z3 if z3 > 0
+        avg = current_user.get_avg_rating
+        @local_rating += "<li>Rating C: %.1f/10" % (z1 * p1) if z1 > 0
+        @local_rating += "<li>Rating D: %.1f/10" % (avg + z1 * p1_adj) if z1 > 0
+        # @local_rating += "<li>Rating D: %.1f/10" % (z2 * p2) if z2 > 0
+        # @local_rating += "<li>Rating E: %.1f/10" % (z3 * p3) if z3 > 0
+      end
       
       if current_user.has_rated? @entity
         prating = current_user.rating_for @entity
-        @local_rating += "</li><li>You rated this: %.1f/10" % prating
+        @local_rating += "</li><li>Rating F: %.1f/10" % prating
       end  
       
       @local_rating << "</li>"

@@ -8,8 +8,8 @@
   <b>Entities rated:</b>
   <%= @num_ratings %>
   <ul>
-  <% @ratings.each do |r| %>
-    <li> Rated <%= link_to r.entity.name, entity_path(r.entity) %> <%= "%.1f"% @user.rating_for(r.entity) %>/10</li>
+  <% @entities.each do |e| %>
+    <li> Rated <%= link_to e.name, entity_path(e) %> <%= "%.1f"% @user.rating_for(e) %>/10</li>
   <% end %>
   </ul>
   

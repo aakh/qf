@@ -171,4 +171,9 @@ class Entity < ActiveRecord::Base
   def rated_yet?
     Rating.find_by_entity_id(self.id) != nil
   end
+  
+  def get_users_who_rated    
+    ratings = Rating.all :conditions => {:entity_id => self.id}, :select => "DISTINCT(user_id)", :include => :user
+    ratings.collect {|x| x.user }
+  end
 end

@@ -107,6 +107,7 @@ class User < ActiveRecord::Base
       
       unless use_cos
         sims += mine.similarity_to his, use_calude
+        # this is the +2 part
         num += 1 if use_calude
       else
         if mine.opinion.dimension.bool?
@@ -117,14 +118,15 @@ class User < ActiveRecord::Base
           his_i = his.ideal
         end
         
-        mine_i *= (mine.weight ? mine.weight / 5 : 0.2)
-        his_i *= (his.weight ? his.weight / 5 : 0.2)
-        # mine_w = (mine.weight ? mine.weight : 1)
-        # his_w = (his.weight ? his.weight : 1)
+        # Set weight to I don't care if not available
+        mine_w = (mine.weight ? mine.weight : 1)
+        his_w = (his.weight ? his.weight : 1)
         
-        sum_mine_his += mine_i * his_i #+ mine_w * his_w
-        sum_mine_sq += mine_i * mine_i #+ mine_w * mine_w
-        sum_his_sq += his_i * his_i #+ his_w * his_w
+        
+        sum_mine_his += mine_i * his_i + mine_w * his_w
+        sum_mine_sq += mine_i * mine_i + mine_w * mine_w
+        sum_his_sq += his_i * his_i + his_w * his_w
+        
       end
       
       num += 1
@@ -161,5 +163,22 @@ class User < ActiveRecord::Base
     ratings = Rating.all :conditions => "entity_id=#{entity.id} and user_id=#{self.id}"
     return false unless ratings and ratings.length > 0
     true
+  end
+  
+  def get_rated_entities
+    ratings = Rating.all :conditions => {:user_id => self.id}, :select => "DISTINCT(entity_id)", :include => :entity
+    ratings.collect {|x| x.entity }
+  end
+  
+  def get_avg_rating
+    num_ratings = 0
+    total_rating = 0
+    entities = get_rated_entities
+    entities.each do |e|
+      total_rating += self.rating_for e
+      num_ratings += 1
+    end
+    return total_rating / num_ratings if num_ratings > 0
+    return nil
   end
 end
