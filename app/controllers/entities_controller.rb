@@ -113,7 +113,7 @@ class EntitiesController < ApplicationController
       
       if current_user.has_rated? @entity
         prating = current_user.rating_for @entity
-        @local_rating += "</li><li>Rating F: %.1f/10" % prating
+        @local_rating += "</li><li>Rating E: %.1f/10" % prating
       end  
       
       @local_rating << "</li>"
