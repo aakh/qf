@@ -107,6 +107,20 @@ class Entity < ActiveRecord::Base
     
     dist = 0
     num_dims_used = 0
+    
+    wf = 0
+    self.concept.opinion_dimensions.each do |dim|
+      weight = 0
+      if user
+        ideal, weight = user.get_ideal_and_weight_for dim.valuable
+      else
+        weight = dim.valuable.weight
+      end
+      next if !weight or weight < 1.1
+      wf += weight * weight
+    end
+    
+    wf = Math.sqrt(wf)
 
     self.concept.opinion_dimensions.each do |dim|
       
@@ -142,7 +156,7 @@ class Entity < ActiveRecord::Base
       # if weight is "I don't care" (i.e. 1) then this dimension should be ignored
       next if weight < 1.1
       
-      dist += Dimension.distance(rating, ideal, weight)
+      dist += Dimension.distance(rating, ideal, weight / wf)
       num_dims_used += 1
     end
     

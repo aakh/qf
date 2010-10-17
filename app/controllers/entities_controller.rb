@@ -62,6 +62,13 @@ class EntitiesController < ApplicationController
     @ordinal_fact_values = @entity.fact_values.reject {|elem| elem.fact.dimension.bool? }
     @boolean_fact_values = @entity.fact_values.reject {|elem| !elem.fact.dimension.bool? }
     
+    wf = 0
+    @entity.concept.opinion_dimensions.each do |dim|
+      w = dim.valuable.weight
+      next if !w or w < 1.1
+      wf += w * w
+    end
+    wf = Math.sqrt(wf)
     
     num_to_show = 5
     
@@ -88,7 +95,7 @@ class EntitiesController < ApplicationController
         nh.each do |u|
           next if u == current_user
           avg = u.get_avg_rating
-          ur = u.rating_for(@entity)
+          ur = u.rating_for(@entity, wf)
           # sim1 = current_user.similarity(u)
           sim1 = current_user.cos_similarity(u)
           # sim3 = current_user.calude_similarity(u)
@@ -112,7 +119,7 @@ class EntitiesController < ApplicationController
       end
       
       if current_user.has_rated? @entity
-        prating = current_user.rating_for @entity
+        prating = current_user.rating_for @entity, wf
         @local_rating += "</li><li>Rating E: %.1f/10" % prating
       end  
       

@@ -143,7 +143,7 @@ class User < ActiveRecord::Base
   end
   
   # Returns rating out of 10
-  def rating_for(entity)
+  def rating_for(entity, wf = 5)
     ratings = Rating.all :conditions => "entity_id=#{entity.id} and user_id=#{self.id}"
     return nil unless ratings and ratings.length > 0
     
@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
     ratings.each do |rating|
       weight = rating.opinion.weight
       next if weight < 1.1
-      dist += Dimension.distance(rating.value, rating.opinion.ideal, weight)
+      dist += Dimension.distance(rating.value, rating.opinion.ideal, weight / wf)
       num += 1
     end
     
