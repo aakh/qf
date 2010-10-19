@@ -111,7 +111,7 @@ class EntitiesController < ApplicationController
         z1 = 1 / z1 if z1 > 0
         # z2 = 1 / z2 if z2 > 0
         # z3 = 1 / z3 if z3 > 0
-        avg = current_user.get_avg_rating
+        avg = current_user.get_avg_rating wf
         @local_rating += "<li>Rating C: %.1f/10" % (z1 * p1) if z1 > 0
         @local_rating += "<li>Rating D: %.1f/10" % (avg + z1 * p1_adj) if z1 > 0
         # @local_rating += "<li>Rating D: %.1f/10" % (z2 * p2) if z2 > 0

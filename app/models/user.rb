@@ -170,12 +170,12 @@ class User < ActiveRecord::Base
     ratings.collect {|x| x.entity }
   end
   
-  def get_avg_rating
+  def get_avg_rating( wf = 5)
     num_ratings = 0
     total_rating = 0
     entities = get_rated_entities
     entities.each do |e|
-      total_rating += self.rating_for e
+      total_rating += self.rating_for e, wf
       num_ratings += 1
     end
     return total_rating / num_ratings if num_ratings > 0
